@@ -1,0 +1,38 @@
+<div class="my_item" id="company_iter<%=company.id%>">
+  <div class="my_item_name" id="company_name<%=company.id%>">
+    <%= company.name %>
+  </div>
+  <%- if company.cached_admins.include?(current_user) %>
+    <a class="my_btn_info" style='width: 65px;' href='/companies/<%=company.id%>/show_users' data-method="patch" data-remote="true">
+      <%= company.effectif %>
+      <span class="fa fa-users"></span>
+    </a>
+    <a class="my_btn_edit" id="company_edit_btn<%=company.id%>">
+      <span class="fa fa-edit"></span>
+    </a>
+  <% end %>
+  <a class="my_btn_del" href="/companies/<%=company.id%>/quit"  data-method="patch" data-remote="true" data-confirm="Etes vous sur de vouloir quitter cette companie ? Tous vos accès seront supprimés définitivement">
+    <span class="fa fa-trash"></span>
+  </a>
+</div>
+<%- if company.cached_admins.include?(current_user) %>
+  <div class="company_edit undisplay" id="company_edit<%=company.id%>">
+    <%= simple_form_for(company, remote: true) do |c| %>
+      <div class="input-group" id="sidenav_new_st">
+        <%= c.text_field :name, class: 'form-control', id:"company_name#{company.id}", style: 'border-radius:0;' %>
+        <span class="input-group-btn">
+          <%= c.submit "ok", class: "btn btn-success" %>
+        </span>
+      </div>
+    <% end %>
+  </div>
+  <script>
+    $(document).ready(function () {
+      $('#company_edit_btn<%=company.id%>').on('click', function (event) {
+        $('#company_edit<%=company.id%>').slideToggle();
+        $(".company_edit").not('#company_edit<%=company.id%>').slideUp();
+      });
+    });
+  </script>
+
+<% end %>

@@ -1,0 +1,84 @@
+<div id="company_info_format">
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="panel panel-login">
+        <div class="panel-heading">
+          <div class="col-xs-4">
+            <a href="/info_step/?step=1" data-method="patch" data-remote="true"class="register_steps">
+              <i class="fa fa-user" id="register_step_icon"></i>
+            </a>
+          </div>
+          <div class="col-xs-4">
+            <div class="register_steps_active" style="padding-left: 4px;">
+              <i class="fa fa-building" id="register_step_icon_active"></i>
+            </div>
+          </div>
+          <div class="col-xs-4">
+            <%- if current_user.company? && current_user.cached_admin_company.size != 0%>
+              <a href="/info_step/?step=3" data-method="patch" data-remote="true" class="register_steps" style="padding-right: 6px;">
+                <i class="fa fa-paper-plane" id="register_step_icon"></i>
+              </a>
+            <% else %>
+              <div class="register_steps" style="padding-right: 6px;">
+                <i class="fa fa-paper-plane" id="register_step_icon"></i>
+              </div>
+            <% end %>
+          </div>
+          <hr>
+        </div>
+        <div class="panel-body">
+          <h5> Vos entreprises :</h5>
+          <div class="my_area scrollable_area" id="my_companies_area">
+            <% @my_comps = current_user.companies - current_user.cached_company_invitations %>
+            <% @my_comps.each do |c| %>
+              <%= render 'companies/item', company: c%>
+            <% end %>
+          </div>
+          <%- if current_user.cached_company_invitations.any? %>
+            <h5> Invitations en attente :</h5>
+            
+            <div class="my_area scrollable_area">
+              <% current_user.cached_company_invitations.each do |c| %>
+                <%= render 'companies/pend_invits', c: c%>
+              <% end %>
+            </div>
+          <% end %>
+          <!-- Hide the new form -->
+          <%- if current_user.company? || current_user.cached_company_invitations.any? %>
+            <div class='btn btn-default' id="btn_new_form_company">
+              Créer une nouvelle companie
+            </div>
+            <script>
+              $(document).ready(function () {
+                $('#new_form_company').hide();
+                $('#btn_new_form_company').on('click', function (event) {
+                  $('#new_form_company').slideToggle();
+                });
+              });
+            </script>
+          <% end %>
+          <!-- /Hide the new form -->
+          <%= render 'companies/form'%>
+          <br>
+          <div id="next_step_btn">
+          <%- if current_user.company? %>
+            <%- if current_user.cached_admin_company.size == 0 %>
+              <a href="/" class="btn btn-success pull-right">
+                Suivant
+              <a>
+            <% else %>
+              <a href="/info_step/?step=3" class="btn btn-success pull-right"data-remote="true"data-method="patch">
+                Suivant
+              </a>
+            <% end %>
+          <% end %>
+          </div>
+          <a href="/info_step/?step=1" data-method="patch" data-remote="true" class="btn btn-default pull-left">
+            Retour
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

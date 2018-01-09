@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%- if user_signed_in? %>
+      <%= render 'nav/nav_in' %>
+      <%= render 'nav/sidenav' if @enable_nav %>
+    <% else %>
+      <%= render 'nav/nav_out' %>
+    <% end %>
+    <div class="body_box">
+      <%= yield %>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+$('#user_info_format').remove();
+$('#company_invitation_format').remove();
+$('body').append("<%= j render partial: 'companies/manage' %>");
+$('#company_info_format').hide();
+$('#company_info_format').fadeIn();
+window.history.pushState('page2', 'Title', '/companies/new');

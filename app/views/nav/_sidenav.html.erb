@@ -1,0 +1,168 @@
+<% cache [current_user.upd_cache, 'sn'] do %>
+  <div class="sidenav">
+    <% cache [current_user, 'groups_header'] do %>
+      <div class="btn_sidenav_open">
+        <span class="fa fa-bars"></span>
+      </div>
+
+      <div class="btn_sidenav_close">
+        <span class="fa fa-close sidenav_closed"></span>
+        <span class="sidenav_close_name"><%= current_user.cached_company.name%></span>
+      </div>
+
+      <a href="#" class="link_sidenav" id="sn_item_link_general">
+        <div class="item_sn" id="sn_item_general">
+          <span class="fa fa-inbox" style='padding-left: 3px;'></span>
+          Principal
+        </div>
+      </a>
+      <a href="#" class="link_sidenav" id="sn_item_link_personal">
+        <div class="item_sn" id="sn_item_personal">
+          <span class="fa fa-user-circle-o"></span>
+            <%= current_user.pseudo%>
+        </div>
+      </a>
+      <div class="item_sn" id="item1">
+        <span class="caret caret_sidebar" id='sn_caret1'></span>
+        <span class="fa fa-star"></span>
+        Favoris
+        <a href="/show_fav_group" data-method="patch" data-remote="true"class="fa fa-cog sidenav_btn_edit"></a>
+      </div>
+    <% end %>
+    <% cache [current_user.upd_cache, 'groups_body'] do %>
+      <div class="item_list_body" id="item_list1">
+        <% current_user.cached_favgroups.each do |group| %>
+          <% cache group do %>
+            <%= render group %>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="item_sn" id="item2">
+        <span class="caret caret_sidebar" id='sn_caret2'></span>
+        <span class="fa fa-users"></span>
+        Groupes
+      </div> 
+      <div class="item_list_body" id="item_list2">
+        <% current_user.cached_unfavgroups.each do |group| %>
+          <% cache group do %>
+            <%= render group %>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+    <% cache [current_user, 'groups_footer'] do %>
+      <a href="/show_more_group" data-method="patch" data-remote="true" class="link_sidenav">
+        <div class="item_sn">
+          <span class="fa fa-building" style='padding-left: 3px;'></span>
+          Autres Groupes
+        </div>
+      </a>
+      <a class="item_sn item-bottom" href="/show_new_group" data-method="patch" data-remote="true">
+        <span class="fa fa-plus" style='margin-top: 17px; padding-left: 3px; color: white'></span>
+        Nouveau Groupe
+      </a>
+      <script>
+        $(document).ready(function () {
+          $('[data-toggle="tooltip"]').tooltip()
+
+          // define the href + active link
+          var pathname = window.location.pathname
+          var group = pathname.split("/")[2]
+          // Open Table
+          // Active links
+          if(pathname == '/' || pathname == '/tasks' || pathname == '/events'){
+            $('#sn_item_general').addClass('active');
+
+          } else if(pathname == '/groups/<%=current_user.cached_mygroupid%>' || pathname == '/groups/<%=current_user.cached_mygroupid%>/taskboard' || pathname == '/groups/<%=current_user.cached_mygroupid%>/calendar'){
+            $('#sn_item_personal').addClass('active');
+          }
+          // href route
+          if(pathname == '/' || pathname == '/groups/'+group){
+            $('#sn_item_link_general').attr('href', '/');
+            $('#sn_item_link_personal').attr('href', '/groups/<%=current_user.cached_mygroupid%>');
+          }
+          else if(pathname == '/tasks' || pathname == '/groups/'+group+'/taskboard'){
+            $('#sn_item_link_general').attr('href', '/tasks');
+            $('#sn_item_link_personal').attr('href', '/groups/<%=current_user.cached_mygroupid%>/taskboard');
+          }
+          else if(pathname == '/events' || pathname == '/groups/'+group+'/calendar'){
+            $('#sn_item_link_general').attr('href', '/events');
+            $('#sn_item_link_personal').attr('href', '/groups/<%=current_user.cached_mygroupid%>/calendar');
+          }
+          // Check if sn is open 
+          if (sessionStorage.getItem('sn_opened')){
+            $('.sidenav').addClass("open")
+            $('.sidenav').css({'transition' : 'margin 0s'})
+            $('.body_box').css("margin-left", "250px");
+            $('.btn_sidenav_open').hide();
+            $('.btn_sidenav_close').show();
+            $('.item-bottom').addClass('open');
+            $('.item-bottom').css({'transition' : 'margin 0s'})
+            $('.group_icon').hide();
+            $('.group_name, .sidenav_btn_edit, .sidenav_btn_request').show();
+          }else{
+            $(".sidenav").removeClass("open")
+            $('.sidenav').css({'transition' : 'margin 0s'})
+            $('.body_box').css("margin-left", "60px");
+            $('.btn_sidenav_open').show();
+            $('.btn_sidenav_close').hide();
+            $('.item-bottom').removeClass('open');
+            $('.item-bottom').css({'transition' : 'margin 0s'})
+            $('.group_icon').show();
+            $('.group_name, .sidenav_btn_edit, .sidenav_btn_request').hide();
+          }
+          // Open sn
+          $('.btn_sidenav_open').on('click', function (event) {
+            sessionStorage.setItem('sn_opened', true)
+            $('.sidenav').addClass('open');
+            $('.item-bottom').addClass('open');
+            $('.btn_sidenav_open').hide();
+            $('.btn_sidenav_close').show();
+            $('.body_box').css({
+              'transition' : 'margin 1s',
+              'margin-left' : '250px'
+            });
+            $('.group_icon').hide();
+            $('.group_name, .sidenav_btn_edit, .sidenav_btn_request').show();
+          });
+          // Close sn
+          $('.btn_sidenav_close').on('click', function (event) {
+            sessionStorage.removeItem('sn_opened', false)
+            $('.sidenav').removeClass('open');
+            $('.item-bottom').removeClass('open');
+            $('.btn_sidenav_open').show();
+            $('.btn_sidenav_close').hide();
+            $('.body_box').css("margin-left", "60px");
+            $('.group_icon').show();
+            $('.group_name, .sidenav_btn_edit, .sidenav_btn_request').hide();
+          });
+          // Open and close dropdown
+          $('.item_list_body').hide();
+          if (sessionStorage.getItem('dpl1')) {
+            $('#item_list1').show();
+            $('#sn_caret1').show();
+          } else if (sessionStorage.getItem('dpl2')) {
+            $('#item_list2').show();
+            $('#sn_caret2').show();
+          }
+          $('#item1').on('click', function (event) {
+            $('#item_list1').slideToggle();
+            $('#item_list2').slideUp();
+            $('#sn_caret1').toggle();
+            $('#sn_caret2').hide();
+            sessionStorage.setItem('dpl1', true)
+            sessionStorage.removeItem('dpl2', false)
+          });
+          $('#item2').on('click', function (event) {
+            $('#item_list2').slideToggle();
+            $('#item_list1').slideUp();
+            $('#sn_caret2').toggle();
+            $('#sn_caret1').hide();
+            sessionStorage.setItem('dpl2', true)
+            sessionStorage.removeItem('dpl1', false)
+          });
+        });
+      </script>
+    <% end %>
+  </div>
+<% end %>

@@ -1,0 +1,19 @@
+<div id='MyUserCompany<%=@company.id%>' class='modal fade' role='dialog' aria-hidden="true">
+  <div class="modal-dialog" style="width:500px;">
+    <div class='content'>
+      <div class="modal-header">
+        <h5>Collaborateurs</h5>
+      </div>
+      <div class="modal-body">
+        <div class='my_area'>
+          <% @users.each do |user| %>
+            <%= render 'companies/user', user: user %>
+          <% end %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a data-dismiss="modal" class="btn btn-danger pull-left">Annuler</a>
+      </div>
+    </div>
+  </div>
+</div>

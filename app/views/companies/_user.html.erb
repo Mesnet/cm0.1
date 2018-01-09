@@ -1,0 +1,31 @@
+<div class='my_item' id='user_company_item<%=user.id%>'>
+  <div class="dropdown">
+    <div class="btn btn-default" data-toggle="dropdown" style='border-radius: 0;'>
+      <%- if @company.cached_admins.include?(user) %>
+        <i class="fa fa-user-secret"></i>
+      <% else %>
+        <i class="fa fa-user-o"></i>
+      <% end %>
+    </div>
+    <ul class="dropdown-menu dp_menu_role_event">
+      <li>
+        <a href="/companies/<%= @company.id%>/upd_role?userid=<%=user.id%>&admin=true" data-method="patch" data-remote="true">
+          <i class="fa fa-user-secret" id="fa_icons"></i>
+          Administrateur
+        </a>
+      </li>
+      <li>
+        <a href="/companies/<%= @company.id%>/upd_role?userid=<%=user.id%>&admin=false" data-method="patch" data-remote="true">
+          <i class="fa fa-user-o" id="fa_icons"></i>
+          Collaborateur
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class='my_item_name'>
+    <%= user.pseudo %>
+  </div>
+  <a href='/companies/<%=@company.id%>/expel?userid=<%=user.id%>' class='my_btn_del' data-method='patch' data-remote='true' data-confirm="Etes vous sur de vouloir bannir ce collaborateur ? Tous ses accès seront supprimés définitivement">
+    <span class="fa fa-trash"></span>
+  </a>
+</div>

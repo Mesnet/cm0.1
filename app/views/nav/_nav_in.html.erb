@@ -1,0 +1,128 @@
+<% cache [current_user, "header"] do %>
+  <div class="nav_bar">
+    <a href="#" class='nb_logo'>
+      <%= image_tag "log.png", class: "nb_logo_img"%>
+    </a>
+    <a href="#" class="nb_date">
+      <%= Date.today.strftime('%d %b')%>
+    </a>
+    <div style="width: 50%;"></div>
+    <a href="#" class="nb_link nb_link0">
+      <i class="fa fa-home"></i>
+    </a>
+
+    <a href="#" class="nb_link nb_link1">
+      <i class="fa fa-thumb-tack" id="fa_nav"></i>
+    </a>
+
+    <a href="#" class="nb_link nb_link2">
+      <i class="fa fa-calendar" id="fa_nav"></i>
+    </a>
+
+    <a href="#" class="nb_link nb_link3">
+      <i class="fa fa-cloud" id="fa_nav"></i>
+    </a>
+    <div style="width: 50%;"></div>
+    <a href='/show_invit' data-method='patch' data-remote='true' class="nb_link">
+      <i class="fa fa-users" id="fa_nav_right"></i>
+      <%- unless current_user.pend_invit == 0 %>
+      <span class="label label-danger pull-right unread_count" id="pend_notif_num"><%=current_user.pend_invit%></span>
+      <% end %>
+    </a>
+    <div class="nb_link">
+      <i class="fa fa-bell" id="fa_nav_right"></i>
+      <span class="label label-danger pull-right unread_count">2</span>
+    </div>
+    <div class="nb_link">
+      <i class="fa fa-envelope" id="fa_nav_right"></i>
+      <span class="label label-danger pull-right unread_count_m">2</span>
+    </div>
+    <div class="nb_user_icon" style='background: <%= current_user.color%>'>
+      <%=current_user.initial%>
+    </div>
+    <div class="nb_dropown_area">
+      <ul class="nav_list_user">
+        <li class="nav_list_user_item">
+          <a href="/company_invit" class="nav_list_user_links">
+            <i class="fa fa-user-plus" id="fa_icons" ></i>Inviter des utilisateurs
+          </a>
+        </li>
+        <li class="nav_list_user_item">
+          <a href="/users/edit" class="nav_list_user_links">
+            <i class="fa fa-cog" id="fa_icons" ></i>Paramètres
+          </a>
+        </li>
+        <li class="nav_list_user_item_log_out">
+          <a href="/users/sign_out" data-method="delete" data-confirm="Voulez vous sortir de CMessenger ?" data-commit="Deconnecter" data-cancel="Annuler" class="nav_list_user_links" style="color: white !important">
+            <i class="fa fa-sign-out" id="fa_icons"></i>Deconnection
+          </a>
+        </li>
+      </ul>
+      <% cache ["header_script"] do %>
+        <script>
+          $(document).ready(function () {
+            // Highlight the current tab(nav-bar) + href for nav_btn
+            var pathname = window.location.pathname;
+            var group = pathname.split("/")[2]
+            if(pathname == '/'){
+               $('.nb_link0').addClass('nb_link_active')
+               $('.nb_link1').attr('href', '/tasks')
+               $('.nb_link2').attr('href', '/events')
+               $('.nb_link3').attr('href', '/clouds')
+            } else if(pathname == '/groups/'+ group ){
+               $('.nb_link0').addClass('nb_link_active')
+               $('.nb_link1').attr('href', '/groups/'+group+'/taskboard')
+               $('.nb_link2').attr('href', '/groups/'+group+'/calendar')
+               $('.nb_link3').attr('href', '/groups/'+group+'/cloud')
+            } else if(pathname == '/tasks'){
+              $('.nb_link0').attr('href', '/')
+              $('.nb_link1').addClass('nb_link_active')
+              $('.nb_link2').attr('href', '/events')
+              $('.nb_link3').attr('href', '/clouds')
+            } else if(pathname == '/groups/'+ group +'/taskboard'){
+              $('.nb_link0').attr('href', '/groups/'+group)
+              $('.nb_link1').addClass('nb_link_active')
+              $('.nb_link2').attr('href', '/groups/'+group+'/calendar')
+              $('.nb_link3').attr('href', '/groups/'+group+'/cloud')
+            } else if(pathname == '/events'){
+              $('.nb_link0').attr('href', '/')
+              $('.nb_link1').attr('href', '/tasks')
+              $('.nb_link2').addClass('nb_link_active')
+              $('.nb_link3').attr('href', '/clouds')
+            } else if(pathname == '/groups/'+group+'/calendar'){
+              $('.nb_link0').attr('href', '/groups/'+group)
+              $('.nb_link1').attr('href', '/groups/'+group+'/taskboard')
+              $('.nb_link2').addClass('nb_link_active')
+              $('.nb_link3').attr('href', '/groups/'+group+'/cloud')
+            }else if(pathname == '/clouds'){
+              $('.nb_link0').attr('href', '/')
+              $('.nb_link1').attr('href', '/tasks')
+              $('.nb_link2').attr('href', '/events')
+              $('.nb_link3').addClass('nb_link_active')
+            } else if(pathname == '/groups/'+group+'/cloud'){
+              $('.nb_link0').attr('href', '/groups/'+group)
+              $('.nb_link1').attr('href', '/groups/'+group+'/taskboard')
+              $('.nb_link2').attr('href', '/groups/'+group+'/calendar')
+              $('.nb_link3').addClass('nb_link_active')
+            } else {
+              $('.nb_link0').attr('href', '/')
+              $('.nb_link1').attr('href', '/tasks')
+              $('.nb_link2').attr('href', '/events')
+              $('.nb_link3').attr('href', '/clouds')
+            }
+            //Open the tab_user
+            $('.nb_user_icon').on('click', function (event) {
+              $('.nav_list_user').slideToggle();
+            });
+          });
+          // Close the tab_user if click out 
+          $(document).mouseup(function(e){
+            var container = $(".nav_list_user, .nb_user_icon");
+            if (!container.is(e.target) && container.has(e.target).length === 0) {$(".nav_list_user").slideUp();
+            }
+          });
+        </script>
+      <% end %>
+    </div>
+  </div>
+<% end %>

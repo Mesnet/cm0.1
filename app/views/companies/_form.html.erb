@@ -1,0 +1,11 @@
+<div id="new_form_company">
+<%= simple_form_for(Company.new, validate: true, remote: true)  do |f| %>
+  <div class="form-group">
+    <%= f.text_field :name, placeholder: "Nom*", class: "form-control" %>
+  </div>
+  <div class="form-group area_flex">
+    <%= f.select(:size_type, options_for_select([['0-10 personnes', 1], ['10-20 personnes', 2], ['20-50 personnes', 3], ['50-200 personnes', 4], ['+200 personnes', 5]], :selected => @size_type), {}, {class: "form-control", style:'margin-right: 10px;'}) %>
+    <%= f.button :submit, "Créer", class: "btn btn-success pull-right" %>
+  </div>
+<% end %>
+</div>

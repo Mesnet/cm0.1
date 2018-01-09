@@ -1,0 +1,6 @@
+$('#user_info_format').remove();
+$('#company_info_format').remove();
+$('body').append("<%= j render partial: 'companies/invitations_page' %>");
+$('#company_invitation_format').hide();
+$('#company_invitation_format').fadeIn();
+window.history.pushState('page2', 'Title', '/company_invit');

@@ -1,0 +1,6 @@
+$('#invit_iter<%=@company.id%>').slideUp();
+if('<%=@idz%>' == 1 ){
+  $('#my_companies_area').append("<%=  j render partial: 'companies/item', locals: {company: @company} %>");
+  $('#company_iter<%=@company.id%>').hide();
+  $('#company_iter<%=@company.id%>').slideDown();
+}
