@@ -18,7 +18,7 @@
 <%- if company.cached_admins.include?(current_user) %>
   <div class="company_edit undisplay" id="company_edit<%=company.id%>">
     <%= simple_form_for(company, remote: true) do |c| %>
-      <div class="input-group" id="sidenav_new_st">
+      <div class="input-group">
         <%= c.text_field :name, class: 'form-control', id:"company_name#{company.id}", style: 'border-radius:0;' %>
         <span class="input-group-btn">
           <%= c.submit "ok", class: "btn btn-success" %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180109132630) do
+ActiveRecord::Schema.define(version: 20180110120419) do
 
   create_table "companies", force: :cascade do |t|
     t.string "name"
@@ -20,15 +20,24 @@ ActiveRecord::Schema.define(version: 20180109132630) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "company_invits", force: :cascade do |t|
+    t.string "email"
+    t.integer "company_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_company_invits_on_company_id"
+    t.index ["user_id"], name: "index_company_invits_on_user_id"
+  end
+
   create_table "company_users", force: :cascade do |t|
-    t.integer "role_cat", default: 1
+    t.integer "admin", default: 0
+    t.boolean "invitation", default: false
+    t.boolean "participation", default: false
     t.integer "user_id"
     t.integer "company_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "invitation", default: false
-    t.boolean "participation", default: false
-    t.boolean "admin", default: false
     t.index ["company_id"], name: "index_company_users_on_company_id"
     t.index ["user_id"], name: "index_company_users_on_user_id"
   end
@@ -43,6 +52,8 @@ ActiveRecord::Schema.define(version: 20180109132630) do
 
   create_table "users", force: :cascade do |t|
     t.boolean "admin", default: false
+    t.boolean "company", default: false
+    t.boolean "registred", default: false
     t.string "color"
     t.string "initial"
     t.string "name"
@@ -62,8 +73,7 @@ ActiveRecord::Schema.define(version: 20180109132630) do
     t.string "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "company", default: false
-    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["email"], name: "index_users_on_email"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 

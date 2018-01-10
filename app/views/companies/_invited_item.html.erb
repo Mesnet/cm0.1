@@ -1,38 +1,5 @@
-<div id="invited_item<%=invited.id%>">
-  <div class="my_item">
-    <div class="company_invit_email">
-      <%= invited.email %>
-    </div>
-    <div class="company_invit_date">
-      <%= invited.updated_at.strftime('%d %b')%>
-    </div>
-    <%- if invited.user_id == current_user.id %>
-      <a class="my_btn_edit" id="my_btn_edit<%=invited.id%>">
-        <i class="fa fa-pencil"></i>
-      </a>
-      <a href='company_invitations/<%=invited.id%>' data-method="delete" data-remote="true" class="my_btn_del" data-confirm="Etes vous sur de vouloir supprimer cette invitation ? ">
-        <i class="fa fa-trash"></i>
-      </a>
-    <% end %>
+<div class="my_item" id="invited_item<%=user.id%>">
+  <div class="my_item_name">
+    <%= user.email %>
   </div>
-  <%- if invited.user_id == current_user.id %>
-    <div class="edit_company_invitation_area" id="edit_company_invitation_area<%=invited.id%>">
-      <%= simple_form_for(invited, validate: true, remote: true) do |f| %>
-        <div class="company_invit_input_edit">
-          <div class="form-group" style="margin: 0; width: 100%;">
-          <%= f.text_field :email, placeholder: "Rentrez l'email de votre collaborateur", class: "form-control", style: "border-radius: 0;", id:"company_invitation_email#{invited.id}" %>
-          </div>
-          <%= f.button :submit, "OK", class: "btn btn-success", style:'border-radius: 0; padding-top: 10px; height: 45px' %>
-        </div>
-      <% end %>
-    </div>
-    <script>
-      $(document).ready(function () {
-        $('#my_btn_edit<%=invited.id%>').on('click', function (event) {
-          $('#edit_company_invitation_area<%=invited.id%>').slideToggle();
-          $('.edit_company_invitation_area').not('#edit_company_invitation_area<%=invited.id%>').slideUp();
-        });
-      });
-    </script>
-  <% end %>
 </div>

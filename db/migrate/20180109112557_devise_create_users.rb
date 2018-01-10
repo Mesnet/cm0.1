@@ -4,6 +4,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
 
       t.boolean :admin, default: false
       t.boolean :company, default: false
+      t.boolean :registred, default: false
       t.string :color
       t.string :initial
       t.string :name

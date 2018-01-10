@@ -91,9 +91,6 @@ class CompaniesController < ApplicationController
     end
   end
 
-  def create_invit
-  end
-
   def del_invit
   end
 

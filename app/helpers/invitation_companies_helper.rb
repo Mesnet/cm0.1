@@ -1,0 +1,2 @@
+module InvitationCompaniesHelper
+end

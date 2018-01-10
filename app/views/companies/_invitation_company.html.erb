@@ -1,0 +1,27 @@
+<div class="dpd_title">
+  <%= company.name %>
+</div>
+<div class="dpd_content" id="sn_tab_content">
+  <%= simple_form_for(CompanyInvit.new, remote: true) do |f| %>
+    <div class="input-group" style="margin: -3px;">
+      <%= f.text_field :email, placeholder: "Email du collaborateur", class: 'form-control', style: 'border-radius:0; height: 40px;', id:"company_invit_email#{company.id}"%>
+      <%= f.hidden_field :company_id, :value => company.id  %>
+      <span class="input-group-btn">
+        <%= f.submit "ok", class: "btn btn-success", style: "height: 40px" %>
+      </span>
+    </div>
+  <% end %>
+  <div class='scrollable_area' id="company_invitation_area<%=company.id%>" style="margin-top: 10px;">
+    <%- if company.cached_invits.any? %>
+      <% cache company do %>
+        <% company.cached_invits.each do |user| %>
+          <% cache user do %>
+            <%= render 'companies/invited_item', user: user %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% else %>
+      <h5 class="message_alert"><i class="fa fa-exclamation-triangle"></i>&emsp;Pas d'invitations en cours</h5>
+    <% end %>
+  </div>
+</div>

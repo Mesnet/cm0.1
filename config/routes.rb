@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
  
+  resources :company_invits
+  resources :invitation_companies
    # USERS
   devise_for :users
   resources :user_infos

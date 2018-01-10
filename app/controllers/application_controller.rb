@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   end
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:account_update, keys: [:pseudo, :name, :surname, :color])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:pseudo, :name, :surname, :color, :registred, :company])
   end
 
   def enable_nav

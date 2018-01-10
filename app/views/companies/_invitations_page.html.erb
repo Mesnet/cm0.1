@@ -23,8 +23,21 @@
         </div>
         <div class="panel-body">
           <h5> Invitez vos collaborateurs :</h5>
-          
-          
+          <!-- ListMenu -->
+          <% current_user.company_users.admin.includes(:company).map(&:company).each do |company| %>
+            <%= render 'companies/invitation_company', company: company %>
+          <% end %>
+          <script>
+            $(document).ready(function () {
+              $('.dpd_content').first().show();
+              $('.dpd_title').on('click', function (event) {
+                var content = $(this).next('.dpd_content')
+                content.slideToggle();
+                $('.dpd_content').not(content).slideUp();
+              });
+            });
+          </script>
+          <!-- ListMenu -->
           <br>
           <a href="/" class="btn btn-success pull-right">
             Commencer
