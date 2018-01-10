@@ -7,7 +7,9 @@ class CompanyInvitsController < ApplicationController
           @user = User.create(email: params[:company_invit][:email])
         end
         @company = Company.where(id: params[:company_invit][:company_id]).first
-        @company.company_users.where(user: @user, invitation: true).first_or_create
+        if @company.cached_admins.include?(current_user)
+          @company.company_users.where(user: @user, invitation: true).first_or_create
+        end
         format.js { render 'companies/js/create_invit' }
       end
     end

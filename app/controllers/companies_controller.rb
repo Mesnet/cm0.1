@@ -1,7 +1,7 @@
 class CompaniesController < ApplicationController
   before_action :set_company, except: [:info_step, :create, :new, :company_invit]
   before_action :authorization, except: [:info_step, :create, :new, :company_invit, :acc_invit, :den_invit]
-  before_action :administrator, only: [:expel, :show_users, :update, :upd_role, :create_invit, :del_invit]
+  before_action :administrator, only: [:expel, :show_users, :update, :upd_role, :del_invit]
 
   # AJAX Action
   def quit
@@ -92,6 +92,11 @@ class CompaniesController < ApplicationController
   end
 
   def del_invit
+    @user = User.find(params[:userid])
+    @company.company_users.where(user: @user).update(invitation: false, participation: false)
+    respond_to do |format|
+      format.js { render "companies/js/del_invit"}
+    end
   end
 
   #AJAX routing 

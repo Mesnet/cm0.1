@@ -1,4 +1,4 @@
-$('#company_invitation_area<%=@company.id%>').append("<%=  j render partial: 'companies/invited_item', locals: {user: @user} %>");
+$('#company_invitation_area<%=@company.id%>').append("<%=  j render partial: 'companies/invited_item', locals: {user: @user, company: @company} %>");
 $('#invited_item<%=@user.id%>').hide();
 $('#invited_item<%=@user.id%>').slideDown();
 $('#company_invit_email<%=@company.id%>').val('')

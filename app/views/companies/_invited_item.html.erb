@@ -2,4 +2,7 @@
   <div class="my_item_name">
     <%= user.email %>
   </div>
+  <a href='/companies/<%=company.id%>/del_invit?userid=<%=user.id%>' class='my_btn_del' data-method='patch' data-remote='true' data-confirm="Voulez-vous supprimer l'invitation de cet utilisateur ? ">
+    <i class="fa fa-trash"></i>
+  </a>
 </div>
