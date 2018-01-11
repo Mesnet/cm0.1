@@ -1,4 +1,5 @@
 class CompaniesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_company, except: [:info_step, :create, :new, :company_invit]
   before_action :authorization, except: [:info_step, :create, :new, :company_invit, :acc_invit, :den_invit]
   before_action :administrator, only: [:expel, :show_users, :update, :upd_role, :del_invit]
@@ -117,23 +118,17 @@ class CompaniesController < ApplicationController
   #BASICS
   def create
     @company = Company.new(company_params)
-    CompanyUser.create(company: @company, user: current_user, admin: true, participation: true)
-    current_user.update(company: true)
-    # @main_group = Group.create(name: @company.name, cat: 1, creator_id: current_user.id, effectif: 1, description: "Groupe principal de #{@company.name}", company: @company)
-    # @my_group = Group.create(name: current_user.pseudo, cat: 2, creator_id: current_user.id, effectif: 1, description: "Groupe personnel de #{current_user.pseudo}", company: @company)
-    # UsersGroup.create(group_id: @my_group.id, user_id: current_user.id, favorit: nil, participation: true)
-    # UsersGroup.create(group_id: @main_group.id, user_id: current_user.id, favorit: true, participation: true)
     respond_to do |format|
       if @company.save
+        CompanyUser.create(company: @company, user: current_user, admin: true, participation: true)
+        current_user.update(company: true)
+        Group.create(company: @company, user_id: current_user.id, cat: 2, name: @company.name)
         if current_user.cached_admin_company.size == 1
           # Btn next step appear
           @idz = 1
         end
         format.html { redirect_back }
         format.js { render "companies/js/create" }
-      else
-        format.html { render redirect_back }
-        format.json { render json: @company.errors, status: :unprocessable_entity }
       end
     end
   end

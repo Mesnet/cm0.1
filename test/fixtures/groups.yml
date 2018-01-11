@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  company: one
+  name: MyString
+  effectif: 1
+  cat: 1
+  pend_req: 1
+  description: MyText
+  open: false
+
+two:
+  company: two
+  name: MyString
+  effectif: 1
+  cat: 1
+  pend_req: 1
+  description: MyText
+  open: false

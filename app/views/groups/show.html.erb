@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Company:</strong>
+  <%= @group.company %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @group.name %>
+</p>
+
+<p>
+  <strong>Effectif:</strong>
+  <%= @group.effectif %>
+</p>
+
+<p>
+  <strong>Cat:</strong>
+  <%= @group.cat %>
+</p>
+
+<p>
+  <strong>Pend req:</strong>
+  <%= @group.pend_req %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @group.description %>
+</p>
+
+<p>
+  <strong>Open:</strong>
+  <%= @group.open %>
+</p>
+
+<%= link_to 'Edit', edit_group_path(@group) %> |
+<%= link_to 'Back', groups_path %>

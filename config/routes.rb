@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
  
+  resources :groups
   resources :company_invits
   resources :invitation_companies
    # USERS

@@ -1,4 +1,5 @@
 class CompanyInvitsController < ApplicationController
+  before_action :authenticate_user!
   def create
     if params[:company_invit][:email] =~ /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
       respond_to do |format|

@@ -42,6 +42,13 @@
     </div>
     <div class="nb_dropown_area">
       <ul class="nav_list_user">
+        <%- if current_user.admin? %>
+          <li class="nav_list_user_item">
+            <a href="/admin" class="nav_list_user_links">
+              <i class="fa fa-tachometer" id="fa_icons" ></i>Adminitrateur
+            </a>
+          </li>
+        <% end %>
         <li class="nav_list_user_item">
           <a href="/company_invit" class="nav_list_user_links">
             <i class="fa fa-user-plus" id="fa_icons" ></i>Inviter des utilisateurs

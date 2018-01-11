@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180110120419) do
+ActiveRecord::Schema.define(version: 20180111130727) do
 
   create_table "companies", force: :cascade do |t|
     t.string "name"
@@ -23,11 +23,9 @@ ActiveRecord::Schema.define(version: 20180110120419) do
   create_table "company_invits", force: :cascade do |t|
     t.string "email"
     t.integer "company_id"
-    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["company_id"], name: "index_company_invits_on_company_id"
-    t.index ["user_id"], name: "index_company_invits_on_user_id"
   end
 
   create_table "company_users", force: :cascade do |t|
@@ -40,6 +38,35 @@ ActiveRecord::Schema.define(version: 20180110120419) do
     t.datetime "updated_at", null: false
     t.index ["company_id"], name: "index_company_users_on_company_id"
     t.index ["user_id"], name: "index_company_users_on_user_id"
+  end
+
+  create_table "group_users", force: :cascade do |t|
+    t.integer "group_id"
+    t.integer "user_id"
+    t.boolean "favorit", default: false
+    t.boolean "request", default: false
+    t.boolean "invitation", default: false
+    t.boolean "participation", default: false
+    t.boolean "admin", default: false
+    t.integer "invitor_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_group_users_on_group_id"
+    t.index ["user_id"], name: "index_group_users_on_user_id"
+  end
+
+  create_table "groups", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.integer "cat"
+    t.integer "effectif", default: 0
+    t.integer "pend_req", default: 0
+    t.boolean "open", default: false
+    t.integer "user_id"
+    t.integer "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_groups_on_company_id"
   end
 
   create_table "user_infos", force: :cascade do |t|
@@ -73,7 +100,7 @@ ActiveRecord::Schema.define(version: 20180110120419) do
     t.string "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_users_on_email"
+    t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
