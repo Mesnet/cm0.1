@@ -1,6 +1,6 @@
-$('#company_invitation_area<%=@company.id%>').append("<%=  j render partial: 'companies/invited_item', locals: {user: @user, company: @company} %>");
-$('#invited_item<%=@user.id%>').hide();
-$('#invited_item<%=@user.id%>').slideDown();
+$('#company_invitation_area<%=@company.id%>').append("<%=  j render partial: 'companies/invited_item', locals: {invit: @company_user, company: @company} %>");
+$('#invited_item<%=@company_user.id%>').hide();
+$('#invited_item<%=@company_user.id%>').slideDown();
 $('#company_invit_email<%=@company.id%>').val('')
 var wtf    = $('#company_invitation_area<%=@company.id%>');
 var height = wtf[0].scrollHeight;

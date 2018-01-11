@@ -9,6 +9,7 @@ class CreateGroupUsers < ActiveRecord::Migration[5.1]
       t.boolean :participation, default: false
       t.boolean :admin, default: false
       t.integer :invitor_id
+      t.string :email
       t.timestamps
     end
   end

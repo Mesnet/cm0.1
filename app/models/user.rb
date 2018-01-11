@@ -4,8 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  before_create :verif_exist, :default_value
-  after_create :first_group
+  before_create :default_value
+  after_create :first_group, :assign_elements
   before_save :upd_elements
 
   has_many :company_users, dependent: :destroy
@@ -51,8 +51,8 @@ class User < ApplicationRecord
 
   private
 
-  def verif_exist
-    #Assimilate the Profile with the same email
+  def assign_elements
+    CompanyUser.where(email: self.email).update(user_id: self.id)
   end
 
   def default_value

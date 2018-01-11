@@ -3,4 +3,7 @@ if('<%=@idz%>' == 1 ){
   $('#my_companies_area').append("<%=  j render partial: 'companies/item', locals: {company: @company} %>");
   $('#company_iter<%=@company.id%>').hide();
   $('#company_iter<%=@company.id%>').slideDown();
+  if('<%=@idy%>' == 1 ){
+    $('#next_step_btn').html('<a href="/info_step/?step=3" class="btn btn-success pull-right"data-remote="true"data-method="patch">Suivant</a>')
+  }
 }

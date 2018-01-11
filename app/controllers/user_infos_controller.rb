@@ -5,7 +5,7 @@ class UserInfosController < ApplicationController
       @name = params[:user_info][:name].humanize.rstrip
       @surname = params[:user_info][:surname].humanize.rstrip
       @initial = @name[0] + @surname[0]
-      if params[:user_info][:pseudo]
+      if params[:user_info][:pseudo].present?
         @pseudo = params[:user_info][:pseudo].humanize.rstrip
       else 
         @pseudo =  @name + @surname

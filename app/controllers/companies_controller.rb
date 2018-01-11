@@ -58,7 +58,12 @@ class CompaniesController < ApplicationController
       if @company.cached_admins.include?(@user) && @company.cached_admins.size == 1
         format.js {render 'companies/js/error_admin'}
       else
-        @company.company_users.where(user: @user).update(admin: params[:admin])
+        @cu = @company.company_users.where(user: @user)
+        if params[:admin]
+          @cu.update(admin: true)
+        else 
+          @cu.update(admin: false)
+        end
         if @user.id == current_user.id
           format.js {render inline: "location.reload();" }
         else 
@@ -72,6 +77,10 @@ class CompaniesController < ApplicationController
     respond_to do |format|
       if current_user.cached_company_invitations.include?(@company)
         current_user.company_users.where(user: current_user).update(invitation: false, participation: true)
+        unless current_user.company?
+          current_user.update(company: true)
+          @idy = 1
+        end
         @company.update(effectif: (@company.effectif += 1))
         @idz = 1
         format.js { render "companies/js/rep_invit"}

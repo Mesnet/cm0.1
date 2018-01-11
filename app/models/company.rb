@@ -17,4 +17,8 @@ class Company < ApplicationRecord
     Rails.cache.fetch([self, "cached_invits"]) {(company_users.invited.includes(:user).map(&:user)).to_a}
   end
 
+  def cached_compinvits
+    Rails.cache.fetch([self, "cached_compinvits"]) {company_users.invited}
+  end
+
 end

@@ -2,10 +2,9 @@
   <%= company.name %>
 </div>
 <div class="dpd_content" id="sn_tab_content">
-  <%= simple_form_for(CompanyInvit.new, remote: true) do |f| %>
+  <%= form_for [company, CompanyUser.new], :remote => true do |f| %>
     <div class="input-group" style="margin: -3px;">
       <%= f.text_field :email, placeholder: "Email du collaborateur", class: 'form-control', style: 'border-radius:0; height: 40px;', id:"company_invit_email#{company.id}"%>
-      <%= f.hidden_field :company_id, :value => company.id  %>
       <span class="input-group-btn">
         <%= f.submit "ok", class: "btn btn-success", style: "height: 40px" %>
       </span>
@@ -14,9 +13,9 @@
   <div class='scrollable_area' id="company_invitation_area<%=company.id%>" style="margin-top: 10px;">
     <%- if company.cached_invits.any? %>
       <% cache company do %>
-        <% company.cached_invits.each do |user| %>
-          <% cache user do %>
-            <%= render 'companies/invited_item', user: user, company: company %>
+        <% company.cached_compinvits.each do |invit| %>
+          <% cache invit do %>
+            <%= render 'companies/invited_item', invit: invit, company: company %>
           <% end %>
         <% end %>
       <% end %>

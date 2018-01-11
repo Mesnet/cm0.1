@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20180111130727) do
     t.integer "admin", default: 0
     t.boolean "invitation", default: false
     t.boolean "participation", default: false
+    t.string "email"
     t.integer "user_id"
     t.integer "company_id"
     t.datetime "created_at", null: false
@@ -49,6 +50,7 @@ ActiveRecord::Schema.define(version: 20180111130727) do
     t.boolean "participation", default: false
     t.boolean "admin", default: false
     t.integer "invitor_id"
+    t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_group_users_on_group_id"
