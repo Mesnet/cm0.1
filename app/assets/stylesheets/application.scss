@@ -671,24 +671,6 @@ a.register_steps{
 
   }
 
-  .add_group_btn{
-    border: none;
-    height:60px;
-    width: 60px;
-    text-align: center;
-    vertical-align: middle; 
-    border-radius:50%;
-    color: white;
-    font-size: 40px;
-    font-family: monospace;
-    background: #5CC551;
-    font-weight:bold;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    &:hover {
-    opacity: 0.5;
-    }
-  }
-
   .modal-backdrop.in{
     z-index: 9999;
   }
@@ -788,12 +770,6 @@ td, th {
 
 .btn_sidenav_close{
   display: none;
-}
-
-.sidenav_close_name{
-  font-size: 18px;
-  font-weight: bold;
-  overflow: hidden;
 }
 
 .sidenav_btn_edit,
@@ -966,4 +942,10 @@ td, th {
     cursor: pointer;
     opacity: 0.8;
   }
+}
+
+.add_group_btn{
+  text-align: center;
+  font-size: 22px;
+  padding-top: 10px;
 }

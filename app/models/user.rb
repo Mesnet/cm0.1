@@ -32,8 +32,13 @@ class User < ApplicationRecord
   end
 
   #Cache for group system (CACHE UNPERMANENT)
-  def cached_favgroups
-    Rails.cache.fetch([self, "fav_groups"]) {(group_users.participate.favorit.includes(:group).map(&:group)).to_a}
+
+  def favgroups
+    self.group_users.participate.favorit.includes(:group).map(&:group)
+  end
+
+  def unfavgroups
+    self.group_users.participate.unfavorit.includes(:group).map(&:group)
   end
 
   def cached_unfavgroups
@@ -45,7 +50,7 @@ class User < ApplicationRecord
   end
 
   def othergroups
-    (self.company.groups.findable - self.cached_favgroups - self.cached_unfavgroups - [self.cached_mygroup])
+    (self.company.groups.findable - self.favgroups - self.unfavgroups - [self.cached_mygroup])
   end
 
 

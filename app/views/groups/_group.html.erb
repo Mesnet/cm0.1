@@ -1,0 +1,47 @@
+<div class="link_sidenav" id="subitem_link_group_h<%=group.id%>" >
+  <a href="#" class="sub_item" id="group_iter<%=group.id%>">
+    <div class="group_icon">
+      <%= group.name.capitalize[0]%>
+    </div>
+    <div class="group_name">
+      <%= group.name %>
+    </div>
+  </a>
+  <%- if group.pend_req != 0 && group.cached_admins.include?(current_user) %>
+    <a href="/groups/<%=group.id%>/editor" data-method="patch" data-remote="true"class="fa fa-user sidenav_btn_request" data-toggle="tooltip" data-placement="right"  title="Editer le groupe"></a>
+    <span class="label label-danger pend_req"><%=group.pend_req%></span>
+  <% else %>
+    <% unless group.cat == 1 %>
+      <a href="/groups/<%=group.id%>/editor" data-method="patch" data-remote="true"class="fa fa-pencil sidenav_btn_edit" data-toggle="tooltip" data-placement="right"  title="Editer le groupe"></a>
+    <% end %>
+  <% end %>
+  <br>
+  <script>
+    $(document).ready(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+      if ($(".sidenav").hasClass("open")){
+        $('.group_icon').hide();
+        $('.group_name, .sidenav_btn_edit, .sidenav_btn_request').show();
+      } else {
+        $('.group_icon').show();
+        $('.group_name, .sidenav_btn_edit, .sidenav_btn_request').hide();
+      }
+      var pathname = window.location.pathname
+      var group = pathname.split("/")[2]
+      // Active links
+      if(pathname == '/groups/<%=group.id%>' || pathname == '/groups/<%=group.id%>/taskboard' || pathname == '/groups/<%=group.id%>/calendar') {
+        $('#group_iter<%=group.id%>').addClass('active');
+      }
+      // href route
+      if(pathname == '/' || pathname == '/groups/'+group){
+        $('#group_iter<%=group.id%>').attr('href', '/groups/<%=group.id%>');
+      }
+      else if(pathname == '/tasks' || pathname == '/groups/'+group+'/taskboard'){
+        $('#group_iter<%=group.id%>').attr('href', '/groups/<%=group.id%>/taskboard');
+      }
+      else if(pathname == '/events' || pathname == '/groups/'+group+'/calendar'){
+        $('#group_iter<%=group.id%>').attr('href', '/groups/<%=group.id%>/calendar');
+      }
+    });
+  </script>
+</div>

@@ -28,7 +28,12 @@ class Group < ApplicationRecord
   protected 
 
   def first_user
-    GroupUser.create!(user_id: self.user_id, group_id: self.id, participation: true, admin: true)
+    gu = GroupUser.create!(user_id: self.user_id, group_id: self.id, participation: true, admin: true)
+    if self.company_id != nil
+      if self.company.groups.size == 1
+        gu.update(favorit: true)
+      end
+    end
   end
 
 

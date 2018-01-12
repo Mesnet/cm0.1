@@ -4,9 +4,7 @@ class Companies::CompanyUsersController < ApplicationController
 
   def create
     if params[:company_user][:email] =~ /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-      @company_user = CompanyUser.where(email: params[:company_user][:email], company: params[:company_id]).first_or_create
-      @company_user.invitation = true
-      @company_user.company = @company
+      @company_user = CompanyUser.where(email: params[:company_user][:email], company: params[:company_id], invitation: true).first_or_create
       if @company_user.save
         respond_to do |format|
           format.js { render 'companies/js/create_invit' }

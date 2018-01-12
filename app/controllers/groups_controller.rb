@@ -1,75 +1,33 @@
 class GroupsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_group, only: [:show, :edit, :update, :destroy]
+  before_action :have_company, only: [:index, :show, :taskboard]
+  before_action :enable_nav, only: [:index, :show, :taskboard, :calendar, :cloud]
+  before_action :set_group, except: [:index, :show_new_group, :show_more_group, :show_fav_group, :create]
+  before_action :autorization, except: [:index, :show_new_group, :show_more_group, :create, :join, :unjoin, :show_fav_group, :acc_invit, :den_invit]
+  before_action :aministrator, only: [:update, :destroy, :upd_role]
+  before_action :set_user, only: [:expel, :invit, :uninvit, :accept_req, :denie_req, :upd_role]
+  before_action :last_request, only: [:accept_req, :denie_req]
+  before_action :last_invit, only: [:acc_invit, :den_invit]
+  before_action :last_group, only: [:join]
 
-  # GET /groups
-  # GET /groups.json
-  def index
-    @groups = Group.all
-  end
-
-  # GET /groups/1
-  # GET /groups/1.json
-  def show
-  end
-
-  # GET /groups/new
-  def new
-    @group = Group.new
-  end
-
-  # GET /groups/1/edit
-  def edit
-  end
-
-  # POST /groups
-  # POST /groups.json
-  def create
-    @group = Group.new(group_params)
-
-    respond_to do |format|
-      if @group.save
-        format.html { redirect_to @group, notice: 'Group was successfully created.' }
-        format.json { render :show, status: :created, location: @group }
-      else
-        format.html { render :new }
-        format.json { render json: @group.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /groups/1
-  # PATCH/PUT /groups/1.json
-  def update
-    respond_to do |format|
-      if @group.update(group_params)
-        format.html { redirect_to @group, notice: 'Group was successfully updated.' }
-        format.json { render :show, status: :ok, location: @group }
-      else
-        format.html { render :edit }
-        format.json { render json: @group.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /groups/1
-  # DELETE /groups/1.json
-  def destroy
-    @group.destroy
-    respond_to do |format|
-      format.html { redirect_to groups_url, notice: 'Group was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
+  #Action for create
+  
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_group
-      @group = Group.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def group_params
-      params.require(:group).permit(:company_id, :name, :effectif, :cat, :pend_req, :description, :open)
+  def set_group
+    @group = Group.find(params[:id])
+    if @group == nil
+      redirect_to root_path
     end
+  end
+
+  def group_params
+    params.require(:group).permit(:name, :cat, :creator_id, :effectif, :pend_req, :description, :company_id, :open, :user_ids => [])
+  end
+
+  def enable_nav
+    @enable_nav = true
+  end
+  
 end

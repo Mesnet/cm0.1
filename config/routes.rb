@@ -1,10 +1,35 @@
 Rails.application.routes.draw do
- 
+
+  # GROUPS
   resources :groups do 
     member do 
-    end 
+      patch :join
+      patch :unjoin 
+      patch :quit
+      patch :accept_req
+      patch :denie_req
+      patch :fav
+      patch :unfav
+      patch :expel
+      patch :editor
+      patch :invit 
+      patch :uninvit
+      patch :invit_all
+      patch :uninvit_all
+      patch :acc_invit
+      patch :den_invit
+      patch :upd_role
+      patch :show_done_tasks
+      get :taskboard
+      get :calendar
+      get :cloud
+    end
     resources :group_users, path: :users, module: :groups
   end
+
+  patch "show_more_group" => "groups#show_more_group"
+  patch "show_new_group" => "groups#show_new_group"
+  patch "show_fav_group" => "groups#show_fav_group"
 
   # COMPANY
   resources :companies do 
