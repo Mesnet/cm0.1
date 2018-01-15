@@ -1,0 +1,56 @@
+<div id='MyFavsGroup' class='modal fade' role='dialog' aria-hidden="true">
+  <div class="modal-dialog">
+    <div class='content'>
+      <div id="MeuCarouselFavorit" class="carousel slide">
+        <div class="modal-header" style="padding-bottom: 0;">
+          <h4>Gérer les favoris</h4>
+          <ul  class="nav nav-tabs nav-justified">
+            <li data-target="#MeuCarouselFavorit" class="active" data-slide-to="0">
+              <a data-toggle="tab">
+                <i class="fa fa-star" id="fa_icons"></i>
+                Favoris
+              </a>
+            </li>
+            <li data-target="#MeuCarouselFavorit" data-slide-to="1">
+              <a data-toggle="tab">
+                <i class="fa fa-users" id="fa_icons"></i>
+                Groupes
+              </a>
+            </li>
+          </ul>
+          <div class="carousel-inner">
+            <div class="item active">
+              <div class="modal-body">
+                <div class="my_area" id="favs_in_list">
+                  <%- if current_user.favgroups.any? %>
+                    <% current_user.favgroups.each do |group| %>
+                      <%= render 'groups/fav/item', group: group%>
+                    <% end %>
+                  <% else %>
+                    <h4 class="message_alert"><i class="fa fa-exclamation-triangle"></i>&emsp;Pas d'autres groupes</h4>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="modal-body">
+                <div class="my_area" id="favs_out_list">
+                  <%- if current_user.unfavgroups.any? %>
+                    <% current_user.unfavgroups.each do |group| %>
+                      <%= render 'groups/fav/item', group: group %>
+                    <% end %>
+                  <% else %>
+                    <h4 class="message_alert"><i class="fa fa-exclamation-triangle"></i>&emsp;Pas d'autres groupes</h4>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer" style="height: 60px;">
+            <a data-dismiss="modal" class="btn btn-danger pull-left">Annuler</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

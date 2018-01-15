@@ -1,0 +1,11 @@
+// Open the list
+var list = ('#item_list2')
+$('.item_list_body').not(list).slideUp();
+$(list).slideDown();
+// Append the new element
+$(list).append("<%=  j render partial: 'groups/group', locals: {group: @group} %>");
+// Scroll Bottom
+var height = $(list)[0].scrollHeight;
+$(list).scrollTop(height);
+
+$("#MyNewGroup").modal('hide');

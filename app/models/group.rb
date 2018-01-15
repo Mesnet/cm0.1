@@ -1,4 +1,5 @@
 class Group < ApplicationRecord
+  validates :name, presence: true
   after_create :first_user
 
   belongs_to :company, optional: true

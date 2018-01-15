@@ -3,7 +3,7 @@ class CreateGroups < ActiveRecord::Migration[5.1]
     create_table :groups do |t|
       t.string :name
       t.text :description
-      t.integer :cat
+      t.integer :cat, default: 3
       t.integer :effectif, default: 0
       t.integer :pend_req, default: 0
       t.boolean :open, default: false

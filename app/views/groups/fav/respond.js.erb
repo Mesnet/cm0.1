@@ -1,0 +1,9 @@
+$('#group_fav_item<%=@group.id%>').slideUp(300, function() { $(this).remove(); });
+$('#group_iter<%=@group.id%>').slideUp(300, function() { $(this).remove(); });
+if('<%=@idz%>' == 1 ){
+  $('#favs_in_list').append("<%= j render partial: 'groups/fav/item', locals: {group: @group} %>");
+  $('#item_list1').append("<%=  j render partial: 'groups/group', locals: {group: @group} %>");
+} else{
+  $('#favs_out_list').append("<%= j render partial: 'groups/fav/item', locals: {group: @group} %>");
+  $('#item_list2').append("<%=  j render partial: 'groups/group', locals: {group: @group} %>");
+}

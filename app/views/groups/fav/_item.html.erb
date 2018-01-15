@@ -1,0 +1,14 @@
+<div class="my_item" id='group_fav_item<%=group.id%>'>
+  <div class="my_item_name">
+    <%= group.name %>
+  </div>
+  <%- if current_user.favgroups.include?(group) %>
+    <a class="my_btn_del" href="/groups/<%=group.id%>/unfav" data-method="patch" data-remote="true">
+      <span class="fa fa-star"></span>
+    </a>
+  <% else %>
+    <a class="my_btn_val" href="/groups/<%=group.id%>/fav" data-method="patch" data-remote="true">
+      <span class="fa fa-star-o"></span>
+    </a>
+  <% end %>
+</div>

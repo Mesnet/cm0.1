@@ -1,0 +1,46 @@
+<div id="new_group_area">
+  <%= simple_form_for(Group.new, remote: true) do |f| %>
+    <div id='MyNewGroup' class='modal fade' role='dialog' aria-hidden="true">
+      <div class="modal-dialog" style="width:400px;">
+        <div class='content'>
+          <div class="modal-header">
+            <h4> Nouveau groupe </h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-inputs">
+              <%= f.text_field :name, label: false, placeholder: 'Nom du groupe*', class: "form-control"%>
+            </div>
+            <div class="form-inputs">
+              <%= f.text_area :description, label: false, placeholder: 'Description du groupe' ,class: "form-control" %>
+            </div>
+            <hr>
+            <h5> Restriction :</h5>
+            <%= f.select :company_id, @companies.collect { |p| [ p.name, p.id ] },  prompt: 'Groupe Public'  %>
+
+            <div class="btn-group" data-toggle="buttons">    
+              <label class="btn btn-primary active" data-toggle="tooltip" data-placement="top" title="Tous les utilisateurs peuvent intégrer le groupe"><%= f.radio_button :cat, 3 %>
+                <i class="fa fa-unlock-alt" id="fa_icons"></i> Ouvert
+              </label>
+              <label class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Les demandes des utilisateurs doivent être validées par un administrateur"><%= f.radio_button :cat, 4 %>
+                <i class="fa fa-lock" id="fa_icons"></i>Fermé
+              </label>
+              <label class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Le groupe n'est visible que pour ses participants. Seul les administrateurs peuvent ajouter des membres"><%= f.radio_button :cat, 5 %>
+                <i class="fa fa-user-secret" id="fa_icons"></i>Secret
+              </label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <a data-dismiss="modal" class="btn btn-danger pull-left">Annuler</a>
+            <%= f.button :submit, "Créer le groupe", class: "btn btn-success pull-right" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <script>
+    $(document).ready(function () {
+      $('#group_user_ids').chosen();
+      $('[data-toggle="tooltip"]').tooltip()
+    });
+  </script>
+</div>
