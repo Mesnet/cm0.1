@@ -43,6 +43,8 @@ class CompaniesController < ApplicationController
       else
         @user = User.find(params[:userid])
         @company.company_users.where(user: @user).destroy
+        GroupUser.where(user: @user, group: @company.groups).delete_all
+        @company.update(effectif: (@company.effectif -= 1))
         if @user.id == current_user.id
           format.js {render inline: "location.reload();" }
         else 
@@ -77,11 +79,14 @@ class CompaniesController < ApplicationController
     respond_to do |format|
       if current_user.cached_company_invitations.include?(@company)
         current_user.company_users.where(user: current_user).update(invitation: false, participation: true)
+        @company.update(effectif: (@company.effectif += 1))
+        @group = @company.groups.first
+        @group_user = @group.group_users.where(user: current_user).first_or_create
+        @group_user.update(participation: true, favorit: true)
         unless current_user.company?
           current_user.update(company: true)
           @idy = 1
         end
-        @company.update(effectif: (@company.effectif += 1))
         @idz = 1
         format.js { render "companies/js/rep_invit"}
       else 
@@ -102,8 +107,8 @@ class CompaniesController < ApplicationController
   end
 
   def del_invit
-    @user = User.find(params[:userid])
-    @company.company_users.where(user: @user).update(invitation: false, participation: false)
+    @cu = @company.company_users.find(params[:invitid])
+    @cu.destroy
     respond_to do |format|
       format.js { render "companies/js/del_invit"}
     end

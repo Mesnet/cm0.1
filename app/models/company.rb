@@ -3,6 +3,7 @@ class Company < ApplicationRecord
   has_many :company_users, dependent: :destroy
   has_many :users, through: :company_users
   has_many :groups, dependent: :destroy
+  after_save :upd_group
 
 
   def cached_admins
@@ -17,8 +18,16 @@ class Company < ApplicationRecord
     Rails.cache.fetch([self, "cached_invits"]) {(company_users.invited.includes(:user).map(&:user)).to_a}
   end
 
-  def cached_compinvits
+  def cached_inviteds
     Rails.cache.fetch([self, "cached_compinvits"]) {company_users.invited}
+  end
+
+  private
+
+  def upd_group
+    if self.name_changed?
+      self.groups.first.update(name: self.name)
+    end
   end
 
 end

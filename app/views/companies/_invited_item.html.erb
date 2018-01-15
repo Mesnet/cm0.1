@@ -6,7 +6,7 @@
   <% end %>
     <%= invit.email %>
   </div>
-  <a href='/companies/<%=company.id%>/del_invit?userid=<%=invit.id%>' class='my_btn_del' data-method='patch' data-remote='true' data-confirm="Voulez-vous supprimer l'invitation de cet utilisateur ? ">
+  <a href='/companies/<%=company.id%>/del_invit?invitid=<%=invit.id%>' class='my_btn_del' data-method='patch' data-remote='true' data-confirm="Voulez-vous supprimer l'invitation de cet utilisateur ? ">
     <i class="fa fa-trash"></i>
   </a>
 </div>

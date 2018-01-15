@@ -11,9 +11,9 @@
     </div>
   <% end %>
   <div class='scrollable_area' id="company_invitation_area<%=company.id%>" style="margin-top: 10px;">
-    <%- if company.cached_invits.any? %>
+    <%- if company.cached_inviteds.any? %>
       <% cache company do %>
-        <% company.cached_compinvits.each do |invit| %>
+        <% company.cached_inviteds.each do |invit| %>
           <% cache invit do %>
             <%= render 'companies/invited_item', invit: invit, company: company %>
           <% end %>
