@@ -1,0 +1,53 @@
+<div id='MyEditGroup<%=@group.id%>' class='modal fade' role='dialog' aria-hidden="true">
+  <div class="modal-dialog" style="width:500px;">
+    <div class='content'>
+      <div id="MeuCarousel2" class="carousel slide">
+        <div class="modal-header" style="padding-bottom: 0;">
+          <h4>
+            <%=@group.name%>
+            <%- if @group.company.present? %>
+              (<%= @group.company.name%>)
+            <% end %>
+          </h4>
+          <%- if @group.cached_admins.include?(current_user) %>
+            <ul  class="nav nav-tabs nav-justified">
+              <li data-target="#MeuCarousel2" class="active" data-slide-to="0">
+                <a data-toggle="tab">
+                  <i class="fa fa-users" id="fa_icons"></i>
+                  Participants
+                </a>
+              </li>
+              <li data-target="#MeuCarousel2" data-slide-to="1">
+                <a data-toggle="tab">
+                  <i class="fa fa-telegram" id="fa_icons"></i>
+                  Invitation
+                </a>
+              </li>
+              <li data-target="#MeuCarousel2" data-slide-to="2">
+                <a data-toggle="tab">
+                  <i class="fa fa-edit" id="fa_icons"></i>
+                  Modifier
+                </a>
+              </li>
+            </ul>
+          <% end %>
+          <%- if @group.cached_admins.include?(current_user) %>
+            <div class="carousel-inner">
+              <div class="item active">
+                <%= render 'groups/edit/users'%>
+              </div>
+              <div class="item">
+                <%= render 'groups/edit/invitations' %>
+              </div>
+              <div class="item">
+                <%= render 'groups/edit/edit'%>
+              </div>
+            </div>
+          <% else %>
+            <%= render 'groups/edit/users'%>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

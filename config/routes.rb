@@ -3,23 +3,27 @@ Rails.application.routes.draw do
   # GROUPS
   resources :groups do 
     member do 
+      patch :fav
+      patch :unfav
+
+      patch :editor
+      patch :upd_role
+
       patch :join
       patch :unjoin 
       patch :quit
-      patch :accept_req
-      patch :denie_req
-      patch :fav
-      patch :unfav
       patch :expel
-      patch :editor
+
+      patch :acc_req
+      patch :den_req
+      
       patch :invit 
       patch :uninvit
-      patch :invit_all
-      patch :uninvit_all
       patch :acc_invit
       patch :den_invit
-      patch :upd_role
+
       patch :show_done_tasks
+
       get :taskboard
       get :calendar
       get :cloud

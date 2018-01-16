@@ -1,0 +1,9 @@
+<div class="my_area">
+  <%- if @groups_out.any? %>
+    <% @groups_out.each do |group| %>
+      <%= render 'groups/other/group', group: group %>
+    <% end %>
+  <% else %>
+    <h5>Aucuns autres groupes</h5>
+  <% end %>
+</div>

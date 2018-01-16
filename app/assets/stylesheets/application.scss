@@ -224,17 +224,21 @@
   }
 }
 
-.h_elm{
+.info_btn{
   background: none;
-  color: #575050 !important;
-  min-width: 100%;
+  color: #6697b9;
+  font-size: 20px;
+  margin-top: 15px;
   &:hover {
     background: none;
-    color: #575050 !important;
     text-decoration: none;
     cursor: pointer;
     opacity: 0.5;
   }
+}
+
+.info_btn{
+  
 }
 
 .well_content_area{
@@ -911,7 +915,6 @@ td, th {
 
 .btn_delete_group{
   color:white !important;
-  margin-top: 10px;
 }
 
 .group_admin_area{

@@ -1,0 +1,8 @@
+<div class="my_area" id="group_users_area<%=@group.id%>">
+  <% @users.each do |user| %>
+    <%= render 'groups/edit/user', user: user %>
+  <% end %>
+</div>
+<div class="modal-footer">
+  <a data-dismiss="modal" class="btn btn-danger pull-left">Annuler</a>
+</div>

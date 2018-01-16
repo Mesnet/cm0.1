@@ -1,0 +1,36 @@
+<div id='MyOthersGroup' class='modal fade' role='dialog' aria-hidden="true">
+  <div class="modal-dialog">
+    <div class='content'>
+      <div id="MeuCarouselOtherGroup" class="carousel slide">
+        <div class="modal-header" style="padding-bottom: 0;">
+          <h4>Autres groupes</h4>
+          <ul  class="nav nav-tabs nav-justified">
+            <li data-target="#MeuCarouselOtherGroup" class="active" data-slide-to="0">
+              <a data-toggle="tab">
+                <i class="fa fa-building-o" id="fa_icons"></i>
+                Mes companies
+              </a>
+            </li>
+            <li data-target="#MeuCarouselOtherGroup" data-slide-to="1">
+              <a data-toggle="tab">
+                <i class="fa fa-handshake-o" id="fa_icons"></i>
+                Groupes Externes
+              </a>
+            </li>
+          </ul>
+          <div class="carousel-inner">
+            <div class="item active">
+              <%= render 'groups/other/intern'%>
+            </div>
+            <div class="item">
+              <%= render 'groups/other/extern'%>
+            </div>
+          </div>
+          <div class="modal-footer" style="height: 60px;">
+            <a data-dismiss="modal" class="btn btn-danger pull-left">Annuler</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

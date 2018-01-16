@@ -1,0 +1,26 @@
+<div class="my_item" id='group_user_invit<%=user.id%>'>
+  <div class="my_item_name">
+    <%=user.pseudo%>
+  </div>
+  <%- if @group.cached_requests.include?(user)%>
+    <a class="my_btn_val" href="/groups/<%=@group.id%>/acc_req?userid=<%=user.id%>" data-method="patch" data-remote="true" data-toggle="tooltip" data-placement="left" title="Valider la requête">
+      <span class="fa fa-check"></span>
+    </a>
+    <a class="my_btn_del" href="/groups/<%=@group.id%>/den_req?userid=<%=user.id%>" data-method="patch" data-remote="true" data-toggle="tooltip" data-placement="left" title="Refuser la requête">
+      <span class="fa fa-close"></span>
+    </a>
+  <%- elsif @group.cached_invitations.include?(user) %>
+    <a class="my_btn_del" href="/groups/<%=@group.id%>/uninvit?userid=<%=user.id%>" data-method="patch" data-remote="true" data-toggle="tooltip" data-placement="left" title="Annuler l'invitation">
+      <span class="fa fa-trash"></span>
+    </a>
+  <% else %>
+    <a class="my_btn_info" href="/groups/<%=@group.id%>/invit?userid=<%=user.id%>" data-method="patch" data-remote="true" data-toggle="tooltip" data-placement="left" title="Envoyer une invitation">
+      <span class="fa fa-telegram"></span>
+    </a>
+  <% end %>
+</div>
+<script>
+  $(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  });
+</script>

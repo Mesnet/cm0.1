@@ -1,0 +1,3 @@
+$('#edit_group_area').remove();
+$('body').prepend("<%= j render partial: 'groups/edit/modal'%>");
+$('#MyEditGroup<%=@group.id%>').modal('toggle');

@@ -64,10 +64,10 @@
         var group = pathname.split("/")[2]
         // Open Table
         // Active links
-        if(pathname == '/' || pathname == '/tasks' || pathname == '/events'){
+        if(pathname == '/' || pathname == '/tasks' || pathname == '/events' || pathname == '/files'){
           $('#sn_item_general').addClass('active');
 
-        } else if(pathname == '/groups/<%=current_user.cached_mygroupid%>' || pathname == '/groups/<%=current_user.cached_mygroupid%>/taskboard' || pathname == '/groups/<%=current_user.cached_mygroupid%>/calendar'){
+        } else if(pathname == '/groups/<%=current_user.cached_mygroupid%>' || pathname == '/groups/<%=current_user.cached_mygroupid%>/taskboard' || pathname == '/groups/<%=current_user.cached_mygroupid%>/calendar' || pathname == '/groups/<%=current_user.cached_mygroupid%>/cloud'){
           $('#sn_item_personal').addClass('active');
         }
         // href route
@@ -82,6 +82,10 @@
         else if(pathname == '/events' || pathname == '/groups/'+group+'/calendar'){
           $('#sn_item_link_general').attr('href', '/events');
           $('#sn_item_link_personal').attr('href', '/groups/<%=current_user.cached_mygroupid%>/calendar');
+        }
+        else if(pathname == '/files' || pathname == '/groups/'+group+'/cloud'){
+          $('#sn_item_link_general').attr('href', '/files');
+          $('#sn_item_link_personal').attr('href', '/groups/<%=current_user.cached_mygroupid%>/cloud');
         }
         // Check if sn is open 
         if (sessionStorage.getItem('sn_opened')){

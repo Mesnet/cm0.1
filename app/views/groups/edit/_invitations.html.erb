@@ -1,0 +1,12 @@
+<div class="my_area" id="group_invitations_area<%=@group.id%>">
+  <%- if @invitations.any? %>
+  <% @invitations.each do |user| %>
+    <%= render 'groups/edit/invitation', user: user %>
+  <% end %>
+  <% else %>
+    <h5>Aucun autres utilisateurs</h5>
+  <% end %>
+</div>
+<div class="modal-footer">
+  <a data-dismiss="modal" class="btn btn-danger pull-left">Annuler</a>
+</div>

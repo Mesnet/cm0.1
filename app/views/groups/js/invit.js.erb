@@ -1,0 +1,6 @@
+if('<%=@idz%>' == 1 ){
+  $('#group_user_invit<%=@user.id%>').slideUp(300, function() { $(this).remove(); });
+  $('#group_users_area<%=@group.id%>').append("<%=  j render partial: 'groups/edit/user', locals: {user: @user} %>");  
+} else {
+  $('#group_user_invit<%=@user.id%>').replaceWith("<%=  j render partial: 'groups/edit/invitation', locals: {user: @user} %>");  
+}

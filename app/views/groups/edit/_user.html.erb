@@ -1,0 +1,54 @@
+<div class="my_item" id='group_user_item<%=user.id%>'>
+  <%- if @group.cached_admins.include?(current_user) %>
+    <div class="dropdown">
+      <div class="btn btn-default" data-toggle="dropdown" style='border-radius: 0;'>
+        <%- if @group.cached_admins.include?(user) %>
+          <i class="fa fa-user-secret"></i>
+        <% else %>
+          <i class="fa fa-user-o"></i>
+        <% end %>
+      </div>
+      <ul class="dropdown-menu">
+        <li>
+          <a href="/groups/<%= @group.id%>/upd_role?userid=<%=user.id%>&admin=true" data-method="patch" data-remote="true">
+            <i class="fa fa-user-secret" id="fa_icons"></i>
+            Administrateur
+          </a>
+        </li>
+        <li>
+          <a href="/groups/<%= @group.id%>/upd_role?userid=<%=user.id%>" data-method="patch" data-remote="true">
+            <i class="fa fa-user-o" id="fa_icons"></i>
+            Collaborateur
+          </a>
+        </li>
+      </ul>
+    </div>
+    <% else %>
+      <%- if @group.cached_admins.include?(user) %>
+      <a class="fa fa-user-secret" id="fa_group_name" data-toggle="tooltip" data-placement="bottom" title="Administrateur du groupe"></a>
+    <% end %>
+  <% end %>
+  <div class="my_item_name">
+    <%=user.pseudo%>
+  </div>
+
+  <%- if user.id == current_user.id %>
+    <%- if @group.cat == 3 %>
+      <a class="my_btn_del" href="/groups/<%=@group.id%>/quit" data-method="patch" data-remote="true" data-toggle="tooltip" data-placement="left" title="Quitter le groupe">
+    <% elsif @group.cat == 4 %>
+      <a class="my_btn_del" href="/groups/<%=@group.id%>/quit" data-method="patch" data-remote="true" data-confirm="Ce groupe est fermé, si vous le quittez, vous devrez envoyer un requête pour y accéder. Etes vous sur de vouloir sortir de ce groupe ?" data-toggle="tooltip" data-placement="left" title="Quitter le groupe">
+    <% elsif @group.cat == 5 %>
+      <a class="my_btn_del" href="/groups/<%=@group.id%>/quit" data-method="patch" data-remote="true" data-confirm="Ce groupe est secret, si vous le quittez, vous ne pourrez plus le retrouver. Etes vous sur de vouloir sortir de ce groupe ?" data-toggle="tooltip" data-placement="left" title="Quitter le groupe">
+    <% end %>
+    <span class="fa fa-close"></span></a>
+  <% elsif @group.cached_admins.include?(current_user)  %>
+    <a class="my_btn_del" href="/groups/<%=@group.id%>/expel?userid=<%=user.id%>" data-method="patch" data-remote="true" data-toggle="tooltip" data-placement="left" title="Expulser du groupe">
+      <span class="fa fa-trash"></span>
+    </a>
+  <% end %>
+</div>
+<script>
+  $(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  });
+</script>

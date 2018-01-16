@@ -1,0 +1,2 @@
+$('#group_user_item<%=@user.id%>').slideUp(300, function() { $(this).remove(); });
+$('#group_invitations_area<%=@group.id%>').append("<%=  j render partial: 'groups/edit/invitation', locals: {user: @user} %>");  

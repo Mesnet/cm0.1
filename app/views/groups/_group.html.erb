@@ -1,9 +1,13 @@
 <div class="link_sidenav" id="group_iter<%=group.id%>" >
-  <a href="#" class="sub_item" >
+  <a href="#" class="sub_item" id="group_link<%=group.id%>">
     <div class="group_icon">
       <%= group.name.capitalize[0]%>
     </div>
-    <div class="group_name">
+    <div class="group_name" id="group_name<%=group.id%>">
+     
+      <%- if group.cat == 2 %>
+        <i class="fa fa-university" style="margin: 0; margin-right: 10px; font-size: 18px;"></i>
+      <% end %>
       <%= group.name %>
     </div>
   </a>
@@ -19,7 +23,7 @@
   <script>
     $(document).ready(function () {
       $('[data-toggle="tooltip"]').tooltip()
-      if ($(".sidenav").hasClass("open")){
+      if($('.sidenav').hasClass("open")){
         $('.group_icon').hide();
         $('.group_name, .sidenav_btn_edit, .sidenav_btn_request').show();
       } else {
@@ -30,18 +34,19 @@
       var group = pathname.split("/")[2]
       // Active links
       if(pathname == '/groups/<%=group.id%>' || pathname == '/groups/<%=group.id%>/taskboard' || pathname == '/groups/<%=group.id%>/calendar') {
-        $('#group_iter<%=group.id%>').addClass('active');
+        $('#group_link<%=group.id%>').addClass('active');
       }
       // href route
       if(pathname == '/' || pathname == '/groups/'+group){
-        $('#group_iter<%=group.id%>').attr('href', '/groups/<%=group.id%>');
+        $('#group_link<%=group.id%>').attr('href', '/groups/<%=group.id%>');
       }
       else if(pathname == '/tasks' || pathname == '/groups/'+group+'/taskboard'){
-        $('#group_iter<%=group.id%>').attr('href', '/groups/<%=group.id%>/taskboard');
+        $('#group_link<%=group.id%>').attr('href', '/groups/<%=group.id%>/taskboard');
       }
       else if(pathname == '/events' || pathname == '/groups/'+group+'/calendar'){
-        $('#group_iter<%=group.id%>').attr('href', '/groups/<%=group.id%>/calendar');
+        $('#group_link<%=group.id%>').attr('href', '/groups/<%=group.id%>/calendar');
       }
+
     });
   </script>
 </div>

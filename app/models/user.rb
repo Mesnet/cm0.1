@@ -47,6 +47,10 @@ class User < ApplicationRecord
     Rails.cache.fetch([self, "group_invitations"]) {(group_users.invited.includes(:group).map(&:group)).to_a}
   end
 
+  def cached_group_requests
+    Rails.cache.fetch([self, "group_requests"]) {(group_users.request.includes(:group).map(&:group)).to_a}
+  end
+
 
   private
 

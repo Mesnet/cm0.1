@@ -1,0 +1,58 @@
+<%= simple_form_for(@group, remote: true) do |f| %>
+  <div class="modal-body">
+    <div class="form-inputs">
+      <%= f.text_field :name, label: false, placeholder: 'Description du groupe', class: "form-control"%>
+      <%= f.text_area :description, label: false, placeholder: 'Description du groupe' ,class: "form-control" %>
+      <hr>
+      <h4> Restriction :</h4>
+
+      <div class="btn-group" data-toggle="buttons">
+        <%- if @group.cat == 3 %> 
+        <label class="btn btn-primary active" data-toggle="tooltip" data-placement="bottom" title="Tous les collaborateurs peuvent rentrer dans le groupe">
+        <% else %>
+        <label class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Tous les collaborateurs peuvent rentrer dans le groupe">
+        <% end %>
+          <%= f.radio_button :cat, 3 %>
+          <i class="fa fa-unlock-alt" id="fa_icons"></i> Ouvert
+        </label>
+        <%- if @group.cat == 4 %>
+          <label class="btn btn-primary active" data-toggle="tooltip" data-placement="bottom" title="Les demandes des utilisateurs doivent être validé par l'administrateur du groupe">
+        <% else %>
+          <label class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Les demandes des utilisateurs doivent être validé par l'administrateur du groupe">
+        <% end %>
+          <%= f.radio_button :cat, 4 %>
+          <i class="fa fa-lock" id="fa_icons"></i>Fermé
+        </label>
+        <%- if @group.cat == 5 %>
+          <label class="btn btn-primary active" data-toggle="tooltip" data-placement="bottom" title="Le groupe n'est visible que pour ses participants. Seul l'administrateur du groupe peut ajouter des membres">
+        <% else %>
+          <label class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Le groupe n'est visible que pour ses participants. Seul l'administrateur du groupe peut ajouter des membres">
+        <% end %>
+          <%= f.radio_button :cat, 5 %>
+          <i class="fa fa-user-secret" id="fa_icons"></i>Secret
+        </label>
+      </div>
+      <hr>
+      <a class="btn btn-default" data-toggle="collapse" href="#collapse_group_admin<%=@group.id%>" aria-expanded="false" aria-controls="collapseExample">
+        <i class="fa fa-trash" id="fa_icons"></i>
+        Supprimer le groupe
+      </a>
+      <div class="collapse" id="collapse_group_admin<%=@group.id%>">
+        <div class="edit_group_fields">
+          <br>
+          <div class="well" id="well_group">
+            <i class="fa fa-exclamation-triangle" id="fa_icons"></i>
+              Attention, Tout le contenue du groupe sera supprimer si vous effectuer cette action !
+          </div>
+          <a href="/groups/<%=@group.id%>" data-method="delete" data-remote="true" class="btn btn-danger btn_delete_group" data-confirm="Etes vous certains de vouloir supprimer ce groupe, toutes les tâches, évènements, fichiers et collaborateurs seront également supprimés. Cette action est définitive.">
+            <i class="fa fa-trash" id="fa_icons"></i>Supprimer le groupe
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a data-dismiss="modal" class="btn btn-danger pull-left">Annuler</a>
+    <%= f.button :submit, "Editer le groupe", class: "btn btn-success pull-right" %>
+  </div>
+<% end %>

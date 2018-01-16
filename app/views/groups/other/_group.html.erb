@@ -1,0 +1,73 @@
+<div class="my_item" id='other_group<%=group.id%>'>
+  <div class="my_item_name">
+    <%- if group.cat == 4 %>
+      <span class="fa fa-lock" id="fa_icons"></span>
+    <% end %>
+    <%= group.name %>
+    <%- if group.company.present? %>
+      (<%=group.company.name%>)
+    <% end %>
+  </div>
+  <%- if group.cat == 3 %>
+    <div class="my_btn_default" style="width: 70px;" id="group_list_btn_users<%=group.id%>">
+      <span class="fa fa-users"></span>
+      <%= group.effectif %>
+    </div>
+  <% end %>
+  <%- if group.description.present? %>
+    <div class="my_btn_info" id="group_list_btn_info<%=group.id%>">
+      <span class="fa fa-info-circle"></span>
+    </div>
+  <% end %>
+  <%- if group.cached_requests.include?(current_user) %>
+    <a class="my_btn_edit" href="/groups/<%=group.id%>/unjoin" data-method="patch" data-remote="true" data-toggle="tooltip" data-placement="left" title="Annuler la requête">
+      <span class="fa fa-spinner fa-pulse"></span>
+    </a>
+  <% else %>
+    <a class="my_btn_val" href="/groups/<%=group.id%>/join" data-method="patch" data-remote="true" data-toggle="tooltip" data-placement="left" title="Envoyer une requête">
+      <span class="fa fa-check"></span>
+    </a>
+  <% end %>
+</div>
+<%- if group.description.present? %>
+  <div class="group_detail_area" id="group_detail_area<%=group.id%>">
+    <%= simple_format(group.description)%>
+  </div>
+  <script>
+    $(document).ready(function () {
+      $('#group_list_btn_info<%=group.id%>').on('click', function (event) {
+        $('#group_detail_area<%=group.id%>').slideToggle();
+        $('.group_detail_area').not('#group_detail_area<%=group.id%>').slideUp();
+        $('.group_users_area').slideUp();
+      });
+    });
+  </script>
+<% end %>
+<%- if group.cat == 3 %>
+  <div class="group_users_area" id="group_users_area<%=group.id%>">
+    <div class="area_flex">
+      <% group.cached_users.each do |u| %>
+        <div class="group_user_item">
+          <%- if group.cached_admins.include?(u) %>
+            <span class="fa fa-id-badge"></span>
+          <% end %>
+          <%= u.pseudo%>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <script>
+    $(document).ready(function () {
+      $('#group_list_btn_users<%=group.id%>').on('click', function (event) {
+        $('#group_users_area<%=group.id%>').slideToggle();
+        $('.group_users_area').not('#group_users_area<%=group.id%>').slideUp();
+        $('.group_detail_area').slideUp();
+      });
+    });
+  </script>
+<% end %>
+<script>
+  $(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  });
+</script>

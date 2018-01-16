@@ -15,8 +15,10 @@
             </div>
             <hr>
             <h5> Restriction :</h5>
-            <%= f.select :company_id, @companies.collect { |p| [ p.name, p.id ] },  prompt: 'Groupe Public'  %>
-
+            <div class="area_flex">
+              <%= f.select :company_id, @companies.collect { |p| [ p.name, p.id ] },  prompt: 'Aucune entreprise'  %>
+                <i class="fa fa-info-circle info_btn" id="fa_icons" data-toggle="tooltip" data-placement="left" title="Si vous selectionner une companie, l'accès du groupe sera restreint aux employés de cette companie"></i>
+            </div>
             <div class="btn-group" data-toggle="buttons">    
               <label class="btn btn-primary active" data-toggle="tooltip" data-placement="top" title="Tous les utilisateurs peuvent intégrer le groupe"><%= f.radio_button :cat, 3 %>
                 <i class="fa fa-unlock-alt" id="fa_icons"></i> Ouvert
