@@ -34,7 +34,7 @@ class GroupsController < ApplicationController
             #User already invited
             @gu.update(invitation: false, participation: true)
             @group.update(effectif: (@group.effectif += 1))
-            current_user.update(pend_notif: (current_user.pend_notif -= 1))
+            current_user.update(pend_invit: (current_user.pend_invit -= 1))
             format.js { render 'groups/other/join' }
           else
             #User not invited -> Send a request
@@ -162,7 +162,7 @@ class GroupsController < ApplicationController
           #User was not already accepted
             @gu = @group.group_users.where(user: @user).first_or_create
             @gu.update(invitation: true)
-            @user.update(pend_notif: (@user.pend_notif += 1))
+            @user.update(pend_invit: (@user.pend_invit += 1))
           else 
             @idz = 1
           end
@@ -175,7 +175,7 @@ class GroupsController < ApplicationController
       respond_to do |format|
         if @group.cached_invitations.include?(@user)
           @group.group_users.where(user: @user).update(invitation: false)
-          @user.update(pend_notif: (@user.pend_notif -= 1))
+          @user.update(pend_invit: (@user.pend_invit -= 1))
         else 
           @idz = 1
         end
@@ -184,12 +184,25 @@ class GroupsController < ApplicationController
     end
 
     def acc_invit
-      @group.update(effectif: (@group.effectif += 1))
-      current_user.update(pend_notif: (current_user.pend_notif -= 1))
+      respond_to do |format|
+        if @group.cached_invitations.include?(current_user)
+          @group.group_users.where(user: current_user).update(invitation: false, participation: true)
+          @group.update(effectif: (@group.effectif += 1))
+          current_user.update(pend_invit: (current_user.pend_invit -= 1))
+          @idz = 1
+        end
+        format.js { render 'pages/invit/respond'}
+      end
     end
 
     def den_invit
-      current_user.update(pend_notif: (current_user.pend_notif -= 1))
+      respond_to do |format|
+        if @group.cached_invitations.include?(current_user)
+          @group.group_users.where(user: current_user).update(invitation: false)
+          current_user.update(pend_invit: (current_user.pend_invit -= 1))
+        end
+        format.js { render 'pages/invit/respond'}
+      end
     end
 
   #New

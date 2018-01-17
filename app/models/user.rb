@@ -22,13 +22,21 @@ class User < ApplicationRecord
     Rails.cache.fetch([self, "cached_admin_company"]) {(company_users.participant.admin.includes(:company).map(&:company)).to_a}
   end
 
-  #Cache for group system (CACHE PERMANENT)
+  #Cache for group system
   def cached_mygroup
     Rails.cache.fetch([self, "my_group"]) {group_users.participate.first.group}
   end
 
   def cached_mygroupid
     Rails.cache.fetch([self, "mygroupid"]) {self.cached_mygroup.id}
+  end
+
+  def cached_group_invitations
+    Rails.cache.fetch([self, "group_invitations"]) {(group_users.invited.includes(:group).map(&:group)).to_a}
+  end
+
+  def cached_group_requests
+    Rails.cache.fetch([self, "group_requests"]) {(group_users.request.includes(:group).map(&:group)).to_a}
   end
 
   def favgroups
@@ -43,12 +51,10 @@ class User < ApplicationRecord
     (self.company.groups.findable - self.favgroups - self.unfavgroups - [self.cached_mygroup])
   end
 
-  def cached_group_invitations
-    Rails.cache.fetch([self, "group_invitations"]) {(group_users.invited.includes(:group).map(&:group)).to_a}
-  end
+  #Cache for event system
 
-  def cached_group_requests
-    Rails.cache.fetch([self, "group_requests"]) {(group_users.request.includes(:group).map(&:group)).to_a}
+  def cached_event_invitations
+    self.companies - self.companies
   end
 
 

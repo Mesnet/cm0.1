@@ -8,10 +8,10 @@
 
   <body>
     <%- if user_signed_in? %>
-      <%= render 'nav/nav_in' %>
-      <%= render 'nav/sidenav' if @enable_nav %>
+      <%= render 'pages/nav/nav_in' %>
+      <%= render 'pages/nav/sidenav' if @enable_nav %>
     <% else %>
-      <%= render 'nav/nav_out' %>
+      <%= render 'pages/nav/nav_out' %>
     <% end %>
     <div class="body_box">
       <%= yield %>

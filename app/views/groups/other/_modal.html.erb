@@ -20,10 +20,26 @@
           </ul>
           <div class="carousel-inner">
             <div class="item active">
-              <%= render 'groups/other/intern'%>
+              <div class="my_area">
+                <%- if @groups_in.any? %>
+                  <% @groups_in.each do |group| %>
+                    <%= render 'groups/other/group', group: group %>
+                  <% end %>
+                <% else %>
+                  <h5>Aucuns autres groupes</h5>
+                <% end %>
+              </div>
             </div>
             <div class="item">
-              <%= render 'groups/other/extern'%>
+              <div class="my_area">
+                <%- if @groups_out.any? %>
+                  <% @groups_out.each do |group| %>
+                    <%= render 'groups/other/group', group: group %>
+                  <% end %>
+                <% else %>
+                  <h5>Aucuns autres groupes</h5>
+                <% end %>
+              </div>
             </div>
           </div>
           <div class="modal-footer" style="height: 60px;">

@@ -40,10 +40,10 @@
     <% elsif @group.cat == 5 %>
       <a class="my_btn_del" href="/groups/<%=@group.id%>/quit" data-method="patch" data-remote="true" data-confirm="Ce groupe est secret, si vous le quittez, vous ne pourrez plus le retrouver. Etes vous sur de vouloir sortir de ce groupe ?" data-toggle="tooltip" data-placement="left" title="Quitter le groupe">
     <% end %>
-    <span class="fa fa-close"></span></a>
+    <span class="fa fa-sign-out"></span></a>
   <% elsif @group.cached_admins.include?(current_user)  %>
-    <a class="my_btn_del" href="/groups/<%=@group.id%>/expel?userid=<%=user.id%>" data-method="patch" data-remote="true" data-toggle="tooltip" data-placement="left" title="Expulser du groupe">
-      <span class="fa fa-trash"></span>
+    <a class="my_btn_del" href="/groups/<%=@group.id%>/expel?userid=<%=user.id%>" data-method="patch" data-remote="true" data-toggle="tooltip" data-placement="left" title="Expulser <%= user.pseudo%>" data-confirm="Etes vous sûr de vouloir expulser <%= user.pseudo %> ? Ce dernier n'aura plus accès au groupe">
+      <span class="fa fa-close"></span>
     </a>
   <% end %>
 </div>

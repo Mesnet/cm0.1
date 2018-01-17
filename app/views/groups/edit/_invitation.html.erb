@@ -11,7 +11,7 @@
     </a>
   <%- elsif @group.cached_invitations.include?(user) %>
     <a class="my_btn_del" href="/groups/<%=@group.id%>/uninvit?userid=<%=user.id%>" data-method="patch" data-remote="true" data-toggle="tooltip" data-placement="left" title="Annuler l'invitation">
-      <span class="fa fa-trash"></span>
+      <span class="fa fa-close"></span>
     </a>
   <% else %>
     <a class="my_btn_info" href="/groups/<%=@group.id%>/invit?userid=<%=user.id%>" data-method="patch" data-remote="true" data-toggle="tooltip" data-placement="left" title="Envoyer une invitation">

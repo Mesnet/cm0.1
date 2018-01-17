@@ -14,7 +14,7 @@ class PagesController < ApplicationController
 
   def show_invit
     respond_to do |format|
-      format.js { render 'pages/invit/show_invit' }
+      format.js { render 'pages/invit/show' }
     end
   end
   
