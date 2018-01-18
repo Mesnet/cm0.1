@@ -15,6 +15,7 @@ class CompanyUser < ApplicationRecord
       user = User.find_by(email: self.email)
       if user != nil
         self.user_id = user.id
+        user.update(pend_invit: (user.pend_invit += 1))
       end
     end
   end

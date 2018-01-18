@@ -1,9 +1,24 @@
-$('#invit_iter<%=@company.id%>').slideUp();
+$('#company_invit_iter<%=@company.id%>').slideUp();
 if('<%=@idz%>' == 1 ){
+  //Accept Request (registration)
   $('#my_companies_area').append("<%=  j render partial: 'companies/item', locals: {company: @company} %>");
   $('#company_iter<%=@company.id%>').hide();
   $('#company_iter<%=@company.id%>').slideDown();
   if('<%=@idy%>' == 1 ){
+    // First Request (Display next step btn)
     $('#next_step_btn').html('<a href="/info_step/?step=3" class="btn btn-success pull-right"data-remote="true"data-method="patch">Suivant</a>')
   }
+} else if('<%=@idz%>' == 2 ){
+  //Accept Request (notification)
+  // Open the list
+  var list = ('#item_list1')
+  $('.item_list_body').not(list).slideUp();
+  $(list).slideDown();
+  // Append the new element
+  $(list).append("<%=  j render partial: 'groups/group', locals: {group: @group} %>");
+  $('#group_iter<%=@group.id%>').hide();
+  $('#group_iter<%=@group.id%>').slideDown();
+  // Scroll Bottom
+  var height = $(list)[0].scrollHeight;
+  $(list).scrollTop(height);
 }

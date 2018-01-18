@@ -62,6 +62,7 @@ class User < ApplicationRecord
 
   def assign_elements
     CompanyUser.where(email: self.email).update(user_id: self.id)
+    self.update(pend_invit: CompanyUser.where(email: self.email).size)
   end
 
   def default_value

@@ -12,6 +12,7 @@ class CompaniesController < ApplicationController
           # Delete the company
           @company.destroy
           if current_user.companies.size == 0
+            # User have to remake his registration
             current_user.update(company: false)
             format.js {render inline: "location.reload();" }
           else 
@@ -24,8 +25,11 @@ class CompaniesController < ApplicationController
       else
         # Quit the company
         current_user.company_users.where(company: @company).delete_all
+        @groups = @company.groups
+        current_user.group_users.where(group_id: @groups).delete_all
         @company.update(effectif: (@company.effectif -= 1))
         if current_user.companies.size == 0
+          # User have to remake his registration
           current_user.update(company: false)
           format.js {render inline: "location.reload();" }
         else 
@@ -80,6 +84,7 @@ class CompaniesController < ApplicationController
       if current_user.cached_company_invitations.include?(@company)
         current_user.company_users.where(user: current_user).update(invitation: false, participation: true)
         @company.update(effectif: (@company.effectif += 1))
+        current_user.update(pend_invit: (current_user.pend_invit -= 1))
         @group = @company.groups.first
         @group_user = @group.group_users.where(user: current_user).first_or_create
         @group_user.update(participation: true, favorit: true)
@@ -87,7 +92,11 @@ class CompaniesController < ApplicationController
           current_user.update(company: true)
           @idy = 1
         end
-        @idz = 1
+        if params[:home]
+          @idz = 2
+        else
+          @idz = 1
+        end
         format.js { render "companies/js/rep_invit"}
       else 
         format.js {render inline: "location.reload();" }
@@ -108,6 +117,10 @@ class CompaniesController < ApplicationController
 
   def del_invit
     @cu = @company.company_users.find(params[:invitid])
+    if @cu.user_id.present? && @cu.invitation?
+      user = User.find(@cu.user_id)
+      user.update(pend_invit: (current_user.pend_invit -= 1))
+    end
     @cu.destroy
     respond_to do |format|
       format.js { render "companies/js/del_invit"}

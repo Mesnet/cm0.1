@@ -27,6 +27,9 @@
               <a data-toggle="tab">
                 <i class="fa fa-building-o" id="fa_icons"></i>
                 Company
+                <%- if current_user.cached_company_invitations.any? %>
+                (<%=current_user.cached_company_invitations.count%>)
+                <% end %>
               </a>
             </li>
           </ul>
@@ -54,7 +57,15 @@
               <% end %>
             </div>
             <div class="item">
-              3
+              <%- if current_user.cached_company_invitations.any? %>
+                <div class="my_area" id="my_invitations_event_area">
+                  <% current_user.cached_company_invitations.each do |company| %>
+                    <%= render 'pages/invit/company', company: company %>
+                  <% end%>
+                </div>
+              <% else %>
+                <h5 class='message_alert'><i class='fa fa-exclamation-triangle'></i>&emsp;Aucunes invitations en attente</h5>
+              <% end %>
             </div>
           </div>
         </div>

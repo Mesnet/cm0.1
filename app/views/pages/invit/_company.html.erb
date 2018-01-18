@@ -1,0 +1,11 @@
+<div class="my_item" id="company_invit_iter<%=company.id%>">
+  <div class="my_item_name">
+    <%=company.name%>
+  </div>
+  <a href="/companies/<%=company.id%>/acc_invit?home=true" data-method="patch" data-remote="true" class="my_btn_val">
+    <i class="fa fa-check"></i>
+  </a>
+  <a href="/companies/<%=company.id%>/den_invit" data-method="patch" data-remote="true" class="my_btn_del">
+    <i class="fa fa-close"></i>
+  </a>
+</div>
