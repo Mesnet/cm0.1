@@ -10,13 +10,13 @@ class GroupsController < ApplicationController
 
   #Other
     def other_groups
-      @groups = @groups_in
-      render "groups/other/private"
+      @groups = @groups_in.paginate(:per_page => 3, :page => params[:page])
+      render "groups/other/page"
     end
 
     def other_groups_out
-      @groups = (Group.findable) - @groups_in - @my_groups
-      render "groups/other/public"
+      @groups = ((Group.findable) - @groups_in - @my_groups).paginate(:per_page => 3, :page => params[:page])
+      render "groups/other/page"
     end
 
     def join

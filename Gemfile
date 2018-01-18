@@ -20,6 +20,7 @@ gem 'devise'
 gem 'rails_admin'
 gem 'cocoon'
 gem 'dalli'
+gem 'will_paginate-bootstrap'
 
 # Style
 gem 'bootstrap-sass'
@@ -36,6 +37,11 @@ gem 'chosen-rails'
 gem 'jquery-timepicker-rails'
 gem 'bootstrap-multiselect-rails'
 gem 'geocoder'
+
+# Performance test 
+gem 'rack-mini-profiler'
+
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
