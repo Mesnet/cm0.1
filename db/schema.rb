@@ -61,9 +61,8 @@ ActiveRecord::Schema.define(version: 20180111130727) do
     t.string "name"
     t.text "description"
     t.integer "cat"
-    t.integer "effectif", default: 0
+    t.integer "effectif"
     t.integer "pend_req", default: 0
-    t.boolean "open", default: false
     t.integer "user_id"
     t.integer "company_id"
     t.datetime "created_at", null: false
