@@ -10,13 +10,13 @@ class GroupsController < ApplicationController
 
   #Other
     def other_groups
-      @groups = @groups_in.paginate(:per_page => 3, :page => params[:page])
-      render "groups/other/page"
+      @groups = (Group.where(company: @companies).findable.search(params[:search]).order(effectif: :desc) - @my_groups).paginate(:per_page => 3, :page => params[:page])
+      render "groups/other/private"
     end
 
     def other_groups_out
-      @groups = ((Group.findable) - @groups_in - @my_groups).paginate(:per_page => 3, :page => params[:page])
-      render "groups/other/page"
+      @groups = ((Group.findable.search(params[:search]).order(effectif: :desc)) - Group.where(company: @companies).findable - @my_groups).paginate(:per_page => 3, :page => params[:page])
+      render "groups/other/public"
     end
 
     def join
@@ -267,7 +267,6 @@ class GroupsController < ApplicationController
     def my_other_groups
       @companies = current_user.companies
       @my_groups = current_user.favgroups + current_user.unfavgroups + current_user.cached_group_invitations
-      @groups_in = Group.where(company: @companies).findable - @my_groups
     end
 
     def autorization

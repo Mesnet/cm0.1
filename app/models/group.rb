@@ -24,6 +24,14 @@ class Group < ApplicationRecord
   def cached_admins
     Rails.cache.fetch([self, "admins"]) {(group_users.participate.admin.includes(:user).map(&:user)).to_a}
   end
+
+  def self.search(search)
+    if search
+      findable.where('name LIKE ?', "%#{search}%")
+    else
+      findable
+    end
+  end
   
 
   protected 

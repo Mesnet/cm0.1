@@ -1,0 +1,6 @@
+<div id="groups_out">
+  <% @groups.each do |group| %>
+    <%= render 'groups/other/group', group: group %>
+  <% end %>
+  <%= will_paginate @groups, renderer: BootstrapPagination::Rails %>
+</div>

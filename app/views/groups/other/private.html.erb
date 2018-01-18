@@ -1,0 +1,31 @@
+<div style="text-align: -webkit-center;">
+  <h4>Rejoindre un groupe</h4>
+    <a class="btn btn-success btn_nav_group" href="/other_groups" data-toggle="tooltip" data-placement="bottom"  title="Groupes affectés à vos entreprises">Groupes privés</a>
+    <a class="btn btn-default btn_nav_group" href="/other_groups_out" data-toggle="tooltip" data-placement="bottom"  title="Groupes non-affectés à une entreprise">Groupes publics</a>
+  <div class="my_area other_groups_area" id="other_groups">
+    <%= form_tag other_groups_path, :method => 'get', :id => 'products_private_search' do %>
+      <p>
+        <%= text_field_tag :search, params[:search] %>
+        <%= submit_tag "Search", :name => nil %>
+      </p>
+    <% end %>
+    <%- if @groups.any? %>
+      <%= render 'groups/other/groups' %>
+    <% else %>
+      <h5>Aucun groupes</h5>
+    <% end %>
+  </div>
+  <script>
+    $(document).ready(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+      $('.pagination a').click(function(){
+        $.getScript(this.href);
+        return false;
+      });
+      $('#products_private_search input').keyup(function(){
+        $.get($('#products_private_search').attr("action"), $('#products_private_search').serialize(), null, "script");
+        return false;
+      });
+    });
+  </script>
+</div>
