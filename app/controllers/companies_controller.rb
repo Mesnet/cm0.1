@@ -150,6 +150,7 @@ class CompaniesController < ApplicationController
   def update
     respond_to do |format|
       if @company.update(company_params)
+        @company.groups.first.update(name: @company.name)
         format.js { render "companies/js/update" }
       else
         format.html { render redirect_back }

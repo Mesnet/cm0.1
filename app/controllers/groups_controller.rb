@@ -39,6 +39,14 @@ class GroupsController < ApplicationController
             #User not invited -> Send a request
             @gu.update(request: true)
             @group.update(pend_req: (@group.pend_req += 1))
+            #Company access secure
+            if @group.company.present?
+              unless @group.company.cached_users.include?(current_user)
+                @gu.destroy
+                @group.update(pend_req: (@group.pend_req -= 1))
+              end
+            end
+            #/Company access secure
             format.js { render 'groups/other/update' }
           end
         end
@@ -162,6 +170,14 @@ class GroupsController < ApplicationController
             @gu = @group.group_users.where(user: @user).first_or_create
             @gu.update(invitation: true)
             @user.update(pend_invit: (@user.pend_invit += 1))
+            #Company access secure
+            if @group.company.present?
+              unless @group.company.cached_users.include?(@user)
+                @gu.destroy
+                @user.update(pend_invit: (@user.pend_invit -= 1))
+              end
+            end
+            #/Company access secure
           else 
             @idz = 1
           end
@@ -215,10 +231,15 @@ class GroupsController < ApplicationController
     def create
       respond_to do |format|
         @group = Group.new(group_params)
+        #Company access secure
         if @group.company.present?
           unless @group.company.cached_users.include?(current_user)
             @group.destroy
           end
+        end
+        #/Company access secure
+        unless @group.cat.present?
+          @group.cat == 3
         end
         @group.update(user_id: current_user.id)
         if @group.save

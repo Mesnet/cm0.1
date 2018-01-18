@@ -2,3 +2,5 @@
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
 # Examples:
+
+User.create!(admin: true, email: 'admin@cm.com', password:'jesuisleboss', password_confirmation: 'jesuisleboss')
