@@ -1,23 +1,22 @@
 class GroupsController < ApplicationController
   before_action :authenticate_user!
   before_action :have_company, only: [:index, :show, :taskboard, :calendar, :cloud]
-  before_action :enable_nav, only: [:index, :show, :taskboard, :calendar, :cloud]
-  before_action :set_group, except: [:index, :show_new_group, :show_more_group, :show_fav_group, :create]
-  before_action :autorization, except: [:index, :show_new_group, :show_more_group, :show_fav_group, :create, :join, :unjoin, :acc_invit, :den_invit]
+  before_action :enable_nav, only: [:index, :other_groups, :other_groups_out, :show, :taskboard, :calendar, :cloud]
+  before_action :my_other_groups, only: [:other_groups , :other_groups_out]
+  before_action :set_group, except: [:index, :show_new_group, :other_groups, :other_groups_out, :show_fav_group, :create]
+  before_action :autorization, except: [:index, :show_new_group, :other_groups, :other_groups_out, :show_fav_group, :create, :join, :unjoin, :acc_invit, :den_invit]
   before_action :aministrator, only: [:update, :destroy, :expel, :upd_role, :acc_req, :den_req, :invit, :uninvit]
   before_action :set_user, only: [:expel, :upd_role, :acc_req, :den_req, :invit, :uninvit]
 
   #Other
-    def show_more_group
-      respond_to do |format|
-        #Groups from my company
-        @companies = current_user.companies
-        @my_groups = current_user.favgroups + current_user.unfavgroups + current_user.cached_group_invitations
-        @groups_in = Group.where(company: @companies).findable - @my_groups
-        #Other groups
-        @groups_out = (Group.findable) - @groups_in - @my_groups
-        format.js { render 'groups/other/show' }
-      end
+    def other_groups
+      @groups = @groups_in
+      render "groups/other/private"
+    end
+
+    def other_groups_out
+      @groups = (Group.findable) - @groups_in - @my_groups
+      render "groups/other/public"
     end
 
     def join
@@ -264,6 +263,12 @@ class GroupsController < ApplicationController
     end
   
   private
+
+    def my_other_groups
+      @companies = current_user.companies
+      @my_groups = current_user.favgroups + current_user.unfavgroups + current_user.cached_group_invitations
+      @groups_in = Group.where(company: @companies).findable - @my_groups
+    end
 
     def autorization
       unless @group.cached_users.include?(current_user)

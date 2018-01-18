@@ -31,7 +31,8 @@ Rails.application.routes.draw do
     resources :group_users, path: :users, module: :groups
   end
 
-  patch "show_more_group" => "groups#show_more_group"
+  get "other_groups" => "groups#other_groups"
+  get "other_groups_out" => "groups#other_groups_out"
   patch "show_new_group" => "groups#show_new_group"
   patch "show_fav_group" => "groups#show_fav_group"
 

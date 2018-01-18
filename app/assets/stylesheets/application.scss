@@ -237,8 +237,18 @@
   }
 }
 
-.info_btn{
-  
+.btn_nav_group{
+  border-radius: 0;
+  border-color: #ccc0;;
+  box-shadow: rgba(0, 0, 0, 0.3) 1px 1px 1px;
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 0px;
+  }
+}
+
+.other_groups_area{
+  max-width: 600px;
+  margin-top: 10px;
 }
 
 .well_content_area{

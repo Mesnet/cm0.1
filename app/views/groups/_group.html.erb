@@ -20,33 +20,35 @@
     <% end %>
   <% end %>
   <br>
-  <script>
-    $(document).ready(function () {
-      $('[data-toggle="tooltip"]').tooltip()
-      if($('.sidenav').hasClass("open")){
-        $('.group_icon').hide();
-        $('.group_name, .sidenav_btn_edit, .sidenav_btn_request').show();
-      } else {
-        $('.group_icon').show();
-        $('.group_name, .sidenav_btn_edit, .sidenav_btn_request').hide();
-      }
-      var pathname = window.location.pathname
-      var group = pathname.split("/")[2]
-      // Active links
-      if(pathname == '/groups/<%=group.id%>' || pathname == '/groups/<%=group.id%>/taskboard' || pathname == '/groups/<%=group.id%>/calendar') {
-        $('#group_link<%=group.id%>').addClass('active');
-      }
-      // href route
-      if(pathname == '/' || pathname == '/groups/'+group){
-        $('#group_link<%=group.id%>').attr('href', '/groups/<%=group.id%>');
-      }
-      else if(pathname == '/tasks' || pathname == '/groups/'+group+'/taskboard'){
-        $('#group_link<%=group.id%>').attr('href', '/groups/<%=group.id%>/taskboard');
-      }
-      else if(pathname == '/events' || pathname == '/groups/'+group+'/calendar'){
-        $('#group_link<%=group.id%>').attr('href', '/groups/<%=group.id%>/calendar');
-      }
+  <% cache [group, 'group_script'] do %>
+    <script>
+      $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+        if($('.sidenav').hasClass("open")){
+          $('.group_icon').hide();
+          $('.group_name, .sidenav_btn_edit, .sidenav_btn_request').show();
+        } else {
+          $('.group_icon').show();
+          $('.group_name, .sidenav_btn_edit, .sidenav_btn_request').hide();
+        }
+        var pathname = window.location.pathname
+        var group = pathname.split("/")[2]
+        // Active links
+        if(pathname == '/groups/<%=group.id%>' || pathname == '/groups/<%=group.id%>/taskboard' || pathname == '/groups/<%=group.id%>/calendar') {
+          $('#group_link<%=group.id%>').addClass('active');
+        }
+        // href route
+        if(pathname == '/' || pathname == '/groups/'+group || pathname == "/other_groups" || pathname == '/other_groups_out'){
+          $('#group_link<%=group.id%>').attr('href', '/groups/<%=group.id%>');
+        }
+        else if(pathname == '/tasks' || pathname == '/groups/'+group+'/taskboard'){
+          $('#group_link<%=group.id%>').attr('href', '/groups/<%=group.id%>/taskboard');
+        }
+        else if(pathname == '/events' || pathname == '/groups/'+group+'/calendar'){
+          $('#group_link<%=group.id%>').attr('href', '/groups/<%=group.id%>/calendar');
+        }
 
-    });
-  </script>
+      });
+    </script>
+  <% end %>
 </div>

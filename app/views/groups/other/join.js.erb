@@ -2,6 +2,12 @@ $('#other_group<%=@group.id%>').slideUp();
 $('#item_list2').append("<%=  j render partial: 'groups/group', locals: {group: @group} %>");
 $('#group_iter<%=@group.id%>').hide();
 $('#group_iter<%=@group.id%>').slideDown();
+$('#group_detail_area<%=@group.id%>').slideUp();
+$('#group_users_area<%=@group.id%>').slideUp();
+// Open the list
+var list = ('#item_list2')
+$('.item_list_body').not(list).slideUp();
+$(list).slideDown();
 // Scroll Bottom
 var height = $(list)[0].scrollHeight;
 $(list).scrollTop(height);

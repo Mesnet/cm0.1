@@ -1,0 +1,16 @@
+<div style="text-align: -webkit-center;">
+<div class="my_area other_groups_area">
+  <%- if @groups.any? %>
+    <% @groups.each do |group| %>
+      <%= render 'groups/other/group', group: group %>
+    <% end %>
+  <% else %>
+    <h5>Aucuns autres groupes</h5>
+  <% end %>
+</div>
+</div>
+<script>
+  $(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  });
+</script>

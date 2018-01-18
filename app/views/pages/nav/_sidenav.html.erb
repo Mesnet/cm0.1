@@ -45,8 +45,8 @@
     <% end %>
   </div>
   <% cache [current_user.id, 'groups_footer'] do %>
-    <a href="/show_more_group" data-method="patch" data-remote="true" class="link_sidenav">
-      <div class="item_sn">
+    <a href="/other_groups"class="link_sidenav">
+      <div class="item_sn" id="sn_item_other">
         <span class="fa fa-building" style='padding-left: 3px;'></span>
         Autres Groupes
       </div>
@@ -69,9 +69,12 @@
 
         } else if(pathname == '/groups/<%=current_user.cached_mygroupid%>' || pathname == '/groups/<%=current_user.cached_mygroupid%>/taskboard' || pathname == '/groups/<%=current_user.cached_mygroupid%>/calendar' || pathname == '/groups/<%=current_user.cached_mygroupid%>/cloud'){
           $('#sn_item_personal').addClass('active');
+
+        } else if(pathname == "/other_groups" || pathname == '/other_groups_out'){
+          $('#sn_item_other').addClass('active');
         }
         // href route
-        if(pathname == '/' || pathname == '/groups/'+group){
+        if(pathname == '/' || pathname == '/groups/'+group || pathname == "/other_groups" || pathname == '/other_groups_out'){
           $('#sn_item_link_general').attr('href', '/');
           $('#sn_item_link_personal').attr('href', '/groups/<%=current_user.cached_mygroupid%>');
         }
