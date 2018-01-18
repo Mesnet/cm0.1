@@ -38,6 +38,7 @@ gem 'jquery-timepicker-rails'
 gem 'bootstrap-multiselect-rails'
 gem 'geocoder'
 
+
 # Performance test 
 gem 'rack-mini-profiler'
 
