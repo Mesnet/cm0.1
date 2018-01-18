@@ -1,0 +1,16 @@
+<div class='element_new_post' id="element_iter<%=element.id%>">
+  <%- if element.cat == 1 %>
+  <% elsif element.cat == 2 %>
+    <a href="/elm_upd?elmid=<%=element.id%>" data-method="patch" data-remote="true" class='element_title' data-toggle="tooltip" data-placement="top" title="<%= element.question.title%>">
+     Question
+    </a>
+    <a href="/elm_del?elmid=<%=element.id%>" class="fa fa-close element_new_post_delete" data-method="patch" data-remote="true" data-confirm="Etes vous sur de vouloir supprimer ce sondage ?"></a>
+  <% elsif element.cat == 3 %>
+  <% elsif element.cat == 4 %>
+  <% end %>
+  <script>
+    $(document).ready(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    });
+  </script>
+</div>

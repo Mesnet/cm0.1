@@ -3,10 +3,56 @@ class GroupsController < ApplicationController
   before_action :have_company, only: [:index, :show, :taskboard, :calendar, :cloud]
   before_action :enable_nav, only: [:index, :other_groups, :other_groups_out, :show, :taskboard, :calendar, :cloud]
   before_action :my_other_groups, only: [:other_groups , :other_groups_out]
-  before_action :set_group, except: [:index, :show_new_group, :other_groups, :other_groups_out, :show_fav_group, :create]
-  before_action :autorization, except: [:index, :show_new_group, :other_groups, :other_groups_out, :show_fav_group, :create, :join, :unjoin, :acc_invit, :den_invit]
+  before_action :set_group, except: [:index, :show_new_group, :create, :show_fav_group, :other_groups, :other_groups_out, :elm_upd, :elm_del]
+  before_action :autorization, except: [:index, :create, :show_new_group, :show_fav_group, :join, :unjoin, :acc_invit, :den_invit, :other_groups, :other_groups_out, :elm_upd, :elm_del]
   before_action :aministrator, only: [:update, :destroy, :expel, :upd_role, :acc_req, :den_req, :invit, :uninvit]
   before_action :set_user, only: [:expel, :upd_role, :acc_req, :den_req, :invit, :uninvit]
+  before_action :set_element, only: [:elm_upd, :elm_del]
+
+  #NewPostElements
+  def new_element
+    respond_to do |format|
+      if params[:idz] == '1'
+        format.js { render 'documents/elm/new' }
+      elsif params[:idz] == '2'
+        format.js { render 'questions/elm/new' }
+      elsif params[:idz] == '3'
+        format.js { render 'tasks/elm/new' }
+      elsif params[:idz] == '4'
+        format.js { render 'events/elm/new' }
+      end 
+    end
+  end
+
+  def elm_upd
+    respond_to do |format|
+      if @element.cat == 1
+        format.js { render 'documents/elm/update' }
+      elsif @element.cat == 2
+        @question = @element.question
+        format.js { render 'questions/elm/update' }
+      elsif @element.cat == 3
+        format.js { render 'tasks/elm/update' }
+      elsif @element.cat == 4
+        format.js { render 'events/elm/update' }
+      end 
+    end
+  end
+
+  def elm_del
+    if @element.cat == 2
+      @element.question.destroy
+    end
+    @element.destroy
+    respond_to do |format|
+      format.js { render 'posts/elm_del' }
+    end
+  end
+
+
+  def show
+    @elements = @group.elements.where(user: current_user).empty
+  end
 
   #Other
     def other_groups
@@ -271,10 +317,7 @@ class GroupsController < ApplicationController
       end
     end
 
-  #Basics
-
-    def show 
-    end
+  #Delete
 
     def destroy
       @group.destroy
@@ -313,6 +356,13 @@ class GroupsController < ApplicationController
 
     def set_user
       @user = User.find(params[:userid])
+    end
+
+    def set_element
+      @element = Element.find(params[:elmid])
+      unless @element.user.id == current_user.id
+        redirect_to root_path
+      end
     end
 
     def group_params

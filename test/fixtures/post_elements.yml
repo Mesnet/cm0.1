@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  post: one
+  group: one
+  cat: 1
+  question: one
+  task: one
+  event: one
+
+two:
+  post: two
+  group: two
+  cat: 1
+  question: two
+  task: two
+  event: two

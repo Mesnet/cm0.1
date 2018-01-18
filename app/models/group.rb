@@ -5,6 +5,9 @@ class Group < ApplicationRecord
   has_many :group_users, dependent: :destroy
   has_many :users, through: :group_users
 
+  has_many :posts, dependent: :destroy
+  has_many :elements, dependent: :destroy
+
   scope :findable, -> {where(cat: [3, 4])}
   scope :perso, -> { where(cat: 2) }
 

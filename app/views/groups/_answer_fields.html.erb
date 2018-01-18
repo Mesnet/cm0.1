@@ -1,0 +1,10 @@
+<div class="form-inline" id="nested_fields_question">
+  <div class="nested-fields">
+    <%= f.text_field :title, class: "form-input form-control", id: "nested_field_question", placeholder: "Réponse" %>
+    <%= link_to_remove_association f do %>
+      <div class="btn btn-danger" id="btn_rem_answer" >
+        <i class="fa fa-close"></i>
+      </div>
+    <% end %>
+  </div>
+</div>

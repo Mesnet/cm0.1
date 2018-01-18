@@ -1,0 +1,4 @@
+$('.MyUpdElm').modal('hide');
+$('#element_iter<%=@element.id%>').replaceWith("<%= j render partial: 'posts/element', locals: {element: @element} %>");
+$('#element_iter<%=@element.id%>').hide();
+$('#element_iter<%=@element.id%>').fadeIn();

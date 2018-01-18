@@ -13,6 +13,9 @@ class User < ApplicationRecord
   has_many :group_users, dependent: :destroy
   has_many :groups, through: :group_users
 
+  has_many :posts, dependent: :destroy
+  has_many :elements, dependent: :destroy
+
   #Cache for company system
   def cached_company_invitations
     Rails.cache.fetch([self, "cached_company_invitations"]) {(company_users.invited.includes(:company).map(&:company)).to_a}

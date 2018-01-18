@@ -1,29 +1,31 @@
 Rails.application.routes.draw do
+  resources :questions
+  # POSTS
+  resources :posts
+
+  patch "new_post_question" => "posts#new_question"
+  patch "new_post_task" => "posts#new_task"
+  patch "new_post_event" => "posts#new_event"
 
   # GROUPS
   resources :groups do 
     member do 
       patch :fav
       patch :unfav
-
       patch :editor
       patch :upd_role
-
       patch :join
       patch :unjoin 
       patch :quit
       patch :expel
-
       patch :acc_req
       patch :den_req
-      
       patch :invit 
       patch :uninvit
       patch :acc_invit
       patch :den_invit
-
+      patch :new_element
       patch :show_done_tasks
-
       get :taskboard
       get :calendar
       get :cloud
@@ -31,6 +33,8 @@ Rails.application.routes.draw do
     resources :group_users, path: :users, module: :groups
   end
 
+  patch "elm_upd" => "groups#elm_upd"
+  patch "elm_del" => "groups#elm_del"
   get "other_groups" => "groups#other_groups"
   get "other_groups_out" => "groups#other_groups_out"
   patch "show_new_group" => "groups#show_new_group"

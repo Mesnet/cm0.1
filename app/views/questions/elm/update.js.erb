@@ -1,0 +1,3 @@
+$('#EditQuestionPost<%=@question.id%>').remove();
+$('body').prepend("<%= j render partial: 'questions/elm/update' %>");
+$('#EditQuestionPost<%=@question.id%>').modal('toggle');

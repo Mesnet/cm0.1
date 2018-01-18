@@ -1,0 +1,62 @@
+<div id='NewQuestionPost' class='modal fade' role='dialog'>
+  <div class="modal-dialog">
+    <div class='content'>
+      <div class="modal-header">
+        <h4>Nouveau sondage</h4>
+      </div>
+      <div class='form_new_post_question'>
+        <%= simple_form_for(Question.new, remote: true) do |f| %>
+          <div class="modal-body">
+
+            <div class="area_flex">
+              <%= f.text_field :title, label: false, class: "form-control", placeholder: "Posez votre question" %>
+              <!-- Multiple btn -->
+              <div class="btn btn-default toggle_choices_question1">
+                Une seule réponse
+              </div>
+              <div class="btn btn-default toggle_choices_question2" >
+                Plusieurs réponses
+              </div>
+              <%= f.hidden_field :multiple %>
+              <script>
+                $(document).ready(function () {
+                  $('.toggle_choices_question1').on('click', function (event) {
+                    $('.toggle_choices_question1').hide();
+                    $('.toggle_choices_question2').toggle();
+                    $('#question_multiple').val(true)
+                  });
+                  $('.toggle_choices_question2').on('click', function (event) {
+                    $('.toggle_choices_question2').hide();
+                    $('.toggle_choices_question1').toggle();
+                    $('#question_multiple').val(false)
+                  });
+                });
+              </script>
+              <!-- /Multiple btn -->
+              
+            </div>
+            <div id="answers">
+              <%= f.simple_fields_for :answers do |answer| %>
+                <%= render 'groups/answer_fields', f: answer %>
+              <% end %>
+              <div class='btn_add_more_response'>
+                <%= link_to_add_association f, :answers, class: "btn_add_answer"  do %>
+                  <i class="fa fa-plus"></i>
+                  Ajouter une réponse
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <%- if @post.present? %>
+            <%= hidden_field_tag(:postid, @post) %>
+          <% end %>
+          <%= f.hidden_field :group_id, :value => @group.id %>
+          <div class="modal-footer">
+            <a data-dismiss="modal" class="btn btn-danger pull-left">Annuler</a>
+            <%= f.button :submit, "Créer", class: "btn btn-success pull-right"%>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

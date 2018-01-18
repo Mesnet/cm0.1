@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180111130727) do
+ActiveRecord::Schema.define(version: 20180118203108) do
+
+  create_table "answers", force: :cascade do |t|
+    t.string "title"
+    t.integer "vote", default: 0
+    t.integer "question_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_answers_on_question_id"
+  end
 
   create_table "companies", force: :cascade do |t|
     t.string "name"
@@ -41,6 +50,20 @@ ActiveRecord::Schema.define(version: 20180111130727) do
     t.index ["user_id"], name: "index_company_users_on_user_id"
   end
 
+  create_table "elements", force: :cascade do |t|
+    t.integer "cat"
+    t.integer "group_id"
+    t.integer "post_id"
+    t.integer "user_id"
+    t.integer "question_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_elements_on_group_id"
+    t.index ["post_id"], name: "index_elements_on_post_id"
+    t.index ["question_id"], name: "index_elements_on_question_id"
+    t.index ["user_id"], name: "index_elements_on_user_id"
+  end
+
   create_table "group_users", force: :cascade do |t|
     t.integer "group_id"
     t.integer "user_id"
@@ -68,6 +91,27 @@ ActiveRecord::Schema.define(version: 20180111130727) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["company_id"], name: "index_groups_on_company_id"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.integer "group_id"
+    t.integer "user_id"
+    t.string "title"
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_posts_on_group_id"
+    t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.string "title"
+    t.integer "voters", default: 0
+    t.boolean "multiple", default: false
+    t.integer "group_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_questions_on_group_id"
   end
 
   create_table "user_infos", force: :cascade do |t|
@@ -103,6 +147,17 @@ ActiveRecord::Schema.define(version: 20180111130727) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "votes", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "question_id"
+    t.integer "answer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["answer_id"], name: "index_votes_on_answer_id"
+    t.index ["question_id"], name: "index_votes_on_question_id"
+    t.index ["user_id"], name: "index_votes_on_user_id"
   end
 
 end
