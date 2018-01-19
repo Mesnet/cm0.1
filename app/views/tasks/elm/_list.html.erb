@@ -1,1 +1,34 @@
-list
+<div class="my_area">
+  <div class="new_post_task_list scrollable_area">
+    <% @group.tasks.undone.each do |task| %>
+      <%= render 'tasks/elm/task', task: task %>
+    <% end %>
+  </div>
+  <a class="my_btn_info sh_done_t_btn">
+    <i class="fa fa-plus" id="fa_icons"></i>
+    Tâches terminées
+  </a>
+  <a class="my_btn_info hd_done_t_btn">
+    <i class="fa fa-close" id="fa_icons"></i>
+    Fermer
+  </a>
+  <div class="done_task_list scrollable_area">
+    <% @group.tasks.done.each do |task| %>
+      <%= render 'tasks/elm/task', task: task %>
+    <% end %>
+  </div>
+  <script>
+    $(document).ready(function () {
+      $('.done_task_list').hide();
+      $('.hd_done_t_btn').css('display', 'block');
+      $('.hd_done_t_btn').hide();
+      $('.hd_done_t_btn, .sh_done_t_btn').on('click', function (event) {
+        $('.hd_done_t_btn, .sh_done_t_btn').toggle();
+        $('.done_task_list').slideToggle();
+      });
+    });
+  </script>
+</div>
+<div class="modal-footer">
+  <a data-dismiss="modal" class="btn btn-danger pull-left">Annuler</a>
+</div>

@@ -1,8 +1,28 @@
 class TasksController < ApplicationController
   before_action :set_task, except: [:create]
 
-  # POST /tasks
-  # POST /tasks.json
+  def post_select
+    respond_to do |format|
+      @group = Group.find(params[:groupid])
+      if @group.cached_users.include?(current_user)
+        #Group Secure
+        @element = Element.create(group: @group, user: current_user, cat: 3, task: @task)
+        format.js {render 'posts/elm_new'}
+      end
+    end
+  end 
+
+  def post_change
+      respond_to do |format|
+      @element = Element.find(params[:elmid])
+      if @element.user == current_user
+        #Element Secure
+        @element.update(task_id: @task.id)
+        format.js {render 'posts/elm_upd'}
+      end
+    end
+  end
+
   def create
     respond_to do |format|
       @group = Group.find(params[:groupid])

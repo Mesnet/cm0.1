@@ -1,0 +1,30 @@
+<div id="task_iter<%=task.id%>">
+  <%- if @element.present? && task == @element.task %>
+  <div class="task_s">
+  <% else %>
+  <div class="task">
+  <% end %>
+  <%- if @element.present? && task != @element.task %>
+    <%- if @post.present? %>
+      <a class="task_content" href="/tasks/<%=task.id%>/post_change?postid=<%=@post%>&elmid=<%=@element.id%>" data-method="patch" data-remote="true" >
+    <% else %>
+      <a class="task_content" href="/tasks/<%=task.id%>/post_change?elmid=<%=@element.id%>" data-method="patch" data-remote="true" >
+    <% end %>
+  <% else %>
+    <%- if @element.present? %>
+      <a class="task_content" >
+    <% else %>
+      <a class="task_content" href="/tasks/<%=task.id%>/post_select?groupid=<%=@group.id%>" data-method="patch" data-remote="true" >
+    <% end %>
+  <% end %>
+      <div class="task_title" style="text-align: left;">
+        <%= task.title %>
+      </div>
+    </a>
+    <%-if task.date.present?%>
+      <div class="task_date">
+        <%= task.date.strftime("%d %b")%>
+      </div>
+    <% end %>
+  </div>
+</div>

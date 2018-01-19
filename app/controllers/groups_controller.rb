@@ -41,6 +41,10 @@ class GroupsController < ApplicationController
         format.js { render 'questions/elm/update' }
       elsif @element.cat == 3
         @task = @element.task
+        @group = @element.group
+        if @element.post.present?
+          @post = @element.post.id
+        end
         format.js { render 'tasks/elm/update' }
       elsif @element.cat == 4
         format.js { render 'events/elm/update' }

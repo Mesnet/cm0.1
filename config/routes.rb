@@ -1,6 +1,19 @@
 Rails.application.routes.draw do
   
-  resources :tasks
+  #TASKS
+  resources :tasks do 
+    member do 
+      patch :post_select
+      patch :post_change
+      patch :done 
+      patch :undone
+      patch :participate
+      patch :unparticipate
+      patch :delparticipate
+      patch :show_sn
+    end
+  end
+
   # QUESTIONS
   resources :questions do 
     member do 
