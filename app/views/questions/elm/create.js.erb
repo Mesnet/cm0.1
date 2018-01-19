@@ -1,11 +1,10 @@
 $('#NewQuestionPost').modal('hide');
-if($('.post_elements').is(':hidden')){
-  $('.post_elements').toggle();
+<%- if @post.nil? %>
+  var post_element = $('#post_elements')
+<% else %>
+  var post_element = $('#post_elements<%=@post.id%>')
+<% end %>
+if(post_element.is(':hidden')){
+  post_element.toggle();
 }
-if('<%=@idz%>' == 1 ){
-  $('#new_post_elements_list<%=@post.id%>').append("<%= j render partial: 'posts/element', locals: {element: @element} %>");
-} else {
-  $('#new_post_elements_list').append("<%= j render partial: 'posts/element', locals: {element: @element} %>");
-}
-$('#element_iter<%=@element.id%>').hide();
-$('#element_iter<%=@element.id%>').fadeIn('slow');
+post_element.find('.new_post_elements_list').append("<%= j render partial: 'posts/element', locals: {element: @element} %>");

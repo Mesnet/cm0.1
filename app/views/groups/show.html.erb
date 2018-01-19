@@ -24,10 +24,10 @@
 </div> 
 <!-- /New Post -->
 
-  <div id="posts">
-    <% @posts.each do |post| %>
-      <% cache post do %>
-        <%= render 'posts/post', post: post %>
-      <% end %>
+<div id="posts">
+  <% @posts.each do |post| %>
+    <% cache post do %>
+      <%= render 'posts/post', post: post %>
     <% end %>
-  </div>
+  <% end %>
+</div>

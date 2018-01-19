@@ -1,0 +1,6 @@
+$('#post_update<%=@post.id%>').slideUp();
+$('#close_upd_btn<%=@post.id%>').toggle();
+$('#drop_menu_post<%=@post.id%>').toggle();
+$('#post_body<%= @post.id%>').replaceWith("<%= j render partial: 'posts/content', locals: {post: @post} %>");
+$('#post_body<%=@post.id%>').hide();
+$('#post_body<%=@post.id%>').slideDown();

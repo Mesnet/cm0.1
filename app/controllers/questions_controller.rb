@@ -8,10 +8,13 @@ class QuestionsController < ApplicationController
         @element = Element.create(group_id: @question.group_id, user: current_user, cat: 2, question_id: @question.id)
         # Update Post
         if params[:postid]
+          @new = false
           @post = Post.find(params[:postid])
           if @post.user.id == current_user.id
             @element.update(post_id: @post.id)
           end
+        else
+          @new = true
         end
         format.js { render 'questions/elm/create' }
       end

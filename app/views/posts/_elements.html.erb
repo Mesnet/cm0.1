@@ -1,18 +1,28 @@
-<%- if elements.any? %>
-  <div class="post_elements" style="display: block">
-    <hr style='margin: 7px;'>
-      <div class="new_post_elements_list">
-        <% elements.each do |e| %>
-          <%= render 'posts/element', element: e%>
-        <% end %>
-      </div>
-    <hr style='margin: 7px; margin-top: 2px;'>
-  </div>
+<%- if post.nil? %>
+<!-- Update Post -->
+<div class="post_elements" id="post_elements">
 <% else %>
-  <div class="post_elements undisplay">
-    <hr style='margin: 7px;'>
-      <div class="new_post_elements_list">
-      </div>
-    <hr style='margin: 7px; margin-top: 2px;'>
-  </div>
+<!-- New Post -->
+<div class="post_elements" id="post_elements<%=post.id%>">
+<% end %>
+  <hr style='margin: 7px;'>
+    <div class="new_post_elements_list">
+      <% elements.each do |e| %>
+        <%= render 'posts/element', element: e%>
+      <% end %>
+    </div>
+  <hr style='margin: 7px; margin-top: 2px;'>
+</div>
+
+<%- unless elements.any? %>
+  <!-- If no element -> hide the space -->
+  <%- if post.nil? %>
+    <script>
+      $('#post_elements').hide();
+    </script>
+  <% else %>
+    <script>
+      $('#post_elements<%=post.id%>').hide();
+    </script>
+  <% end %>
 <% end %>
