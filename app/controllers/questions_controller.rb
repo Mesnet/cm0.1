@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_question, except: [:create]
   before_action :set_answer, only: [:vote, :revote, :unvote]
 

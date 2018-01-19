@@ -1,5 +1,6 @@
 class CompaniesController < ApplicationController
   before_action :authenticate_user!
+  before_action :have_company, only: [:info_step, :company_invit]
   before_action :set_company, except: [:info_step, :create, :new, :company_invit]
   before_action :authorization, except: [:info_step, :create, :new, :company_invit, :acc_invit, :den_invit]
   before_action :administrator, only: [:expel, :show_users, :update, :upd_role, :del_invit]

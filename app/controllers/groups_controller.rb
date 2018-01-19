@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
   before_action :authenticate_user!
-  before_action :have_company, only: [:index, :show, :taskboard, :calendar, :cloud]
+  before_action :have_company, only: [:index, :other_groups, :other_groups_out, :show, :taskboard, :calendar, :cloud]
   before_action :enable_nav, only: [:index, :other_groups, :other_groups_out, :show, :taskboard, :calendar, :cloud]
   before_action :my_other_groups, only: [:other_groups , :other_groups_out]
   before_action :set_group, except: [:index, :show_new_group, :create, :show_fav_group, :other_groups, :other_groups_out, :elm_upd, :elm_del]
@@ -8,6 +8,15 @@ class GroupsController < ApplicationController
   before_action :aministrator, only: [:update, :destroy, :expel, :upd_role, :acc_req, :den_req, :invit, :uninvit]
   before_action :set_user, only: [:expel, :upd_role, :acc_req, :den_req, :invit, :uninvit]
   before_action :set_element, only: [:elm_upd, :elm_del]
+
+  def index
+  end
+
+  def calendar
+  end
+
+  def cloud
+  end
 
   #NewPostElements
   def new_element

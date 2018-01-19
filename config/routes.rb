@@ -96,7 +96,7 @@ Rails.application.routes.draw do
 
   # ROOT
   authenticated :user do
-    root to: "pages#home", as: :authenticated_root
+    root to: "groups#index", as: :authenticated_root
   end
   unauthenticated do
     root 'pages#landing'

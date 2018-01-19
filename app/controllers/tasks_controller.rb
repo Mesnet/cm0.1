@@ -1,5 +1,11 @@
 class TasksController < ApplicationController
-  before_action :set_task, except: [:create]
+  before_action :authenticate_user!
+  before_action :have_company, only: [:index]
+  before_action :enable_nav, only: [:index]
+  before_action :set_task, except: [:create, :index]
+
+  def index
+  end
 
   def post_select
     respond_to do |format|
@@ -88,5 +94,9 @@ class TasksController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
       params.require(:task).permit(:title, :date, :important, :user_ids => [])
+    end
+
+    def enable_nav
+      @enable_nav = true
     end
 end
