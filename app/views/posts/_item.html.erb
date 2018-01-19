@@ -1,1 +1,11 @@
-llz
+<%- if element.cat == 1 %>
+<% elsif element.cat == 2 %>
+  <%= render 'questions/question', question: element.question %>
+<% elsif element.cat == 3 %>
+  <%= render 'tasks/task', task: element.task %>
+<% elsif element.cat == 4 %>
+  <%= render 'events/event', event: element.event %>
+<% end %>
+<%- unless element == element.post.elements.last%>
+  <hr>
+<% end %>

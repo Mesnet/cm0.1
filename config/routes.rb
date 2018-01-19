@@ -1,8 +1,16 @@
 Rails.application.routes.draw do
-  resources :questions
+  
+  # QUESTIONS
+  resources :questions do 
+    member do 
+      patch :vote
+      patch :unvote
+      patch :revote
+    end
+  end
+  
   # POSTS
   resources :posts
-
   patch "new_post_question" => "posts#new_question"
   patch "new_post_task" => "posts#new_task"
   patch "new_post_event" => "posts#new_event"

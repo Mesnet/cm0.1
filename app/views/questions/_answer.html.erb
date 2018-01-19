@@ -1,0 +1,21 @@
+<%- if question.cached_users.include?(current_user)%>
+  <%- if answer.cached_voters.include?(current_user) %>
+    <a href="/questions/<%=question.id%>/unvote?qid=<%=answer.id%>" data-method="patch" data-remote="true" class="anwer_elm voted">
+  <% else %>
+    <a href="/questions/<%=question.id%>/revote?qid=<%=answer.id%>" data-method="patch" data-remote="true" class="anwer_elm">
+  <% end %>
+    <%= answer.title %>
+    <% @pourcent = (((answer.vote.to_i*100) / question.voters.to_i).round(2)) %>
+    <div class="question_vote_area">
+      <div class="progress" id="progress_vote">
+        <div class="progress-bar bg-success" style="width: <%= @pourcent %>%; color: white; background: indianred;">
+          <%= answer.vote %> / <%= question.voters %>
+        </div>
+      </div>
+    </div>
+  </a>
+<% else %>
+  <a href="/questions/<%=question.id%>/vote?qid=<%=answer.id%>" data-method="patch" data-remote="true" class="anwer_elm">
+    <%= answer.title %>
+  </a>
+<% end %>

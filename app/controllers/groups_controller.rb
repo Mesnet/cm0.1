@@ -193,6 +193,10 @@ class GroupsController < ApplicationController
           @idz = 1
           @group.update(effectif: (@group.effectif += 1), pend_req: (@group.pend_req -= 1))
         end
+        @req = 1
+        if @group.pend_req == 0
+          @req = 2
+        end
         format.js { render 'groups/js/invit'}
       end
     end
@@ -203,6 +207,10 @@ class GroupsController < ApplicationController
           # Request is still waiting
           @group.group_users.where(user: @user).update(request: false)
           @group.update(pend_req: (@group.pend_req -= 1))
+        end
+        @req = 1
+        if @group.pend_req == 0
+          @req = 2
         end
         format.js { render 'groups/js/invit'}
       end
@@ -290,9 +298,6 @@ class GroupsController < ApplicationController
           end
         end
         #/Company access secure
-        unless @group.cat.present?
-          @group.cat == 3
-        end
         @group.update(user_id: current_user.id)
         if @group.save
           format.js { render 'groups/new/create' }

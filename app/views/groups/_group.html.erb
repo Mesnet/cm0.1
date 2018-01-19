@@ -12,7 +12,7 @@
     </div>
   </a>
   <%- if group.pend_req != 0 && group.cached_admins.include?(current_user) %>
-    <a href="/groups/<%=group.id%>/editor" data-method="patch" data-remote="true"class="fa fa-user sidenav_btn_request" data-toggle="tooltip" data-placement="left"  title="Editer le groupe"></a>
+    <a href="/groups/<%=group.id%>/editor" data-method="patch" data-remote="true"class="fa fa-user sidenav_btn_request" data-toggle="tooltip" data-placement="left"  title="Editer le groupe" id='sidenav_btn_request<%=@group.id%>'></a>
     <span class="label label-danger pend_req"><%=group.pend_req%></span>
   <% else %>
     <% unless group.cat == 2 %>

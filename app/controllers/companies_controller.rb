@@ -28,6 +28,8 @@ class CompaniesController < ApplicationController
         @groups = @company.groups
         current_user.group_users.where(group_id: @groups).delete_all
         @company.update(effectif: (@company.effectif -= 1))
+        @group = @company.groups.first
+        @group.update(effectif: (@group.effectif -= 1))
         if current_user.companies.size == 0
           # User have to remake his registration
           current_user.update(company: false)
@@ -88,6 +90,7 @@ class CompaniesController < ApplicationController
         @group = @company.groups.first
         @group_user = @group.group_users.where(user: current_user).first_or_create
         @group_user.update(participation: true, favorit: true)
+        @group.update(effectif: (@group.effectif += 1))
         unless current_user.company?
           current_user.update(company: true)
           @idy = 1

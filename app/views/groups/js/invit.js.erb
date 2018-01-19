@@ -4,3 +4,12 @@ if('<%=@idz%>' == 1 ){
 } else {
   $('#group_user_invit<%=@user.id%>').replaceWith("<%=  j render partial: 'groups/edit/invitation', locals: {user: @user} %>");  
 }
+if('<%=@req%>' == 1 ){
+  // Upd request icon
+  $('#sidenav_btn_request<%=@group.id%>').next('.pend_req').html('<%=@group.pend_req%>')
+} else if('<%=@req%>' == 2 ){
+  // Remove request icon (last request)
+  $('#sidenav_btn_request<%=@group.id%>').next('.pend_req').fadeOut();
+  $('#sidenav_btn_request<%=@group.id%>').replaceWith('<a href="/groups/<%=@group.id%>/editor" data-method="patch" data-remote="true"class="fa fa-pencil sidenav_btn_edit" data-toggle="tooltip" data-placement="left"  title="Editer le groupe"></a>');
+}
+

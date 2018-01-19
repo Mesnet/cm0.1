@@ -83,8 +83,8 @@ ActiveRecord::Schema.define(version: 20180118203108) do
   create_table "groups", force: :cascade do |t|
     t.string "name"
     t.text "description"
-    t.integer "cat"
-    t.integer "effectif"
+    t.integer "cat", default: 3
+    t.integer "effectif", default: 1
     t.integer "pend_req", default: 0
     t.integer "user_id"
     t.integer "company_id"
@@ -96,7 +96,6 @@ ActiveRecord::Schema.define(version: 20180118203108) do
   create_table "posts", force: :cascade do |t|
     t.integer "group_id"
     t.integer "user_id"
-    t.string "title"
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

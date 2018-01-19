@@ -1,0 +1,5 @@
+<div class="post_answers_list" id="post_answers_list<%=question.id%>">
+  <% question.cached_answers.each do |answer| %>
+    <%= render 'questions/answer', answer: answer, question: question %>
+  <% end %>
+</div>

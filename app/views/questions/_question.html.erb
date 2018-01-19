@@ -1,0 +1,6 @@
+<div class="well well_content_area">
+  <%= question.title %>
+</div>
+<%- if question.cached_answers.any? %>
+  <%= render 'questions/answers', question: question %>
+<% end %>
