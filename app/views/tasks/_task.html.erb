@@ -1,0 +1,43 @@
+<div id="task_iter<%=task.id%>">
+  <%- if task.done? %>
+  <div class="task_d" data-toggle="tooltip" data-placement="top" data-html="true" title="Validée par <%=task.doner.pseudo%> <br> le <%= task.done_at.strftime('%d %b')%> à <%= task.done_at.strftime('%H:%M')%>">
+    <script>
+      $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+      });
+    </script>
+  <% else %>
+  <%- if task.important? %>
+  <div class="task_i">
+  <% else %>
+  <div class="task">
+  <% end %>
+  <% end %>
+    <%- if task.done? %>
+      <a href="/tasks/<%=task.id%>/undone" data-method="patch" data-remote="true" class="task_done_btn">
+        <i class="fa fa-check-square-o"></i>
+      </a>
+    <% else %>
+      <a href="/tasks/<%=task.id%>/done" data-method="patch" data-remote="true" class="task_done_btn">
+        <i class="fa fa-square-o"></i>
+      </a>
+    <% end %>
+    <a class="task_content" href="/tasks/<%=task.id%>/show_sn" data-method="patch" data-remote="true" >
+      <div class="task_title">
+        <%= task.title %>
+      </div>
+    </a>
+    <%-if task.date.present?%>
+      <div class="task_date">
+        <%= task.date.strftime("%d %b")%>
+      </div>
+    <% end %>
+    
+    <%- unless task.done? %>
+      <%= render 'tasks/remind_icon', task: task %>
+      <%- unless task.group.cat == 1 %>
+        <%= render 'tasks/user_icon', task: task %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

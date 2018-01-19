@@ -40,21 +40,26 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = Question.new(question_params)
-    respond_to do |format|
-      if @question.save
-        @element = Element.create(group_id: @question.group_id, user: current_user, cat: 2, question_id: @question.id)
-        # Update Post
-        if params[:postid]
-          @new = false
-          @post = Post.find(params[:postid])
-          if @post.user.id == current_user.id
-            @element.update(post_id: @post.id)
+    @group = Group.find(params[:groupid])
+    if @group.cached_users.include?(current_user)
+      # Group Secure
+      respond_to do |format|
+        @question = Question.new(question_params)
+        @question.group = @group
+        if @question.save
+          if params[:postid]
+            # Post Update
+            @post = Post.find(params[:postid])
+            if @post.user = current_user
+              # Post Secure
+              @element = Element.create(group: @question.group, user: current_user, cat: 2, question: @question, post: @post)
+            end
+          else
+            # Post New
+            @element = Element.create(group: @question.group, user: current_user, cat: 2, question: @question)
           end
-        else
-          @new = true
+          format.js {render 'posts/elm_new'}
         end
-        format.js { render 'questions/elm/create' }
       end
     end
   end
@@ -88,6 +93,6 @@ class QuestionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
-      params.require(:question).permit(:title, :multiple, :group_id, answers_attributes: [:id, :title, :_destroy])
+      params.require(:question).permit(:title, :multiple, answers_attributes: [:id, :title, :_destroy])
     end
 end

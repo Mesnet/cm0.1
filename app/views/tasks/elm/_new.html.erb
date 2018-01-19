@@ -1,0 +1,33 @@
+<div id='NewElementPost' class='modal fade' role='dialog' aria-hidden="true">
+  <div class="modal-dialog">
+    <div class='content'>
+      <div id="MeuCarousel3" class="carousel slide">
+        <div class="modal-header" style="padding-bottom: 0;">
+          <h4>Tâche associée</h4>
+          <ul  class="nav nav-tabs nav-justified">
+            <li data-target="#MeuCarousel3" class="active" data-slide-to="0">
+              <a data-toggle="tab">
+                <i class="fa fa-plus" id="fa_icons"></i>
+                Nouvelle tâche
+              </a>
+            </li>
+            <li data-target="#MeuCarousel3" data-slide-to="1">
+              <a data-toggle="tab">
+                <i class="fa fa-thumb-tack" id="fa_icons"></i>
+                Tâche existante
+              </a>
+            </li>
+          </ul>
+          <div class="carousel-inner">
+            <div class="item active">
+              <%= render 'tasks/elm/form'%>
+            </div>
+            <div class="item">
+              <%= render 'tasks/elm/list'%>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

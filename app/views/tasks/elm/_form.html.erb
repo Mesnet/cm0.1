@@ -1,0 +1,29 @@
+<%= simple_form_for(Task.new, remote: true) do |f| %>
+  <div class="modal-body">
+    <div class="form-inputs">
+      <%= f.text_field :title, label: false, class: "form-control", placeholder: "Nom de la tâche"%>
+      <div class="task_new_second_line">
+        <%= f.text_field :date, label: false, placeholder: "Date [optionnel]", class: "form-control" %>
+        <%- if @group.cat != 1 && @users.any? %>
+          <%= f.collection_select :user_ids, @users, :id, :pseudo, {}, {"data-placeholder"=>"Assigner des collaborateurs", multiple: true, class: 'chosen-select', id:"task_chosen_select"} %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <%- if @post.present? %>
+    <%= hidden_field_tag(:postid, @post.id) %>
+  <% else %>
+    <%= hidden_field_tag(:post, true) %>
+  <% end %>
+  <%= hidden_field_tag(:groupid, @group.id) %>
+  <div class="modal-footer">
+    <a data-dismiss="modal" class="btn btn-danger pull-left">Annuler</a>
+    <%= f.button :submit, "Créer", class: "btn btn-success pull-right" %>
+  </div>
+  <script>
+    $(document).ready(function () {
+      $('#task_chosen_select').chosen();
+      $('#task_date').datepicker({ dateFormat: 'dd-mm-yy' });
+    });
+  </script>
+<% end %>

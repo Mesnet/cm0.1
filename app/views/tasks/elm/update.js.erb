@@ -1,0 +1,3 @@
+$('#EditTaskPost<%=@task.id%>').remove();
+$('body').prepend("<%= j render partial: 'tasks/elm/update' %>");
+$('#EditTaskPost<%=@task.id%>').modal('toggle');

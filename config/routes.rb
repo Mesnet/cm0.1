@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  resources :tasks
   # QUESTIONS
   resources :questions do 
     member do 

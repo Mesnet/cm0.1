@@ -7,7 +7,8 @@ class Group < ApplicationRecord
 
   has_many :posts, dependent: :destroy
   has_many :elements, dependent: :destroy
-
+  has_many :tasks, dependent: :destroy
+  
   scope :findable, -> {where(cat: [3, 4])}
   scope :perso, -> { where(cat: 2) }
 

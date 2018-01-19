@@ -22,6 +22,9 @@ class GroupsController < ApplicationController
       elsif params[:idz] == '2'
         format.js { render 'questions/elm/new' }
       elsif params[:idz] == '3'
+        unless @group.cat == 1
+          @users = [current_user] +( @group.users - [current_user])
+        end
         format.js { render 'tasks/elm/new' }
       elsif params[:idz] == '4'
         format.js { render 'events/elm/new' }
@@ -37,6 +40,7 @@ class GroupsController < ApplicationController
         @question = @element.question
         format.js { render 'questions/elm/update' }
       elsif @element.cat == 3
+        @task = @element.task
         format.js { render 'tasks/elm/update' }
       elsif @element.cat == 4
         format.js { render 'events/elm/update' }

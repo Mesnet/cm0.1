@@ -1,0 +1,17 @@
+<div id="task_remind_icon<%=task.id%>">
+  <%- if task.cached_reminders.include?(current_user) %>
+    <% @remind = task.cached_reminds.where(user_id: current_user.id).first %>
+    <a class="task_remind" data-toggle="tooltip" data-placement="top" data-html="true" title="Un rappel est programmé <br> le <%= @remind.date.strftime('%d %B')%>">
+      <i class="fa fa-clock-o"></i>
+    </a>
+    <script>
+      $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+      });
+    </script>
+  <% else %>
+    <a class="task_remind_o" data-toggle="tooltip" data-placement="top" title="Pas de rappel prévu">
+      <i class="fa fa-clock-o"></i>
+    </a>
+  <% end %>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180118203108) do
+ActiveRecord::Schema.define(version: 20180119154458) do
 
   create_table "answers", force: :cascade do |t|
     t.string "title"
@@ -58,9 +58,11 @@ ActiveRecord::Schema.define(version: 20180118203108) do
     t.integer "question_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "task_id"
     t.index ["group_id"], name: "index_elements_on_group_id"
     t.index ["post_id"], name: "index_elements_on_post_id"
     t.index ["question_id"], name: "index_elements_on_question_id"
+    t.index ["task_id"], name: "index_elements_on_task_id"
     t.index ["user_id"], name: "index_elements_on_user_id"
   end
 
@@ -111,6 +113,59 @@ ActiveRecord::Schema.define(version: 20180118203108) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_questions_on_group_id"
+  end
+
+  create_table "sub_tasks", force: :cascade do |t|
+    t.string "title"
+    t.boolean "done", default: false
+    t.datetime "done_at"
+    t.integer "doner_id"
+    t.integer "task_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_sub_tasks_on_task_id"
+    t.index ["user_id"], name: "index_sub_tasks_on_user_id"
+  end
+
+  create_table "task_reminds", force: :cascade do |t|
+    t.boolean "deleted_state", default: false
+    t.integer "task_id"
+    t.integer "user_id"
+    t.datetime "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_task_reminds_on_task_id"
+    t.index ["user_id"], name: "index_task_reminds_on_user_id"
+  end
+
+  create_table "task_users", force: :cascade do |t|
+    t.integer "task_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_task_users_on_task_id"
+    t.index ["user_id"], name: "index_task_users_on_user_id"
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.string "title"
+    t.datetime "date"
+    t.boolean "done", default: false
+    t.datetime "done_at"
+    t.integer "doner_id"
+    t.boolean "assigned", default: false
+    t.integer "st_n", default: 0
+    t.integer "st_d", default: 0
+    t.integer "effectif", default: 0
+    t.integer "priority", default: 3
+    t.boolean "important", default: false
+    t.integer "user_id"
+    t.integer "group_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_tasks_on_group_id"
+    t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
   create_table "user_infos", force: :cascade do |t|

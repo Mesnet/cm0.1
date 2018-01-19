@@ -1,4 +1,4 @@
-<div id='NewQuestionPost' class='modal fade' role='dialog'>
+<div id='NewElementPost' class='modal fade' role='dialog'>
   <div class="modal-dialog">
     <div class='content'>
       <div class="modal-header">
@@ -49,7 +49,7 @@
           <%- if @post.present? %>
             <%= hidden_field_tag(:postid, @post.id) %>
           <% end %>
-          <%= f.hidden_field :group_id, :value => @group.id %>
+          <%= hidden_field_tag(:groupid, @group.id) %>
           <div class="modal-footer">
             <a data-dismiss="modal" class="btn btn-danger pull-left">Annuler</a>
             <%= f.button :submit, "Créer", class: "btn btn-success pull-right"%>
