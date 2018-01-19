@@ -3,9 +3,9 @@ if($('.post_elements').is(':hidden')){
   $('.post_elements').toggle();
 }
 if('<%=@idz%>' == 1 ){
-  $('.new_post_elements_list').append("<%= j render partial: 'posts/element', locals: {element: @element} %>");
-} else if('<%=@idz%>' == 2 ){
-
+  $('#new_post_elements_list<%=@post.id%>').append("<%= j render partial: 'posts/element', locals: {element: @element} %>");
+} else {
+  $('#new_post_elements_list').append("<%= j render partial: 'posts/element', locals: {element: @element} %>");
 }
 $('#element_iter<%=@element.id%>').hide();
 $('#element_iter<%=@element.id%>').fadeIn('slow');

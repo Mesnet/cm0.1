@@ -1,0 +1,18 @@
+<%- if elements.any? %>
+  <div class="post_elements" style="display: block">
+    <hr style='margin: 7px;'>
+      <div class="new_post_elements_list">
+        <% elements.each do |e| %>
+          <%= render 'posts/element', element: e%>
+        <% end %>
+      </div>
+    <hr style='margin: 7px; margin-top: 2px;'>
+  </div>
+<% else %>
+  <div class="post_elements undisplay">
+    <hr style='margin: 7px;'>
+      <div class="new_post_elements_list">
+      </div>
+    <hr style='margin: 7px; margin-top: 2px;'>
+  </div>
+<% end %>

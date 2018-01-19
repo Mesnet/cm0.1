@@ -1,0 +1,3 @@
+$('#posts').prepend("<%= j render partial: 'posts/post', locals: {post: @post} %>");
+$('#post_iter<%=@post.id%>').hide();
+$('#post_iter<%=@post.id%>').slideDown();

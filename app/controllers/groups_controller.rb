@@ -12,6 +12,11 @@ class GroupsController < ApplicationController
   #NewPostElements
   def new_element
     respond_to do |format|
+      if params[:postid]
+        @post = Post.find(params[:postid])
+      else
+        @post = nil
+      end
       if params[:idz] == '1'
         format.js { render 'documents/elm/new' }
       elsif params[:idz] == '2'
@@ -52,6 +57,7 @@ class GroupsController < ApplicationController
 
   def show
     @elements = @group.elements.where(user: current_user).empty
+    @posts = @group.posts
   end
 
   #Other

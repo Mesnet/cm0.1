@@ -6,15 +6,12 @@ class QuestionsController < ApplicationController
     respond_to do |format|
       if @question.save
         @element = Element.create(group_id: @question.group_id, user: current_user, cat: 2, question_id: @question.id)
-        # New Post
-        @idz = 1
         # Update Post
         if params[:postid]
           @post = Post.find(params[:postid])
-          if @post.id == current_user.id
-            @element.update(post_id: params[:postid])
+          if @post.user.id == current_user.id
+            @element.update(post_id: @post.id)
           end
-          @idz = 2
         end
         format.js { render 'questions/elm/create' }
       end

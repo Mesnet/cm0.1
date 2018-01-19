@@ -1,0 +1,13 @@
+<div class="panel-body" id="post_body<%= post.id%>">
+  <%- if post.content.present? %>
+    <%= simple_format post.content %>
+    <%- if post.elements.any? %>
+      <hr>
+    <% end %>
+  <% end %>
+  <%- if post.elements.any? %>
+    <% post.elements.each do |element| %>
+      <%= render 'posts/item', element: element %>
+    <% end %>
+  <% end %>
+</div>

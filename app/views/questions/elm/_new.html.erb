@@ -33,7 +33,6 @@
                 });
               </script>
               <!-- /Multiple btn -->
-              
             </div>
             <div id="answers">
               <%= f.simple_fields_for :answers do |answer| %>
@@ -48,7 +47,7 @@
             </div>
           </div>
           <%- if @post.present? %>
-            <%= hidden_field_tag(:postid, @post) %>
+            <%= hidden_field_tag(:postid, @post.id) %>
           <% end %>
           <%= f.hidden_field :group_id, :value => @group.id %>
           <div class="modal-footer">

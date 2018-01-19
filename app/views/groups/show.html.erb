@@ -9,25 +9,7 @@
       </div>
     </div>
     <!-- Elements Area -->
-    <%- if @elements.any? %>
-      <div class="post_elements" style="display: block">
-        <hr style='margin: 7px;'>
-          <div class="new_post_elements_list">
-            <% @elements.each do |e| %>
-              <%= render 'posts/element', element: e%>
-            <% end %>
-          </div>
-        <hr style='margin: 7px; margin-top: 2px;'>
-      </div>
-    <% else %>
-      <div class="new_post_elements">
-        <hr style='margin: 7px;'>
-          <div class="new_post_elements_list">
-          </div>
-        <hr style='margin: 7px; margin-top: 2px;'>
-      </div>
-      <%= f.hidden_field :element_counter, :value => 0 %>
-    <% end %>
+    <%= render 'posts/elements', elements: @elements, post: nil %>
     <!-- /Elements Area -->
     <div class="post_footer">
       <!-- Elements Btn -->
@@ -41,3 +23,11 @@
   <% end %>
 </div> 
 <!-- /New Post -->
+
+  <div id="posts">
+    <% @posts.each do |post| %>
+      <% cache post do %>
+        <%= render 'posts/post', post: post %>
+      <% end %>
+    <% end %>
+  </div>

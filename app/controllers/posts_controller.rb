@@ -3,13 +3,11 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
+    @post.user = current_user
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @post, notice: 'Post was successfully created.' }
-        format.json { render :show, status: :created, location: @post }
-      else
-        format.html { render :new }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
+        @post.group.elements.empty.update(post_id: @post.id)
+        format.js
       end
     end
   end
@@ -42,6 +40,6 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:group_id, :user_id, :title, :content)
+      params.require(:post).permit(:group_id, :content)
     end
 end

@@ -1,0 +1,38 @@
+<div id="post_iter<%=post.id%>">
+
+  <div class="panel panel-white post">
+    <div class="post-heading">
+      <%= render 'posts/header', post: post %>
+    </div>
+    <!-- Post Content -->
+    <%= render 'posts/content', post: post %>
+
+    <%- if post.user == current_user%>
+      <div class="panel-body undisplay" id="post_update<%= post.id%>">
+        <%= render 'posts/update', post: post%>
+      </div>
+      <script>
+        $(document).ready(function () {
+          $('[data-toggle="tooltip"]').tooltip()
+          $('#post_edit_open_btn<%=post.id%>, #close_upd_btn<%=post.id%>').on('click', function (event) {
+            $('#post_body<%=post.id%>').slideToggle();
+            $('#post_update<%=post.id%>').slideToggle();
+            $('#close_upd_btn<%=post.id%>').toggle();
+            $('#drop_menu_post<%=post.id%>').toggle();
+          });
+        });
+      </script>
+    <% end %>
+    <!-- /Post Content -->
+    <!-- Edit Post Area -->
+    
+    <!-- /Edit Post Area -->
+    <!-- Comment Area  -->
+
+    <!-- /Comment Area  -->
+  </div>
+</div>
+
+<!-- Delete Post  -->
+
+<!-- /Delete Post  -->

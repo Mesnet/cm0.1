@@ -1,0 +1,15 @@
+<div class='post_edit_area'>
+  <%= simple_form_for(post, remote: true) do |f| %>
+    <div class="form-inputs">
+      <%= f.text_area :content, label: false, class: "form-control", placeholder: "Faites passez un message"%>
+    </div>
+    <%= render 'posts/elements', elements: post.elements, post: post %>
+    <div class="post_footer">
+      <a class="fa fa-file-o post_new_btn" href="/groups/<%=@group.id%>/new_element?idz=1&postid=<%=post.id%>" data-method="patch" data-remote="true"></a>
+      <a class="fa fa-bar-chart post_new_btn" href="/groups/<%=@group.id%>/new_element?idz=2&postid=<%=post.id%>" data-method="patch" data-remote="true"></a>
+      <a class="fa fa-thumb-tack post_new_btn" href="/groups/<%=@group.id%>/new_element?idz=3&postid=<%=post.id%>" data-method="patch" data-remote="true"></a>
+      <a class="fa fa-calendar post_new_btn" href="/groups/<%=@group.id%>/new_element?idz=4&postid=<%=post.id%>" data-method="patch" data-remote="true"></a>
+      <%= f.button :submit, "editer", class: "btn btn-success pull-right post_new_submit" %>
+    </div>
+  <% end %>
+</div>
