@@ -3,7 +3,7 @@ class TasksController < ApplicationController
   before_action :have_company, only: [:index]
   before_action :enable_nav, only: [:index]
   before_action :set_task, except: [:create, :index]
-  before_action :group_autorization, only: [:done, :undone, :participate, :unparticipaten, :post_change, :create]
+  before_action :group_autorization, only: [:done, :undone, :participate, :unparticipate, :post_change, :post_select, :create]
   before_action :adminitrator, only: [:delparticipate, :update, :destroy]
   after_action :upd_elements, except: [:create, :show_sn, :post_select, :post_select, :index]
 
@@ -21,7 +21,7 @@ class TasksController < ApplicationController
     respond_to do |format|
       unless @task.cached_users.include?(current_user)
         @user = current_user
-        TaskUser.where(task: @task, user: @user).first_or_create
+        @task.task_users.where(user: @user).first_or_create
         @task.update(effectif: (@task.effectif += 1))
         format.js { render 'tasks/js/participate' }
       else
@@ -34,12 +34,23 @@ class TasksController < ApplicationController
     respond_to do |format|
       if @task.cached_users.include?(current_user)
         @user = current_user
-        TaskUser.where(task: @task, user: @user).first.delete
+        @task.task_users.where(user: @user).delete_all
         @task.update(effectif: (@task.effectif -= 1))
         format.js { render 'tasks/js/unparticipate' }
       else
         format.js {render inline: "location.reload();" }
       end
+    end
+  end
+
+  def delparticipate
+    respond_to do |format|
+      @user = User.find_by(id: params[:userid])
+      if @task.cached_users.include?(@user)
+        @task.task_users.where(user: @user).delete_all
+        @task.update(effectif: (@task.effectif -= 1))
+      end
+      format.js { render 'tasks/js/unparticipate' }
     end
   end
 
@@ -49,8 +60,9 @@ class TasksController < ApplicationController
         #Prevent done again(if other user did it)
         @task.update(done: true, doner_id: current_user.id, done_at: Time.now)
         @task.task_reminds.update(deleted_state: true)
+        format.js { render 'tasks/js/done' }
       end
-      format.js { render 'tasks/js/done' }
+      format.js {render inline: "location.reload();" }
     end
   end
 
@@ -60,8 +72,9 @@ class TasksController < ApplicationController
         #Prevent undone again(if other user did it)
         @task.update(done: false, doner_id: nil, done_at: nil)
         @task.task_reminds.update(deleted_state: false)
+        format.js { render 'tasks/js/done' }
       end
-      format.js { render 'tasks/js/done' }
+      format.js {render inline: "location.reload();" }
     end
   end 
 
@@ -94,6 +107,13 @@ class TasksController < ApplicationController
       @task.group_id = @group.id
       @task.user_id = current_user.id
       if @task.save
+        if @task.important?
+          @task.update(priority: 1)
+        else 
+          if @task.date.present?
+            @task.update(priority: 2)
+          end
+        end
         if params[:postid]
           # PostUpdate
           @post = Post.find(params[:postid])
@@ -116,16 +136,19 @@ class TasksController < ApplicationController
     end
   end
 
-  # PATCH/PUT /tasks/1
-  # PATCH/PUT /tasks/1.json
   def update
     respond_to do |format|
       if @task.update(task_params)
-        format.html { redirect_to @task, notice: 'Task was successfully updated.' }
-        format.json { render :show, status: :ok, location: @task }
-      else
-        format.html { render :edit }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
+        if @task.important?
+          @task.update(priority: 1)
+        else 
+          if @task.date.present?
+            @task.update(priority: 2)
+          else
+            @task.update(priority: 3)
+          end
+        end
+        format.js { render 'tasks/js/update' }
       end
     end
   end

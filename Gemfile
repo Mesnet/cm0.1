@@ -21,6 +21,7 @@ gem 'rails_admin'
 gem 'cocoon'
 gem 'dalli'
 gem 'will_paginate-bootstrap'
+gem 'rinku'
 
 # Style
 gem 'bootstrap-sass'

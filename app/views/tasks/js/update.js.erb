@@ -1,0 +1,7 @@
+$('#task_iter<%=@task.id%>').replaceWith("<%=  j render partial: 'tasks/task', locals: {task: @task} %>");
+$('.task_participants').replaceWith("<%=  j render partial: 'tasks/sn/participants', locals: {task: @task, users: @task.cached_users} %>");
+$('.sn_header_title').html('<%=@task.title%>')
+<% if (@task.date.present?) %>
+  $('.sn_date').html('<i class="fa fa-calendar-o" id="fa_icons"></i><%=@task.date.strftime("%d %b")%>')
+<% end %>
+$('#sn_edit_task_area').slideUp();

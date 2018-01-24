@@ -1,6 +1,6 @@
 <div class="panel-body" id="post_body<%= post.id%>">
   <%- if post.content.present? %>
-    <%= simple_format post.content %>
+    <%= Rinku.auto_link(simple_format(post.content), :all, 'target="_blank"').html_safe %>
     <%- if post.elements.any? %>
       <hr>
     <% end %>
