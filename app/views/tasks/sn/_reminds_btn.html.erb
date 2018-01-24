@@ -1,0 +1,13 @@
+ <div id="sn_remind_btn">
+  <%- if @task.cached_reminders.include?(current_user) %>
+    <div class="sn_remind">
+      <i class="fa fa-clock-o" id="fa_icons"></i>
+      <%= @task.cached_reminds.where(user_id: current_user.id).first.date.strftime("%d %b")%>
+    </div>
+  <% else %>
+    <div class="sn_remind_add">
+      <i class="fa fa-plus" id="fa_icons"></i>
+      Rappel
+    </div>
+  <% end %>
+</div>

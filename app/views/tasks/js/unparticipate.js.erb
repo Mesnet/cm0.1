@@ -1,0 +1,3 @@
+$('#<%=@task.id%>participant_box<%=@user.id%>').fadeOut();
+$('#btn_add_participation<%=@task.id%>').slideDown();
+$('#task_user_icon<%=@task.id%>').replaceWith("<%=  j render partial: 'tasks/user_icon', locals: {task: @task} %>");

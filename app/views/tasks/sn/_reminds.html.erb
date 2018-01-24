@@ -1,0 +1,30 @@
+<div class="sn_body_remind">
+  <%- if @task.cached_reminders.include?(current_user) %>
+    <% @task.cached_reminds.where(user: current_user).each do |remind| %>
+      <%= render 'tasks/sn/remind_item', remind: remind %>
+    <% end %>
+    <div class="sn_remind_add_btn">
+      <i class="fa fa-plus" id="fa_icons_remind"></i>
+      Nouveau
+    </div>
+    <%= render 'tasks/sn/remind_new' %>
+    <script>
+      $(document).ready(function () {
+        $('.sn_new_remind_area').hide();
+        $('.sn_remind_add_btn').on('click', function (event) {
+          $('.sn_new_remind_area').slideToggle();
+          $('#remind_date<%=@task.id%>').datepicker({ dateFormat: 'dd-mm-yy' }).css('z-index','9999');
+        });
+      });
+    </script>
+  <% else %>
+    <%= render 'tasks/sn/remind_new' %>
+  <% end %>
+  <script>
+    $(document).ready(function () {
+      $('#sn_remind_btn').on('click', function (event) {
+        $('.sn_body_remind').slideToggle();
+      });
+    });
+  </script>
+</div>

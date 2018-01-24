@@ -1,0 +1,50 @@
+<div id="subtask_iter<%=st.id%>">
+  <%- if st.done? %>
+    <div class="subtask_box_d" data-toggle="tooltip" data-placement="top" data-html="true" title="Validée par <%=st.doner.pseudo%> <br> le <%= st.done_at.strftime('%d %b')%> à <%= st.done_at.strftime('%H:%M')%>">
+  <% else %>
+    <div class="subtask_box">
+  <% end %>
+    <%- if st.done? %>
+      <a class="subtask_done_btn" href="/sub_tasks/<%=st.id%>/undone" data-method="patch" data-remote="true">
+        <i class="fa fa-check-square-o"></i>
+      </a>
+    <% else %>
+      <a class="subtask_done_btn" href="/sub_tasks/<%=st.id%>/done" data-method="patch" data-remote="true">
+        <i class="fa fa-square-o"></i>
+      </a>
+    <% end %>
+    <div class="subtask_name" id="subtask_edit_btn<%=st.id%>">
+      <%= st.title %>
+    </div>
+    <%- if st.user == current_user %>
+      <a class="subtask_btn"  href="/sub_tasks/<%=st.id%>" data-method="delete" data-remote="true">
+        <i class="fa fa-close"></i>
+      </a>
+    <% end %>
+  </div>
+  <%- if st.user_id == current_user.id %>
+    <div class="subtask_edit" id="subtask_edit<%=st.id%>">
+      <%= simple_form_for(st, remote: true) do |sub| %>
+        <div class="input-group" id="sidenav_new_st">
+          <%= sub.text_field :title, placeholder: "Nouvelle sous-tâche", class: 'form-control', id: "sub_task_content#{st.task_id}", style: 'border-radius:0;' %>
+          <span class="input-group-btn">
+            <%= sub.submit "ok", class: "btn btn-warning" %>
+          </span>
+        </div>
+      <% end %>
+    </div>
+    <script>
+      $(document).ready(function () {
+        $('#subtask_edit_btn<%=st.id%>').on('click', function (event) {
+          $('#subtask_edit<%=st.id%>').slideToggle();
+          $(".subtask_edit").not('#subtask_edit<%=st.id%>').slideUp();
+        });
+      });
+    </script>
+  <% end %>
+</div>
+<script>
+  $(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  });
+</script>

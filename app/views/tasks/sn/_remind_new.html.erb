@@ -1,0 +1,11 @@
+<div class="sn_new_remind_area">
+  <%= simple_form_for(TaskRemind.new, remote: true) do |remind| %>
+    <div class="input-group sidenav_new_st">
+      <%= remind.text_field :date, placeholder: "Date", class: 'form-control', style: 'border-radius:0;', id:"remind_date#{@task.id}"%>
+      <%= remind.hidden_field :task_id, :value => @task.id  %>
+      <span class="input-group-btn">
+        <%= remind.submit "ok", class: "btn btn-success" %>
+      </span>
+    </div>
+  <% end %>
+</div>

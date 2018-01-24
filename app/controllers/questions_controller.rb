@@ -74,26 +74,18 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def destroy
-    @question.destroy
-    respond_to do |format|
-      format.html { redirect_to questions_url, notice: 'Question was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+private
+
+  def set_question
+    @question = Question.find(params[:id])
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_question
-      @question = Question.find(params[:id])
-    end
+  def set_answer
+    @answer = Answer.find(params[:qid])
+  end
 
-    def set_answer
-      @answer = Answer.find(params[:qid])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def question_params
-      params.require(:question).permit(:title, :multiple, answers_attributes: [:id, :title, :_destroy])
-    end
+  def question_params
+    params.require(:question).permit(:title, :multiple, answers_attributes: [:id, :title, :_destroy])
+  end
+  
 end

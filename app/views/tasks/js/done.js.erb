@@ -1,0 +1,16 @@
+var pathname = window.location.pathname;
+var group = pathname.split("/")[2]
+if(pathname == '/' || pathname == '/groups/'+ group ){
+  $('#task_iter<%=@task.id%>').replaceWith("<%=  j render partial: 'tasks/task', locals: {task: @task} %>");
+} else if( pathname == '/tasks' || pathname == '/groups/'+ group +'/taskboard' ){
+  $("#task_iter<%=@task.id%>").fadeOut(300, function() { $(this).remove(); });
+  if('<%=@task.done%>' == 'false'){
+    $('.taskboard_list').prepend("<%=  j render partial: 'tasks/task', locals: {task: @task} %>");
+    $('#task_iter<%=@task.id%>').hide();
+    $('#task_iter<%=@task.id%>').slideDown();
+  } else{
+    $('.done_task_list').prepend("<%=  j render partial: 'tasks/task', locals: {task: @task} %>");
+    $('#task_iter<%=@task.id%>').hide();
+    $('#task_iter<%=@task.id%>').slideDown();
+  }
+}

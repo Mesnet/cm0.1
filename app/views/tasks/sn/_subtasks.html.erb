@@ -1,0 +1,15 @@
+<%= simple_form_for(SubTask.new, remote: true) do |st| %>
+  <div class="input-group sidenav_new_st">
+    <%= st.text_field :title, placeholder: "Nouvelle sous-tâche", class: 'form-control', style: 'border-radius:0;'%>
+    <%= st.hidden_field :task_id, :value => @task.id  %>
+    <span class="input-group-btn">
+      <%= st.submit "ok", class: "btn btn-success" %>
+    </span>
+  </div>
+<% end %>
+
+<div id="subtask_list<%=@task.id%>" class="subtask_list">
+  <% subtasks.each do |st| %>
+    <%= render 'tasks/sn/subtask_item', st: st %>
+  <% end %>
+</div>

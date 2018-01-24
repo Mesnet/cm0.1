@@ -1,0 +1,104 @@
+<div class="task_sidenav" id="task_sidenav<%=@task.id%>">
+  <div class="sn_header_close">
+    <i class="fa fa-close"></i>
+  </div>
+  <div class="sn_header">
+    <div class="sn_header_title">
+      <%= @task.title%>
+    </div>
+  </div>
+  <div class="sn_body_date">
+    <div class="sn_date">
+      <i class="fa fa-calendar-o" id="fa_icons"></i>
+      <%-if @task.date.present?%>
+        <%= @task.date.strftime("%d %b")%>
+      <% else %>
+        No Date
+      <% end %>
+    </div>
+    <%- unless @task.done? %>
+      <%= render 'tasks/sn/reminds_btn'%>
+    <% end %>
+  </div>
+  <%- unless @task.done? %>
+    <%= render 'tasks/sn/reminds'%>
+  <% end %>
+  <div class="sn_body_tab">
+    <%- unless @task.group.cat  == 1 %>
+      <div class="sn_tab_title">
+        <i class="fa fa-users" id="fa_icons"></i>
+        Participants
+      </div>
+      <div class="sn_tab_content" id="sn_tab_content">
+        <%= render 'tasks/sn/participants', users: @task.cached_users %>
+      </div>
+    <% end %>
+    <div class="sn_tab_title">
+      <i class="fa fa-tasks" id="fa_icons"></i>
+      Sous-tâches 
+      <span id="sn_subtask_n<%=@task.id%>">
+      <%- if @task.st_n != 0 %>
+        (<%= @task.st_n %>/<%= @task.st_d %>)
+      <% end %>
+      </span>
+    </div>
+    <div class="sn_tab_content" id="sn_tab_content">
+      <%= render 'tasks/sn/subtasks', subtasks: @task.cached_subtasks %>
+    </div>
+
+    <div class="sn_tab_title">
+      <i class="fa fa-comment" id="fa_icons"></i>
+      Messages
+    </div>
+    <div class="sn_tab_content" id="sn_tab_content">
+      3
+    </div>
+  </div>
+  <script>
+    $(document).ready(function () {
+      $('.sn_tab_title').on('click', function (event) {
+        var content = $(this).next('.sn_tab_content')
+        content.slideToggle();
+        $('.sn_tab_content').not(content).slideUp();
+        $('#sn_body_remind').slideUp();
+        $('#sn_edit_task_area').slideUp();
+      });
+    });
+  </script>
+  <%- if @task.user_id == current_user.id%>
+    <!-- Edit Task -->
+    <div class="sn_edit_task_area" id="sn_edit_task_area">
+      <%= render 'tasks/sn/edit', task: @task%>
+    </div>
+    <div class="sn_footer">
+      <a class="sn_edit_task_btn" id="sn_edit_task_btn">
+        <i class="fa fa-edit" id="fa_icons"></i>
+        Edit
+      </a>
+      <a href='/tasks/<%=@task.id%>' data-method="delete" data-remote="true" data-confirm="Etes vous sur de vouloir supprimer cette tâche ? ( Cette action est définitive )" class="sn_edit_task_btn">
+        <i class="fa fa-trash" id="fa_icons"></i>
+        Delete
+      </a>
+      <script>
+        $(document).ready(function () {
+          $('#sn_edit_task_btn').on('click', function (event) {
+            $('#sn_edit_task_area').slideToggle();
+            $('.sn_tab_content').slideUp();
+          });
+        });
+      </script>
+    </div>
+    <!-- /Edit Task -->
+  <% end %>
+</div>
+<script>
+  $(document).ready(function () {
+    $('.sn_header_close').on('click', function (event) {
+      $('#task_sidenav<%=@task.id%>').slideUp();
+      $('.body_box').css("margin-right", "0px");
+    });
+    if ($(".task_sidenav").is(":visible")){
+      $('.body_box').css("margin-right", "300px");
+    }
+  });
+</script>

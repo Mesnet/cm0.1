@@ -1,0 +1,17 @@
+<div class="task_participants">
+  <a class="btn_add_participation" id="btn_add_participation<%=@task.id%>" href="/tasks/<%=@task.id%>/participate" data-method="patch" data-remote="true">
+    <i class="fa fa-plus" id="fa_icons"></i>
+    Participer
+  </a>
+  <div id="task_participants_list<%=@task.id%>">
+    <% users.each do |user| %>
+      <%= render 'tasks/sn/participant_item', user: user %>
+    <% end %>
+  </div>
+  
+  <!-- If current_user pluck users -->
+  <%- if users.include?(current_user) %>
+  <script>$(document).ready(function () {$('.btn_add_participation').hide();});</script>
+  <% end %>
+
+</div>

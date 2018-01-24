@@ -6,7 +6,7 @@ class Task < ApplicationRecord
   has_many :elements, dependent: :destroy
   has_many :posts, through: :post_elements
   has_many :task_reminds, dependent: :destroy
-  has_many :sub_tasks
+  has_many :sub_tasks, dependent: :destroy
 
   default_scope {order(done_at: :desc)} 
   default_scope {order(priority: :asc)} 

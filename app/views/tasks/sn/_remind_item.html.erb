@@ -1,0 +1,33 @@
+<div class="sn_remind_item" id="sn_remind_item<%=remind.id%>">
+  <div class="sn_remind_item_box" id="sn_remind_item_box">
+    <div class="sn_remind_item_date">
+      <%= remind.date.strftime("%d %b")%>
+    </div>
+    <a class="sn_remind_item_edit" id="sn_remind_item_edit<%=remind.id%>">
+      <i class="fa fa-pencil"></i>
+    </a>
+    <a class="sn_remind_item_delete" href="/task_reminds/<%=remind.id%>" data-method="delete" data-remote="true">
+      <i class="fa fa-trash"></i>
+    </a>
+  </div>
+  <script>
+    $(document).ready(function () {
+      $('#sn_remind_item_edit<%=remind.id%>').on('click', function (event) {
+        $('#sn_remind_item_edit_area<%=remind.id%>').slideToggle();
+        $('.sn_remind_item_edit_area').not('#sn_remind_item_edit_area<%=remind.id%>').slideUp();
+        $('#remind_date_upd<%=remind.id%>').datepicker({ dateFormat: 'dd-mm-yy' }).css('z-index','9999');
+      });
+    });
+  </script>
+</div>
+<div class="sn_remind_item_edit_area" id="sn_remind_item_edit_area<%=remind.id%>">
+  <%= simple_form_for(remind, remote: true) do |r| %>
+    <div class="input-group sidenav_new_st">
+      <%= r.text_field :date, placeholder: "Date", :value => remind.date.try(:strftime,"%d-%m-%Y"), class: 'form-control', style: 'border-radius:0;', id:"remind_date_upd#{remind.id}"%>
+      <span class="input-group-btn">
+        <%= r.submit "ok", class: "btn btn-success" %>
+      </span>
+    </div>
+  <% end %>
+</div>
+
