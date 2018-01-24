@@ -2,4 +2,3 @@ $('.task_sidenav').remove();
 $('body').append("<%=  j render partial: 'tasks/sn/sidenav' %>");
 $('#task_sidenav<%=@task.id%>').hide();
 $('#task_sidenav<%=@task.id%>').slideDown();
-$('#remind_date<%=@task.id%>').datepicker({ dateFormat: 'dd-mm-yy' }).css('z-index','9999');

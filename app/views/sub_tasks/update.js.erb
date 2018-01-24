@@ -1,0 +1,3 @@
+$('#subtask_iter<%=@sub_task.id%>').replaceWith("<%= j render partial: 'tasks/sn/subtask_item', locals: {st: @sub_task} %>");
+$('#subtask_edit<%=@sub_task.id%>').toggle();
+$('#subtask_edit<%=@sub_task.id%>').slideUp();

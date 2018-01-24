@@ -25,6 +25,7 @@
       $('#sn_remind_btn').on('click', function (event) {
         $('.sn_body_remind').slideToggle();
       });
+      $('#remind_date<%=@task.id%>').datepicker({ dateFormat: 'dd-mm-yy' }).css('z-index','9999');
     });
   </script>
 </div>

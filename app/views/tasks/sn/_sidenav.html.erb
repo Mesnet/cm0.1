@@ -68,7 +68,7 @@
   <%- if @task.user_id == current_user.id%>
     <!-- Edit Task -->
     <div class="sn_edit_task_area" id="sn_edit_task_area">
-      <%= render 'tasks/sn/edit', task: @task%>
+      <%= render 'tasks/sn/edit'%>
     </div>
     <div class="sn_footer">
       <a class="sn_edit_task_btn" id="sn_edit_task_btn">

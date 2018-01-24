@@ -13,6 +13,15 @@ Rails.application.routes.draw do
       patch :show_sn
     end
   end
+  
+  resources :task_reminds
+
+  resources :sub_tasks do 
+    member do 
+      patch :done 
+      patch :undone
+    end 
+  end
 
   # QUESTIONS
   resources :questions do 

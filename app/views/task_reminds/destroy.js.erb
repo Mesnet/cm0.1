@@ -1,0 +1,4 @@
+$('#sn_remind_btn').replaceWith("<%=  j render partial: 'tasks/sn/reminds_btn', locals: {task: @task} %>");
+$('.sn_body_remind').replaceWith("<%=  j render partial: 'tasks/sn/reminds', locals: {task: @task} %>");
+$('#task_remind_icon<%=@task.id%>').replaceWith("<%=  j render partial: 'tasks/remind_icon', locals: {task: @task} %>");$('#remind_date<%=@task.id%>').datepicker({ dateFormat: 'dd-mm-yy' }).css('z-index','9999');
+$('.sn_body_remind').toggle();

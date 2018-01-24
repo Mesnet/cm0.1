@@ -20,17 +20,21 @@ class TasksController < ApplicationController
   def participate
     respond_to do |format|
       unless @task.cached_users.include?(current_user)
-        @user = TaskUser.where(task: @task, user: current_user).first_or_create
+        @user = current_user
+        TaskUser.where(task: @task, user: @user).first_or_create
         @task.update(effectif: (@task.effectif += 1))
+        format.js { render 'tasks/js/participate' }
+      else
+        format.js {render inline: "location.reload();" }
       end
-      format.js { render 'tasks/js/participate' }
     end
   end
 
   def unparticipate
     respond_to do |format|
       if @task.cached_users.include?(current_user)
-        @user = TaskUser.where(task: @task, user: current_user).first.delete
+        @user = current_user
+        TaskUser.where(task: @task, user: @user).first.delete
         @task.update(effectif: (@task.effectif -= 1))
         format.js { render 'tasks/js/unparticipate' }
       else
