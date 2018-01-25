@@ -1,4 +1,9 @@
-<div id="task_iter<%=task.id%>">
+<%- if elm.present? %>
+  <div id="task_iter<%=task.id%>_elm<%=elm.id%>">
+<% else %>
+  <div id="task_iter<%=task.id%>">
+<% end %>
+
   <%- if task.done? %>
   <div class="task_d" data-toggle="tooltip" data-placement="top" data-html="true" title="Validée par <%=task.doner.pseudo%> <br> le <%= task.done_at.strftime('%d %b')%> à <%= task.done_at.strftime('%H:%M')%>">
     <script>

@@ -1,13 +1,18 @@
-<div class="panel-body" id="post_body<%= post.id%>">
-  <%- if post.content.present? %>
-    <%= Rinku.auto_link(simple_format(post.content), :all, 'target="_blank"').html_safe %>
+<%- if post.content.present? || post.elements.any? %>
+  <%- unless post.cat == 1 %>
+  <hr style="margin: 10px;">
+  <% end %>
+  <div class="panel-body" id="post_body<%= post.id%>">
+    <%- if post.content.present? %>
+      <%= Rinku.auto_link(simple_format(post.content), :all, 'target="_blank"').html_safe %>
+      <%- if post.elements.any? %>
+        <hr>
+      <% end %>
+    <% end %>
     <%- if post.elements.any? %>
-      <hr>
+      <% post.elements.each do |element| %>
+        <%= render 'posts/item', element: element %>
+      <% end %>
     <% end %>
-  <% end %>
-  <%- if post.elements.any? %>
-    <% post.elements.each do |element| %>
-      <%= render 'posts/item', element: element %>
-    <% end %>
-  <% end %>
-</div>
+  </div>
+<% end %>

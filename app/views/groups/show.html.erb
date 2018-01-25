@@ -5,6 +5,9 @@
     <%= f.hidden_field :group_id, :value => @group.id %>
     <div class="post-heading">
       <div class="form-inputs">
+        <%= f.input :title, label: false, class: "form-control", placeholder: "Titre (objet du mail)"%>
+      </div>
+      <div class="form-inputs" style="margin-top: -10px;">
         <%= f.text_area :content, label: false, class: "form-control", placeholder: "Faites passez un message"%>
       </div>
     </div>

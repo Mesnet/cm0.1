@@ -69,6 +69,9 @@ class QuestionsController < ApplicationController
     respond_to do |format|
       if @question.update(question_params)
         @element = @question.element
+        if @element.post.present?
+          @element.post.update(upd_at: Time.now, upd_title: 'a modifier un élément')
+        end
         format.js { render 'posts/elm_upd' }
       end
     end

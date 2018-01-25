@@ -1,6 +1,7 @@
 $('#posts').prepend("<%= j render partial: 'posts/post', locals: {post: @post} %>");
 $('#post_iter<%=@post.id%>').hide();
 $('#post_iter<%=@post.id%>').slideDown();
+$('#post_title').val('');
 $('#post_content').val('');
 $('#post_elements').find('.new_post_elements_list').html('')
 $('#post_elements').slideUp();

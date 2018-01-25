@@ -92,6 +92,9 @@ class TasksController < ApplicationController
       if @element.user == current_user
         #Element Secure
         @element.update(task_id: @task.id)
+        if @element.post.present?
+          @element.post.update(upd_at: Time.now, upd_title: 'a modifier un élément')
+        end
         format.js {render 'posts/elm_upd'}
       end
     end
@@ -107,6 +110,9 @@ class TasksController < ApplicationController
       @task.group_id = @group.id
       @task.user_id = current_user.id
       if @task.save
+        # Create a new initial post
+        @new_post = Post.create(user: current_user, group: @group, upd_at: Time.now, cat: 1, upd_title: 'a créer une nouvelle tâche')
+        @element = Element.create(group: @group, user: current_user, cat: 3, task: @task, post: @new_post)
         if @task.important?
           @task.update(priority: 1)
         else 
@@ -125,8 +131,8 @@ class TasksController < ApplicationController
         else
           if params[:post]
             #Post New
-            format.js {render 'posts/elm_new'}
             @element = Element.create(group: @group, user: current_user, cat: 3, task: @task)
+            format.js {render 'posts/elm_new'}
           else
             #Task New
             format.js
@@ -148,6 +154,7 @@ class TasksController < ApplicationController
             @task.update(priority: 3)
           end
         end
+        @elements = @task.elements 
         format.js { render 'tasks/js/update' }
       end
     end
@@ -156,10 +163,15 @@ class TasksController < ApplicationController
   # DELETE /tasks/1
   # DELETE /tasks/1.json
   def destroy
+    @post = @task.posts.last
+    @elements = @task.elements.map(&:id) 
+    @task.elements.delete_all
+    @task.task_users.delete_all
+    @post.destroy
     @task.destroy
+    @task.posts.update(updated_at: Time.now)
     respond_to do |format|
-      format.html { redirect_to tasks_url, notice: 'Task was successfully destroyed.' }
-      format.json { head :no_content }
+      format.js { render 'tasks/js/destroy' }
     end
   end
 

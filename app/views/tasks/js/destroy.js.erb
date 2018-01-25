@@ -1,0 +1,8 @@
+<%- if @elements %>
+  <% @elements.each do |elm| %>
+    $('#task_iter<%=@task.id%>_elm<%=elm%>').slideUp(300, function() { $(this).remove(); });
+  <% end %>
+  $('#post_iter<%=@post.id%>').slideUp(300, function() { $(this).remove(); });
+<% else %>
+  $('#task_iter<%=@task.id%>').slideUp(300, function() { $(this).remove(); });
+<% end %>

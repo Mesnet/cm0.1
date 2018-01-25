@@ -2,7 +2,7 @@
 <% elsif element.cat == 2 %>
   <%= render 'questions/question', question: element.question %>
 <% elsif element.cat == 3 %>
-  <%= render 'tasks/task', task: element.task %>
+  <%= render 'tasks/task', task: element.task, elm: element %>
 <% elsif element.cat == 4 %>
   <%= render 'events/event', event: element.event %>
 <% end %>

@@ -1,6 +1,4 @@
-$('#post_update<%=@post.id%>').slideUp();
-$('#close_upd_btn<%=@post.id%>').toggle();
-$('#drop_menu_post<%=@post.id%>').toggle();
-$('#post_body<%= @post.id%>').replaceWith("<%= j render partial: 'posts/content', locals: {post: @post} %>");
-$('#post_body<%=@post.id%>').hide();
-$('#post_body<%=@post.id%>').slideDown();
+$('#post_iter<%=@post.id%>').slideUp(300, function() { $(this).remove(); });
+$('#posts').prepend("<%= j render partial: 'posts/post', locals: {post: @post} %>");
+$('#post_iter<%=@post.id%>').hide();
+$('#post_iter<%=@post.id%>').slideDown();

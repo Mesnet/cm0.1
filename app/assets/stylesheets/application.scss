@@ -109,7 +109,7 @@
   }
 
   body{
-    background: #eff7f5;
+    background: #DDDFE2;
     padding-top: 70px;
     width: 100%;
     height: 100%;
@@ -255,6 +255,13 @@
   padding-top :7px;
   padding-bottom: 7px;
   margin-bottom: 10px;
+}
+
+.well_title_area{
+  padding-top :8px;
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .undisplay{
@@ -1091,6 +1098,11 @@ td, th {
     background: none;
     text-decoration: none;
   }
+}
+
+.post_title_header{
+  text-align: center;
+  font-size: 18px;
 }
 
 /********************************************************************/

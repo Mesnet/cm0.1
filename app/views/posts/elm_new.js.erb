@@ -8,3 +8,8 @@ if(post_element.is(':hidden')){
   post_element.toggle();
 }
 post_element.find('.new_post_elements_list').append("<%= j render partial: 'posts/element', locals: {element: @element} %>");
+<%- if @new_post.present? %>
+  $('#posts').prepend("<%= j render partial: 'posts/post', locals: {post: @new_post} %>");
+  $('#post_iter<%=@new_post.id%>').hide();
+  $('#post_iter<%=@new_post.id%>').slideDown();
+<% end %>

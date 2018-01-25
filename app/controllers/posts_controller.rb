@@ -5,6 +5,7 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.user = current_user
+    @post.upd_at = Time.now
     @group = @post.group
     respond_to do |format|
       if @post.save
@@ -14,9 +15,15 @@ class PostsController < ApplicationController
     end
   end
 
-  def update
-    respond_to do |format|
-      if @post.update(post_params)
+  def update  
+    @old_title = @post.title
+    @old_content = @post.content
+    if @post.update(post_params)
+      if @old_title != @post.title || @old_content != @post.content
+        @post.update(upd_at: Time.now, upd_title: 'a modifier le post')
+      end
+      @group = @post.group
+      respond_to do |format|
         format.js
       end
     end
@@ -37,6 +44,6 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:group_id, :content)
+      params.require(:post).permit(:group_id, :content, :title)
     end
 end

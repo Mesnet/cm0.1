@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180119154458) do
+ActiveRecord::Schema.define(version: 20180124200122) do
 
   create_table "answers", force: :cascade do |t|
     t.string "title"
@@ -56,9 +56,9 @@ ActiveRecord::Schema.define(version: 20180119154458) do
     t.integer "post_id"
     t.integer "user_id"
     t.integer "question_id"
+    t.integer "task_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "task_id"
     t.index ["group_id"], name: "index_elements_on_group_id"
     t.index ["post_id"], name: "index_elements_on_post_id"
     t.index ["question_id"], name: "index_elements_on_question_id"
@@ -101,6 +101,11 @@ ActiveRecord::Schema.define(version: 20180119154458) do
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "title"
+    t.integer "cat", default: 2
+    t.datetime "upd_at"
+    t.integer "upd_by"
+    t.string "upd_title", default: "a créer un Post"
     t.index ["group_id"], name: "index_posts_on_group_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end

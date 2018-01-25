@@ -1,8 +1,11 @@
 <div class='post_edit_area'>
   <%= simple_form_for(post, remote: true) do |f| %>
     <div class="form-inputs">
-      <%= f.text_area :content, label: false, class: "form-control", placeholder: "Faites passez un message"%>
-    </div>
+        <%= f.input :title, label: false, class: "form-control", placeholder: "Titre (objet du mail)"%>
+      </div>
+      <div class="form-inputs" style="margin-top: -10px;">
+        <%= f.text_area :content, label: false, class: "form-control", placeholder: "Faites passez un message"%>
+      </div>
     <%= render 'posts/elements', elements: post.elements, post: post %>
     <div class="post_footer">
       <a class="fa fa-file-o post_new_btn" href="/groups/<%=@group.id%>/new_element?idz=1&postid=<%=post.id%>" data-method="patch" data-remote="true"></a>

@@ -65,6 +65,9 @@ class GroupsController < ApplicationController
     if @element.cat == 2
       @element.question.destroy
     end
+    if @element.post.present?
+      @element.post.update(upd_at: Time.now, upd_title: "a supprimer un élément")
+    end
     @element.destroy
     respond_to do |format|
       format.js { render 'posts/elm_del' }
