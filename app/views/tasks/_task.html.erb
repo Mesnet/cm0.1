@@ -41,7 +41,11 @@
     <%- unless task.done? %>
       <%= render 'tasks/remind_icon', task: task %>
       <%- unless task.group.cat == 1 %>
-        <%= render 'tasks/user_icon', task: task %>
+        <%- if elm.present? %>
+          <%= render 'tasks/user_icon', task: task, elm: elm %>
+        <% else %>
+          <%= render 'tasks/user_icon', task: task, elm: nil %>
+        <% end %>
       <% end %>
     <% end %>
   </div>

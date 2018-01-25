@@ -1,0 +1,7 @@
+$('.taskboard_list').prepend("<%=  j render partial: 'tasks/task', locals: {task: @task, elm: nil} %>");
+$('#task_iter<%=@task.id%>').hide();
+$('#task_iter<%=@task.id%>').slideDown();
+$('#task_name_input').val('')
+$('#task_date_input').val('')
+$('#task_user_ids').multiselect('deselectAll', false);    
+$('#task_user_ids').multiselect('updateButtonText');

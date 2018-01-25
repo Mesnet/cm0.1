@@ -1,1 +1,66 @@
-TaskBoard de <%= @group.name %>
+<% cache [@group, "task_new", current_user.id] do %>  
+  <div class="nav_title_group">
+    <%= @group.name %>
+  </div>
+  <div class="panel panel-white post_task">
+    <%= simple_form_for(Task.new, remote: true) do |f| %>
+      <div class="post-heading">
+        <div class="form-inputs area_flex">
+          <%= f.text_field :title, label: false, class: "form-control", placeholder: "Nom de la tâche", id:"task_name_input"%>
+          <%= f.text_field :date, label: false, class: "form-control", placeholder: "Date", id:"task_date_input"%>
+          <%- unless @group.cat == 2 %>
+            <%= f.collection_select :user_ids, @users, :id, :pseudo, {}, :multiple => 'true' %>
+          <% end %>
+          <div class='btn btn-default' id="task_priority_btn" style="margin-left: 5px; border-radius: 5px;" data-toggle="tooltip" data-placement="bottom" title="Tâche non-prioritaire">
+            <i class="fa fa-exclamation"></i>
+          </div>
+
+          <div class='btn btn-warning undisplay' id="task_unpriority_btn" style="margin-left: 5px; border-radius: 5px;" data-toggle="tooltip" data-placement="bottom" title="Tâche prioritaire">
+            <i class="fa fa-exclamation"></i>
+          </div>
+          <%= hidden_field_tag(:groupid, @group.id) %>
+          <%= f.hidden_field :important, :value => false %>
+          <%= f.button :submit, "Créer la tâche", class: "btn btn-success task_new_submit" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <script>
+    $(document).ready(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+      $('#task_date_input').datepicker({ dateFormat: 'dd-mm-yy' })
+      $('#task_user_ids').multiselect({
+          numberDisplayed: 0,
+          nonSelectedText: 'Participants'
+      });
+      $('#task_priority_btn').on('click', function (event) {
+        $('#task_priority_btn').hide();
+        $('#task_unpriority_btn').toggle();
+        $('#task_important').val(true)
+      });
+      $('#task_unpriority_btn').on('click', function (event) {
+        $('#task_priority_btn').toggle();
+        $('#task_unpriority_btn').hide();
+        $('#task_important').val(false)
+      });
+    });
+  </script>
+<% end %>
+
+<div class="taskboard_list">
+  <% @tasks.each do |task| %>
+    <% cache task do %>
+      <%= render 'tasks/task', task: task, elm: nil %>
+    <% end %>
+  <% end %>
+</div>
+<a href="/groups/<%=@group.id%>/show_done_tasks" data-method="patch" data-remote="true" class="my_btn_info sh_done_t_btn">
+  <i class="fa fa-plus" id="fa_icons"></i>
+  Tâches terminées
+</a>
+<a class="my_btn_info hd_done_t_btn undisplay">
+  <i class="fa fa-close" id="fa_icons"></i>
+  Fermer
+</a>
+<div class="done_tasks">
+</div>

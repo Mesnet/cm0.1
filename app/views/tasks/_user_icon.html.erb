@@ -1,16 +1,21 @@
+<%- if elm.present? %>
+  <% @post = true %>
+<% else %>
+  <% @post = nil %>
+<% end %>
 <div id="task_user_icon<%=task.id%>">
   <%- if task.cached_users.any? %>
     <%- if task.cached_users.include?(current_user) %>
-      <a class="task_user" href="/tasks/<%=task.id%>/unparticipate" data-method="patch" data-remote="true" data-toggle="tooltip" data-placement="top" title="S'abstenir">
+      <a class="task_user" href="/tasks/<%=task.id%>/unparticipate?post=<%=@post%>" data-method="patch" data-remote="true" data-toggle="tooltip" data-placement="top" title="S'abstenir">
         <i class="fa fa-user-circle-o"></i>
       </a>
     <% else %>
-      <a class="task_user" href="/tasks/<%=task.id%>/participate" data-method="patch" data-remote="true" data-toggle="tooltip" data-placement="top" title="Participer">
+      <a class="task_user" href="/tasks/<%=task.id%>/participate?post=<%=@post%>" data-method="patch" data-remote="true" data-toggle="tooltip" data-placement="top" title="Participer">
         <i class="fa fa-user"></i>
       </a>
     <% end %>
   <% else %>
-    <a class="task_user_o" href="/tasks/<%=task.id%>/participate" data-method="patch" data-remote="true" data-toggle="tooltip" data-placement="top" title="Participer">
+    <a class="task_user_o" href="/tasks/<%=task.id%>/participate?post=<%=@post%>" data-method="patch" data-remote="true" data-toggle="tooltip" data-placement="top" title="Participer">
       <i class="fa fa-user-o"></i>
     </a>
   <% end %>

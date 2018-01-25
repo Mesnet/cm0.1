@@ -1,0 +1,13 @@
+<div class="done_tasks">
+  <% tasks.each do |task| %>
+    <%= render 'tasks/task', task: task, elm: nil %>
+  <% end %>
+</div>
+<script>
+  $(document).ready(function () {
+    $('.hd_done_t_btn, .sh_done_t_btn').on('click', function (event) {
+      $('.hd_done_t_btn, .sh_done_t_btn').toggle();
+      $('.done_tasks').slideToggle();
+    });
+  });
+</script>

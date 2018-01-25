@@ -9,6 +9,13 @@ class GroupsController < ApplicationController
   before_action :set_user, only: [:expel, :upd_role, :acc_req, :den_req, :invit, :uninvit]
   before_action :set_element, only: [:elm_upd, :elm_del]
 
+  # Basics
+  def show_done_tasks
+    @tasks = @group.tasks.done
+    respond_to do |format|
+      format.js { render 'groups/js/show_tasks' }
+    end
+  end
   def index
   end
 
@@ -16,6 +23,10 @@ class GroupsController < ApplicationController
   end
 
   def cloud
+  end
+
+  def taskboard
+    @tasks = @group.tasks.undone
   end
 
   #NewPostElements

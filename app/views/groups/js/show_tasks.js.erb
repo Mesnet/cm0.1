@@ -1,0 +1,7 @@
+$('.sh_done_t_btn').hide();
+$('.sh_done_t_btn').removeAttr("href data-method data-remote");
+$('.hd_done_t_btn').toggle();
+$('.hd_done_t_btn').css("display", "block");
+$('.done_tasks').prepend("<%=  j render partial: 'tasks/done_tasks', locals: {tasks: @tasks} %>");
+$('.done_tasks').hide();
+$('.done_tasks').slideDown();

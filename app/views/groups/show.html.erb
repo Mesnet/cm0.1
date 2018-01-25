@@ -1,31 +1,36 @@
-<!-- New Post -->
-<title><%=@group.name%></title>
-<div class="panel panel-white post post_new">
-  <%= simple_form_for(Post.new, remote: true) do |f| %>
-    <%= f.hidden_field :group_id, :value => @group.id %>
-    <div class="post-heading">
-      <div class="form-inputs">
-        <%= f.input :title, label: false, class: "form-control", placeholder: "Titre (objet du mail)"%>
+<% cache [@group, "post_new", current_user.id] do %>  
+  <div class="nav_title_group">
+    <%= @group.name %>
+  </div>
+  <!-- New Post -->
+  <title><%=@group.name%></title>
+  <div class="panel panel-white post post_new">
+    <%= simple_form_for(Post.new, remote: true) do |f| %>
+      <%= f.hidden_field :group_id, :value => @group.id %>
+      <div class="post-heading">
+        <div class="form-inputs">
+          <%= f.input :title, label: false, class: "form-control", placeholder: "Titre (objet du mail)"%>
+        </div>
+        <div class="form-inputs" style="margin-top: -10px;">
+          <%= f.text_area :content, label: false, class: "form-control", placeholder: "Faites passez un message"%>
+        </div>
       </div>
-      <div class="form-inputs" style="margin-top: -10px;">
-        <%= f.text_area :content, label: false, class: "form-control", placeholder: "Faites passez un message"%>
+      <!-- Elements Area -->
+      <%= render 'posts/elements', elements: @elements, post: nil %>
+      <!-- /Elements Area -->
+      <div class="post_footer">
+        <!-- Elements Btn -->
+        <a class="fa fa-file-o post_new_btn" href="/groups/<%=@group.id%>/new_element?idz=1" data-method="patch" data-remote="true"></a>
+        <a class="fa fa-bar-chart post_new_btn" href="/groups/<%=@group.id%>/new_element?idz=2" data-method="patch" data-remote="true"></a>
+        <a class="fa fa-thumb-tack post_new_btn" href="/groups/<%=@group.id%>/new_element?idz=3" data-method="patch" data-remote="true"></a>
+        <a class="fa fa-calendar post_new_btn" href="/groups/<%=@group.id%>/new_element?idz=4" data-method="patch" data-remote="true"></a>
+        <!-- /Elements Btn -->
+        <%= f.button :submit, "Créer le post", class: "btn btn-success pull-right post_new_submit" %>
       </div>
-    </div>
-    <!-- Elements Area -->
-    <%= render 'posts/elements', elements: @elements, post: nil %>
-    <!-- /Elements Area -->
-    <div class="post_footer">
-      <!-- Elements Btn -->
-      <a class="fa fa-file-o post_new_btn" href="/groups/<%=@group.id%>/new_element?idz=1" data-method="patch" data-remote="true"></a>
-      <a class="fa fa-bar-chart post_new_btn" href="/groups/<%=@group.id%>/new_element?idz=2" data-method="patch" data-remote="true"></a>
-      <a class="fa fa-thumb-tack post_new_btn" href="/groups/<%=@group.id%>/new_element?idz=3" data-method="patch" data-remote="true"></a>
-      <a class="fa fa-calendar post_new_btn" href="/groups/<%=@group.id%>/new_element?idz=4" data-method="patch" data-remote="true"></a>
-      <!-- /Elements Btn -->
-      <%= f.button :submit, "Créer le post", class: "btn btn-success pull-right post_new_submit" %>
-    </div>
-  <% end %>
-</div> 
-<!-- /New Post -->
+    <% end %>
+  </div> 
+  <!-- /New Post -->
+<% end %>
 
 <div id="posts">
   <% @posts.each do |post| %>

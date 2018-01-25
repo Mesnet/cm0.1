@@ -2,4 +2,10 @@ $('#task_participants_list<%=@task.id%>').prepend("<%=  j render partial: 'tasks
 $('#<%=@task.id%>participant_box<%=@user.id%>').hide();
 $('#<%=@task.id%>participant_box<%=@user.id%>').slideDown();
 $('#btn_add_participation<%=@task.id%>').slideUp();
-$('#task_user_icon<%=@task.id%>').replaceWith("<%=  j render partial: 'tasks/user_icon', locals: {task: @task} %>");
+<%- if @elements %>
+  <% @elements.each do |elm| %>
+    $('#task_iter<%=@task.id%>_elm<%=elm.id%>').replaceWith("<%=  j render partial: 'tasks/task', locals: {task: @task, elm: elm} %>");
+  <% end %>
+<% else %>
+  $('#task_user_icon<%=@task.id%>').replaceWith("<%=  j render partial: 'tasks/user_icon', locals: {task: @task, elm: nil} %>");
+<% end %>

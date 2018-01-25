@@ -20,6 +20,9 @@ class TasksController < ApplicationController
   def participate
     respond_to do |format|
       unless @task.cached_users.include?(current_user)
+        if params[:post].present?
+          @elements = @task.elements
+        end
         @user = current_user
         @task.task_users.where(user: @user).first_or_create
         @task.update(effectif: (@task.effectif += 1))
@@ -33,6 +36,9 @@ class TasksController < ApplicationController
   def unparticipate
     respond_to do |format|
       if @task.cached_users.include?(current_user)
+        if params[:post].present?
+          @elements = @task.elements
+        end
         @user = current_user
         @task.task_users.where(user: @user).delete_all
         @task.update(effectif: (@task.effectif -= 1))
@@ -60,6 +66,7 @@ class TasksController < ApplicationController
         #Prevent done again(if other user did it)
         @task.update(done: true, doner_id: current_user.id, done_at: Time.now)
         @task.task_reminds.update(deleted_state: true)
+        @elements = @task.elements
         format.js { render 'tasks/js/done' }
       end
       format.js {render inline: "location.reload();" }
@@ -70,6 +77,7 @@ class TasksController < ApplicationController
     respond_to do |format|
       if @task.done?
         #Prevent undone again(if other user did it)
+        @elements = @task.elements
         @task.update(done: false, doner_id: nil, done_at: nil)
         @task.task_reminds.update(deleted_state: false)
         format.js { render 'tasks/js/done' }
@@ -135,7 +143,7 @@ class TasksController < ApplicationController
             format.js {render 'posts/elm_new'}
           else
             #Task New
-            format.js
+            format.js {render 'tasks/js/create'}
           end
         end
       end
