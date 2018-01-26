@@ -27,6 +27,16 @@ class ApplicationController < ActionController::Base
     @enable_nav = true
   end
 
+  def group_autorization
+    @group = Group.find(params[:groupid])
+    unless @group.cached_users.include?(current_user)
+      respond_to do |format|
+        redirect_to root_path
+        # Vous ne faites pas parti de ce groupe
+      end
+    end
+  end
+
   def have_company
     unless current_user.company?
       unless current_user.pseudo.present?

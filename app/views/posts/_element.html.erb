@@ -11,6 +11,8 @@
     </a>
     <a href="/elm_del?elmid=<%=element.id%>" class="fa fa-close element_new_post_delete" data-method="patch" data-remote="true" data-confirm="Etes vous sur de vouloir supprimer cette tâche ?"></a>
   <% elsif element.cat == 4 %>
+  <% elsif element.cat == 5 %>
+    <h4>Element supprimé</h4>
   <% end %>
   <script>
     $(document).ready(function () {

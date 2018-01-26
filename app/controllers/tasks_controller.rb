@@ -3,7 +3,7 @@ class TasksController < ApplicationController
   before_action :have_company, only: [:index]
   before_action :enable_nav, only: [:index]
   before_action :set_task, except: [:create, :index]
-  before_action :group_autorization, only: [:done, :undone, :participate, :unparticipate, :post_change, :post_select, :create]
+  before_action :group_autorization, only: [:done, :undone, :participate, :unparticipate, :post_change, :post_select, :create, :show_sn, :delparticipate]
   before_action :adminitrator, only: [:delparticipate, :update, :destroy]
   after_action :upd_elements, except: [:create, :show_sn, :post_select, :post_select, :index]
 
@@ -51,11 +51,12 @@ class TasksController < ApplicationController
 
   def delparticipate
     respond_to do |format|
-      @user = User.find_by(id: params[:userid])
+      @user = User.find(params[:userid])
       if @task.cached_users.include?(@user)
         @task.task_users.where(user: @user).delete_all
         @task.update(effectif: (@task.effectif -= 1))
       end
+      @idz = 1
       format.js { render 'tasks/js/unparticipate' }
     end
   end
@@ -67,6 +68,7 @@ class TasksController < ApplicationController
         @task.update(done: true, doner_id: current_user.id, done_at: Time.now)
         @task.task_reminds.update(deleted_state: true)
         @elements = @task.elements
+        @idz = 1
         format.js { render 'tasks/js/done' }
       end
       format.js {render inline: "location.reload();" }
@@ -173,11 +175,10 @@ class TasksController < ApplicationController
   def destroy
     @post = @task.posts.last
     @elements = @task.elements.map(&:id) 
-    @task.elements.delete_all
+    @task.elements.update(task_id: nil, cat: 5)
     @task.task_users.delete_all
-    @post.destroy
+    @post.update(user: current_user, upd_at: Time.now, upd_title: "a supprimer la tâche #{@task.title}", cat: 3)
     @task.destroy
-    @task.posts.update(updated_at: Time.now)
     respond_to do |format|
       format.js { render 'tasks/js/destroy' }
     end
@@ -187,20 +188,6 @@ class TasksController < ApplicationController
 
     def set_task
       @task = Task.find(params[:id])
-    end
-
-    def group_autorization
-      if params[:groupid]
-        @group = Group.find(params[:groupid])
-      else
-        @group = @task.group
-      end
-      unless @group.cached_users.include?(current_user)
-        respond_to do |format|
-          redirect_to root_path
-          # Vous ne faites pas parti de ce groupe
-        end
-      end
     end
 
     def adminitrator
@@ -222,7 +209,4 @@ class TasksController < ApplicationController
       params.require(:task).permit(:title, :date, :important, :user_ids => [])
     end
 
-    def enable_nav
-      @enable_nav = true
-    end
 end

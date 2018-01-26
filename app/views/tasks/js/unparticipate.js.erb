@@ -1,5 +1,7 @@
-$('#<%=@task.id%>participant_box<%=@user.id%>').fadeOut();
-$('#btn_add_participation<%=@task.id%>').slideDown();
+$('#<%=@task.id%>participant_box<%=@user.id%>').fadeOut(300, function() { $(this).remove(); });
+<%- unless @idz == 1 %>
+  $('#btn_add_participation<%=@task.id%>').slideDown();
+<% end %>
 <%- if @elements %>
   <% @elements.each do |elm| %>
     $('#task_iter<%=@task.id%>_elm<%=elm.id%>').replaceWith("<%=  j render partial: 'tasks/task', locals: {task: @task, elm: elm} %>");

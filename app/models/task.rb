@@ -3,7 +3,7 @@ class Task < ApplicationRecord
   belongs_to :doner, optional: true, class_name: "User"
   has_many :task_users, dependent: :destroy
   has_many :users, through: :task_users
-  has_many :elements, dependent: :destroy
+  has_many :elements
   has_many :posts, through: :elements
   has_many :task_reminds, dependent: :destroy
   has_many :sub_tasks, dependent: :destroy

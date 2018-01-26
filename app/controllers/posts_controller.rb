@@ -1,16 +1,20 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
+  before_action :group_autorization, only: [:create]
   before_action :set_post, only: [:update, :destroy]
+  before_action :authorization, only: [:update, :destroy]
 
   def create
-    @post = Post.new(post_params)
-    @post.user = current_user
-    @post.upd_at = Time.now
-    @group = @post.group
-    respond_to do |format|
-      if @post.save
-        @post.group.elements.empty.update(post_id: @post.id)
-        format.js
+    if params[:title] || params[:content] || @group.elements.empty
+      @new_post = Post.new(post_params)
+      @new_post.user = current_user
+      @new_post.upd_at = Time.now
+      @new_post.group = @group
+      respond_to do |format|
+        if @new_post.save
+          @group.elements.empty.update(post_id: @new_post.id)
+          format.js
+        end
       end
     end
   end
@@ -45,5 +49,11 @@ class PostsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
       params.require(:post).permit(:group_id, :content, :title)
+    end
+
+    def authorization
+      unless @post.user == current_user
+        redirect_to root_path
+      end
     end
 end

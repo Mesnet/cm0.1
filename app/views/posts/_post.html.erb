@@ -1,13 +1,16 @@
 <div id="post_iter<%=post.id%>">
-
+  <%- if post.cat == 1 || 3 %>
+  <div class="panel panel-white post" style='padding: 0;'>
+  <% else %>
   <div class="panel panel-white post">
+  <% end %>
     <div class="post-heading">
       <%= render 'posts/header', post: post %>
     </div>
     <!-- Post Content -->
     <%= render 'posts/content', post: post %>
 
-    <%- if post.user == current_user%>
+    <%- if post.user == current_user && post.cat == 2 %>
       <div class="panel-body undisplay" id="post_update<%= post.id%>">
         <%= render 'posts/update', post: post%>
       </div>

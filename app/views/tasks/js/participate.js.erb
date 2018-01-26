@@ -1,4 +1,4 @@
-$('#task_participants_list<%=@task.id%>').prepend("<%=  j render partial: 'tasks/sn/participant_item', locals: {task: @task, user: @user} %>");
+$('#task_participants_list<%=@task.id%>').prepend("<%=  j render partial: 'tasks/sn/participant', locals: {task: @task, user: @user} %>");
 $('#<%=@task.id%>participant_box<%=@user.id%>').hide();
 $('#<%=@task.id%>participant_box<%=@user.id%>').slideDown();
 $('#btn_add_participation<%=@task.id%>').slideUp();

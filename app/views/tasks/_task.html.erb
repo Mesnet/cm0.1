@@ -19,15 +19,15 @@
   <% end %>
   <% end %>
     <%- if task.done? %>
-      <a href="/tasks/<%=task.id%>/undone" data-method="patch" data-remote="true" class="task_done_btn">
+      <a href="/tasks/<%=task.id%>/undone?groupid=<%=@group.id%>" data-method="patch" data-remote="true" class="task_done_btn">
         <i class="fa fa-check-square-o"></i>
       </a>
     <% else %>
-      <a href="/tasks/<%=task.id%>/done" data-method="patch" data-remote="true" class="task_done_btn">
+      <a href="/tasks/<%=task.id%>/done?groupid=<%=@group.id%>" data-method="patch" data-remote="true" class="task_done_btn">
         <i class="fa fa-square-o"></i>
       </a>
     <% end %>
-    <a class="task_content" href="/tasks/<%=task.id%>/show_sn" data-method="patch" data-remote="true" >
+    <a class="task_content" href="/tasks/<%=task.id%>/show_sn?groupid=<%=@group.id%>" data-method="patch" data-remote="true" >
       <div class="task_title">
         <%= task.title %>
       </div>

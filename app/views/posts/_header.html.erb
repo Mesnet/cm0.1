@@ -1,3 +1,4 @@
+<%- unless post.cat == 1 %>
 <div class="pull-left image">
   <div class="user_icon_round" style="background:<%=post.cached_user.color%>;">
       <%= post.cached_user.initial %>
@@ -12,6 +13,12 @@
     <%= post.upd_at.strftime("%d %b à %H:%M") %>
   </h6>
 </div>
+<% else %>
+  <div class="h5" style="text-align: center;">
+    <a href="<%=(post.cached_user.id)%>"><b><%= post.cached_user.pseudo %></b></a>, <%= post.upd_title%> 
+    <span class="text-muted time">(<%= post.upd_at.strftime("%d %b à %H:%M") %>)</span>
+  </div>
+<% end %>
 <%- unless post.cat == 1 %>
   <div class="pull-right meta">
     <%- if post.cached_user == current_user %>
@@ -40,10 +47,11 @@
     <% end %>
   </div>
 <% end %>
-
+<%- unless post.cat == 1 %>
 <br>
 <br>
 <br>
+<% end %>
 <%- if post.title.present? %>
   <div class='well well_title_area'><%=post.title%></div>
 <% end %>

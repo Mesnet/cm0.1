@@ -3,6 +3,9 @@
     $('#task_iter<%=@task.id%>_elm<%=elm%>').slideUp(300, function() { $(this).remove(); });
   <% end %>
   $('#post_iter<%=@post.id%>').slideUp(300, function() { $(this).remove(); });
+  $('.posts').prepend("<%=  j render partial: 'posts/post', locals: {post: @post} %>");
+  $('#post_iter<%=@post.id%>').hide();
+  $('#post_iter<%=@post.id%>').slideDown();
 <% else %>
   $('#task_iter<%=@task.id%>').slideUp(300, function() { $(this).remove(); });
 <% end %>

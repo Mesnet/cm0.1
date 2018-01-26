@@ -5,6 +5,8 @@
   <%= render 'tasks/task', task: element.task, elm: element %>
 <% elsif element.cat == 4 %>
   <%= render 'events/event', event: element.event %>
+<% elsif element.cat == 5 %>
+  <span class="fa fa-exclamation-triangle" id="fa_icons"></span>Element supprimé
 <% end %>
 <%- unless element == element.post.elements.last%>
   <hr>

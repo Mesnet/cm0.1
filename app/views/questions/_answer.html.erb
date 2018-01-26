@@ -1,4 +1,5 @@
 <%- if question.cached_users.include?(current_user)%>
+  <% @users_names = answer.cached_voters.map(&:pseudo)%>
   <%- if answer.cached_voters.include?(current_user) %>
     <a href="/questions/<%=question.id%>/unvote?qid=<%=answer.id%>" data-method="patch" data-remote="true" class="anwer_elm voted">
   <% else %>
@@ -7,13 +8,18 @@
     <%= answer.title %>
     <% @pourcent = (((answer.vote.to_i*100) / question.voters.to_i).round(2)) %>
     <div class="question_vote_area">
-      <div class="progress" id="progress_vote">
+      <div class="progress" id="progress_vote" data-toggle="tooltip" data-placement="top" title="<%= @users_names %>">
         <div class="progress-bar bg-success" style="width: <%= @pourcent %>%; color: white; background: indianred;">
           <%= answer.vote %> / <%= question.voters %>
         </div>
       </div>
     </div>
   </a>
+  <script>
+      $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+      });
+    </script>
 <% else %>
   <a href="/questions/<%=question.id%>/vote?qid=<%=answer.id%>" data-method="patch" data-remote="true" class="anwer_elm">
     <%= answer.title %>

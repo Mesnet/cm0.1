@@ -26,6 +26,7 @@ class GroupsController < ApplicationController
   end
 
   def taskboard
+    @users = @group.cached_users
     @tasks = @group.tasks.undone
   end
 
@@ -156,7 +157,7 @@ class GroupsController < ApplicationController
             @invitations = @group.cached_requests + @group.cached_invitations + (@group.company.cached_users - @group.cached_requests - @group.cached_invitations - @users )
           else 
             # Select the contacts of current_user
-            @invitations = @users - @users
+            @invitations = @group.cached_requests
           end
           format.js { render 'groups/edit/show' }
         end
@@ -411,8 +412,4 @@ class GroupsController < ApplicationController
       params.require(:group).permit(:name, :cat, :description, :company_id)
     end
 
-    def enable_nav
-      @enable_nav = true
-    end
-  
 end

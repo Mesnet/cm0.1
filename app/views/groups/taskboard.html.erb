@@ -8,7 +8,7 @@
         <div class="form-inputs area_flex">
           <%= f.text_field :title, label: false, class: "form-control", placeholder: "Nom de la tâche", id:"task_name_input"%>
           <%= f.text_field :date, label: false, class: "form-control", placeholder: "Date", id:"task_date_input"%>
-          <%- unless @group.cat == 2 %>
+          <%- unless @group.cat == 1 %>
             <%= f.collection_select :user_ids, @users, :id, :pseudo, {}, :multiple => 'true' %>
           <% end %>
           <div class='btn btn-default' id="task_priority_btn" style="margin-left: 5px; border-radius: 5px;" data-toggle="tooltip" data-placement="bottom" title="Tâche non-prioritaire">
@@ -47,7 +47,7 @@
   </script>
 <% end %>
 
-<div class="taskboard_list">
+<div class="tasks">
   <% @tasks.each do |task| %>
     <% cache task do %>
       <%= render 'tasks/task', task: task, elm: nil %>
@@ -62,5 +62,5 @@
   <i class="fa fa-close" id="fa_icons"></i>
   Fermer
 </a>
-<div class="done_tasks">
+<div class="done_tasks_area">
 </div>

@@ -17,11 +17,5 @@ class PagesController < ApplicationController
       format.js { render 'pages/invit/show' }
     end
   end
-  
-  private 
-
-  def enable_nav
-    @enable_nav = true
-  end
 
 end
